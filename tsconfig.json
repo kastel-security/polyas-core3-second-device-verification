@@ -1,0 +1,9 @@
+{
+    "include": ["src/*"],
+    "compilerOptions": {
+      "lib": ["ES2020", "DOM"],
+      "types": ["jest"],
+      "strictNullChecks": true,
+      "resolveJsonModule": true
+    },
+  }
