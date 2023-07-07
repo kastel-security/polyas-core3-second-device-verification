@@ -19,10 +19,10 @@ class MultiCiphertext {
     public static fromJson(cipherJson: any) {
         let ciphertexts = new Array<Ciphertext>()
         let auxData = new Map<String, String>()
-        for (let ciphertext in cipherJson) {
+        for (let ciphertext of cipherJson) {
             ciphertexts.push(Ciphertext.fromJson(cipherJson))
         }
-        for (let aux in cipherJson.auxData.keys) {
+        for (let aux of cipherJson.auxData.keys) {
             auxData.set(aux as String, cipherJson.auxData.get(aux))
         }
         return new MultiCiphertext(ciphertexts, auxData)
@@ -40,6 +40,14 @@ class Proof {
     }
 }
 
+class SecretProof {
+    public constructor(
+        public readonly e: bigint, //random number
+        public readonly r: bigint, //random number
+        public readonly c: bigint
+    ) {}
+}
+
 class Ballot {
     public constructor(    
         public readonly encryptedChoice: MultiCiphertext,
@@ -51,7 +59,7 @@ class Ballot {
             let choice = MultiCiphertext.fromJson(ballotJson.encryptedChoice)
             let coinProofs = new Array<Proof>()
             let credProof = Proof.fromJson(ballotJson.proofOfKnowledgeOfPrivateCredential)
-            for (let proof in ballotJson.proofOfKnowledgeOfEncryptionCoins) {
+            for (let proof of ballotJson.proofOfKnowledgeOfEncryptionCoins) {
                 coinProofs.push(Proof.fromJson(proof))
             }
             return new Ballot(choice, coinProofs, credProof)
@@ -85,7 +93,7 @@ class Core3StandardBallot extends Core3Ballot{
         let title = I18n.fromJson<String>(ballotJson.title, "string")
         let contentAbove = ballotJson.contentAbove != undefined ? Content.generateContentFromJson(ballotJson.contentAbove) : undefined
         let contentBelow = ballotJson.contentBelow != undefined ? Content.generateContentFromJson(ballotJson.contentBelow) : undefined
-        for (let list in ballotJson.lists) {
+        for (let list of ballotJson.lists) {
             lists.push(CandidateList.fromJson(list))
         }
         return new Core3StandardBallot(ballotJson.id as String, lists, ballotJson.showAbstainOption as boolean,
@@ -115,16 +123,16 @@ class CandidateList {
         let columnProperties: Array<ColumnProperties>|undefined = undefined
         let contentAbove: Content|undefined = undefined
         let derivedListVotes: DerivedListVotesSpecVariant|undefined = undefined
-        for (let cand in listJson.candidates) {
+        for (let cand of listJson.candidates) {
             candidates.push(CandidateSpec.fromJson(cand))
         }
-        for (let header in listJson.columnHeaders) {
-            columnHeaders.push(I18n.fromJsonGeneric(listJson.columnHeaders))
+        for (let header of listJson.columnHeaders) {
+            columnHeaders.push(I18n.fromJsonGeneric(header))
         }
 
         if (listJson.columnProperties != undefined) {
             columnProperties = new Array<ColumnProperties>()
-            for (let prop in listJson.coulmProperties) {
+            for (let prop of listJson.coulmProperties) {
                 columnProperties.push(ColumnProperties.fromJson(prop))
             }
         }
@@ -152,7 +160,7 @@ class CandidateSpec {
         }
     public static fromJson(candJson: any): CandidateSpec {
         let columns = new Array<Content>()
-        for (let columnJson in candJson.columns) {
+        for (let columnJson of candJson.columns) {
             columns.push(Content.generateContentFromJson(columnJson))
         }
         return new CandidateSpec(columns, candJson.id as String, candJson.externalIdentification as String, candJson.writeInSize as number)
@@ -174,4 +182,4 @@ enum DerivedListVotesSpecVariant {
 }
 
 
-export{Ciphertext, MultiCiphertext, Proof, Ballot, Core3Ballot, CandidateList, CandidateSpec, ColumnProperties, DerivedListVotesSpecVariant}
+export{Ciphertext, MultiCiphertext, Proof, Ballot, Core3Ballot, CandidateList, CandidateSpec, ColumnProperties, DerivedListVotesSpecVariant, SecretProof}

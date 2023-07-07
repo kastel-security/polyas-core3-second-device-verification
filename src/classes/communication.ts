@@ -11,7 +11,7 @@ class ElectionData {
     public static fromJson(electionJson : any) {
         let title = I18n.fromJson<String>(electionJson.title, "string")
         let languages = new Array<Language>()
-        for (let lang in electionJson.languages) {
+        for (let lang of electionJson.languages) {
             languages.push(Language[lang])
         }
         return new ElectionData(title, languages)
@@ -44,7 +44,7 @@ class SecondDeviceFinalMessage {
     }
     public static fromJson(messageJson: any): SecondDeviceFinalMessage {
         let z = new Array<bigint>()
-        for (let num in messageJson.z) {
+        for (let num of messageJson.z) {
             z.push(BigInt("0x" + num))
         }
         return new SecondDeviceFinalMessage(z)
@@ -85,6 +85,9 @@ class SecondDeviceInitialMsg {
         msgJson.factorY.forEach(factor => {factorY.push(BigInt(factor))});
         return new SecondDeviceInitialMsg(ballot, comSeed, factorA, factorB, factorX, factorY, publicCredential, 
             secondDeviceParameterJson, signatureHex)
+    }
+    public get secondDeviceParameter() {
+        return VerifiableSecondDeviceParameters.fromJson(this.secondDeviceParameter)
     }
 }
 

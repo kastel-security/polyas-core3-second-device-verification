@@ -22,10 +22,10 @@ class NodeBlock extends GenericNode {
     public static fromJson(nodeJson: any): GenericNode {
         let data: Map<String, String> = new Map<String, String>()
         let nodes: Array<GenericNode> = new Array<GenericNode>
-        for (let key in nodeJson.keys()) {
+        for (let key of nodeJson.keys) {
             data.set(key, nodeJson.data.get(key))
         }
-        for (let node in nodeJson.nodes) {
+        for (let node of nodeJson.nodes) {
             nodes.push(GenericNode.generateNodeFromJson(node))
         }
         let type = nodeJson.type as String
@@ -45,10 +45,10 @@ class NodeInline extends GenericNode {
     public static fromJson(nodeJson: any): GenericNode {
         let data: Map<String, String> = new Map<String, String>()
         let nodes: Array<GenericNode> = new Array<GenericNode>
-        for (let key in nodeJson.keys()) {
+        for (let key of nodeJson.keys) {
             data.set(key, nodeJson.data.get(key))
         }
-        for (let node in nodeJson.nodes) {
+        for (let node of nodeJson.nodes) {
             nodes.push(GenericNode.generateNodeFromJson(node))
         }
         let type = nodeJson.type as String
@@ -65,7 +65,7 @@ class NodeMark {
         }
     public static fromJson(nodeJson: any): NodeMark {
         let data: Map<String, String> = new Map<String, String>()
-        for (let key in nodeJson.keys()) {
+        for (let key of nodeJson.keys) {
             data.set(key, nodeJson.data.get(key))
         }
         let object = nodeJson.object as String
@@ -87,7 +87,7 @@ class NodeText extends GenericNode {
     public static fromJson(nodeJson: any) {
         let text = nodeJson.text as String
         let marks = new Set<NodeMark>()
-        for (let node in nodeJson.marks.keys()) {
+        for (let node of nodeJson.marks.keys) {
             marks.add(NodeMark.fromJson(node))
         }
         return new NodeText(marks, text)
