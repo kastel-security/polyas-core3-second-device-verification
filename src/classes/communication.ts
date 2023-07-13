@@ -3,16 +3,16 @@ import {Ballot, Core3Ballot} from "./ballot"
 
 class ElectionData {
     public constructor(
-        public readonly title: I18n<String>,
+        public readonly title: I18n<string>,
         public readonly languages: Array<Language>
     ) {
         throwIfNotPresent(title, languages)
     }
     public static fromJson(electionJson : any) {
-        let title = I18n.fromJson<String>(electionJson.title, "string")
+        let title = I18n.fromJson<string>(electionJson.title, "string")
         let languages = new Array<Language>()
         for (let lang of electionJson.languages) {
-            languages.push(Language[lang])
+            languages.push(lang as Language)
         }
         return new ElectionData(title, languages)
     }
@@ -60,43 +60,43 @@ class SecondDeviceInitialMsg {
         public readonly factorX: Array<bigint>,
         public readonly factorY: Array<bigint>,
         public readonly publicCredential: bigint,
-        public readonly secondDeviceParameterJson: String,
-        public readonly signatureHex: String
+        public readonly secondDeviceParameter: string,
+        public readonly signatureHex: string
     ) {
-        throwIfNotPresent(ballot, comSeed, factorA, factorB, factorX, factorY, publicCredential, secondDeviceParameterJson, signatureHex)
+        throwIfNotPresent(ballot, comSeed, factorA, factorB, factorX, factorY, publicCredential, secondDeviceParameter, signatureHex)
     }
-    public static fromJson(msgJson): SecondDeviceInitialMsg {
+    public static fromJson(msgJson: any): SecondDeviceInitialMsg {
         let ballot = Ballot.fromJson(msgJson.ballot)
-        let comSeedString = msgJson.comSeed as String
-        let comSeed = new Uint8Array(comSeedString.length / 2)
+        let comSeedstring = msgJson.comSeed as string
+        let comSeed = new Uint8Array(comSeedstring.length / 2)
         for (let i = 1; i < comSeed.length; i++) {
-            comSeed[i] = parseInt(comSeedString[2*i] + comSeed[2*i + 1], 16)
+            comSeed[i] = parseInt(comSeedstring[2*i] + comSeed[2*i + 1], 16)
         }
         let factorA = new Array<bigint>()
         let factorB = new Array<bigint>()
         let factorX = new Array<bigint>()
         let factorY = new Array<bigint>()
-        let publicCredential = BigInt(msgJson.publicCredential)
-        let secondDeviceParameterJson = msgJson.secondDeviceParameterJson as String
-        let signatureHex = msgJson.signatureHex as String
-        msgJson.factorA.forEach(factor => {factorA.push(BigInt(factor))});
-        msgJson.factorB.forEach(factor => {factorB.push(BigInt(factor))});
-        msgJson.factorX.forEach(factor => {factorX.push(BigInt(factor))});
-        msgJson.factorY.forEach(factor => {factorY.push(BigInt(factor))});
+        let publicCredential = BigInt("0x" + msgJson.publicCredential)
+        let secondDeviceParameterJson = msgJson.secondDeviceParametersJson as string
+        let signatureHex = msgJson.signatureHex as string
+        msgJson.factorA.forEach((factor: any) => {factorA.push(BigInt("0x" + factor))});
+        msgJson.factorB.forEach((factor: any) => {factorB.push(BigInt("0x" + factor))});
+        msgJson.factorX.forEach((factor: any) => {factorX.push(BigInt("0x" + factor))});
+        msgJson.factorY.forEach((factor: any) => {factorY.push(BigInt("0x" + factor))});
         return new SecondDeviceInitialMsg(ballot, comSeed, factorA, factorB, factorX, factorY, publicCredential, 
             secondDeviceParameterJson, signatureHex)
     }
-    public get secondDeviceParameter() {
-        return VerifiableSecondDeviceParameters.fromJson(this.secondDeviceParameter)
+    public get secondDeviceParameterDecoded(): VerifiableSecondDeviceParameters {
+        return VerifiableSecondDeviceParameters.fromJson(JSON.parse(this.secondDeviceParameter))
     }
 }
 
 class SecondDeviceLogin {
     public constructor(
-        public readonly challengeCommitment: String,
-        public readonly nonce: String,
-        public readonly password: String,
-        public readonly voterId: String
+        public readonly challengeCommitment: string,
+        public readonly nonce: string,
+        public readonly password: string,
+        public readonly voterId: string
     ) {
         throwIfNotPresent(challengeCommitment, nonce, password, voterId)
     }
@@ -106,48 +106,49 @@ class SecondDeviceLoginResponse {
     public readonly initialMessageDecoded: SecondDeviceInitialMsg
     public constructor(
         public readonly allowInvalid: boolean,
-        public readonly ballotVoterId: String,
-        public readonly electionId: String,
-        public readonly initialMessage: String,
+        public readonly ballotVoterId: string,
+        public readonly electionId: string,
+        public readonly initialMessage: string,
         public readonly languages: Array<Language>,
-        public readonly messages: Map<String, I18n<any>>,
-        public readonly publicLabel: String,
-        public readonly title: I18n<String>,
-        public readonly token: String,
+        public readonly messages: Map<string, I18n<any>>,
+        public readonly publicLabel: string,
+        public readonly title: I18n<string>,
+        public readonly token: string,
         public readonly contentAbove?: Content,
         public readonly logo?: I18n<ImageRef>
     ) {
         throwIfNotPresent(allowInvalid, ballotVoterId, electionId, initialMessage, languages, messages,
             publicLabel, title, token)
-        this.initialMessageDecoded = SecondDeviceInitialMsg.fromJson(initialMessage)
+        this.initialMessageDecoded = SecondDeviceInitialMsg.fromJson(JSON.parse(initialMessage))
     }
-    public static fromJson(respJson): SecondDeviceLoginResponse {
+    public static fromJson(respJson: any): SecondDeviceLoginResponse {
         let languages = new Array<Language>
-        let messages = new Map<String, I18n<any>>
-        let title = I18n.fromJson<String>(respJson.title, "string")
+        let title = I18n.fromJson<string>(respJson.title, "string")
         let contentAbove = respJson.contentAbove ? Content.generateContentFromJson(respJson.contentAbove) : undefined
         let logo = respJson.logo ? I18n.fromJson<ImageRef>(respJson.logo, "image"): undefined
-        respJson.languages.forEach(element => {languages.push(Language[element])});   
-        for (let key of respJson.messages.keys) {
-            messages.set(key as String, I18n.fromJsonGeneric(respJson.messages.get(key)))
-        } 
-        return new SecondDeviceLoginResponse(respJson.allowInvalid as boolean, respJson.ballotVoterId as String,
-            respJson.electionId as String, respJson.initialMessage as String, languages, messages,
-            respJson.publicLabel as String, title, respJson.token as String, contentAbove, logo)
+        respJson.languages.forEach((element: any) => {languages.push(element as Language)}); 
+        let messages: Map<string, I18n<any>> = new Map(
+            Object.entries(respJson.messages).map(([key, val]) => [key as string, I18n.fromJsonGeneric(val)])
+          )
+        return new SecondDeviceLoginResponse(respJson.allowInvalid as boolean, respJson.ballotVoterId as string,
+            respJson.electionId as string, respJson.initialMessage as string, languages, messages,
+            respJson.publicLabel as string, title, respJson.token as string, contentAbove, logo)
     }
 }
 
 class VerifiableSecondDeviceParameters {
     public constructor(
         public readonly ballots: Array<Core3Ballot>,
-        public readonly publicKey: String,
-        public readonly verificationKey: String
+        public readonly publicKey: string,
+        public readonly verificationKey: string
     ) {
         throwIfNotPresent(ballots, publicKey, verificationKey)
     }
-    public static fromJson(paramJson) {
+    public static fromJson(paramJson: any) {
         let ballots = new Array<Core3Ballot>()
-        paramJson.ballots.forEach(element => {ballots.push(Core3Ballot.fromJson(element))});
-        return new VerifiableSecondDeviceParameters(ballots, paramJson.publicKey as String, paramJson.verificationKey as String)
+        paramJson.ballots.forEach((element: any) => {ballots.push(Core3Ballot.fromJson(element))});
+        return new VerifiableSecondDeviceParameters(ballots, paramJson.publicKey as string, paramJson.verificationKey as string)
     }
 }
+
+export{ElectionData, LoginRequest, SecondDeviceLogin, SecondDeviceLoginResponse}

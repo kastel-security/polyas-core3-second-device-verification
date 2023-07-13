@@ -17,14 +17,11 @@ class MultiCiphertext {
             throwIfNotPresent(ciphertexts)
         }
     public static fromJson(cipherJson: any) {
-        let ciphertexts = new Array<Ciphertext>()
-        let auxData = new Map<String, String>()
-        for (let ciphertext of cipherJson) {
-            ciphertexts.push(Ciphertext.fromJson(cipherJson))
-        }
-        for (let aux of cipherJson.auxData.keys) {
-            auxData.set(aux as String, cipherJson.auxData.get(aux))
-        }
+        let ciphertexts = new Array<Ciphertext>(
+            ...Object.entries(cipherJson.ciphertexts).map(([key, val]) => Ciphertext.fromJson(val))
+        )
+        let auxData: Map<string, string>|undefined = cipherJson.auxData? new Map(
+            Object.entries(cipherJson.auxData).map(([key, val]) => [key as string, val as string])) : undefined
         return new MultiCiphertext(ciphertexts, auxData)
     }
 }
@@ -36,7 +33,7 @@ class Proof {
             throwIfNotPresent(c, f)
         }
     public static fromJson(cipherJson: any) {
-        return new Proof(BigInt("0x" + cipherJson.c), BigInt("0x" + cipherJson.f))
+        return new Proof(BigInt(cipherJson.c), BigInt(cipherJson.f))
     }
 }
 
@@ -55,7 +52,7 @@ class Ballot {
         public readonly proofOfKnowledgeOfPrivateCredential: Proof) {
             throwIfNotPresent(encryptedChoice, proofOfKnowledgeOfEncryptionCoins, proofOfKnowledgeOfPrivateCredential)
         }
-        public static fromJson(ballotJson) {
+        public static fromJson(ballotJson: any) {
             let choice = MultiCiphertext.fromJson(ballotJson.encryptedChoice)
             let coinProofs = new Array<Proof>()
             let credProof = Proof.fromJson(ballotJson.proofOfKnowledgeOfPrivateCredential)
@@ -67,7 +64,7 @@ class Ballot {
 }
 
 abstract class Core3Ballot {
-    public static fromJson(ballotJson): Core3Ballot {
+    public static fromJson(ballotJson: any): Core3Ballot {
         return Core3StandardBallot.fromJson(ballotJson)
     }
 }
@@ -117,7 +114,7 @@ class CandidateList {
             throwIfNotPresent(candidates, columnHeaders, id)
         }
 
-    public static fromJson(listJson) {
+    public static fromJson(listJson: any) {
         let candidates = new Array<CandidateSpec>
         let columnHeaders = new Array<I18n<any>>()
         let columnProperties: Array<ColumnProperties>|undefined = undefined
@@ -140,7 +137,7 @@ class CandidateList {
             contentAbove = Content.generateContentFromJson(listJson.contentAbove)
         }
         if (listJson.derivedListVotes != undefined) {
-            derivedListVotes = DerivedListVotesSpecVariant[listJson.derivedListVotes]
+            derivedListVotes = listJson.derivedListVotes
         }
         return new CandidateList(candidates, columnHeaders, listJson.id as String, columnProperties, 
             contentAbove, derivedListVotes, listJson.externalIdentification as String, listJson.title as String)
@@ -176,10 +173,8 @@ class ColumnProperties {
     }
 }
 
-enum DerivedListVotesSpecVariant {
-    EACH_VOTE_COUNTS = "EACH_VOTE_COUNTS",
-    AT_MOST_ONE = "AT_MOST_ONE"
-}
+type DerivedListVotesSpecVariant = "EACH_VOTE_COUNTS"|"AT_MOST_ONE"
+
 
 
 export{Ciphertext, MultiCiphertext, Proof, Ballot, Core3Ballot, CandidateList, CandidateSpec, ColumnProperties, DerivedListVotesSpecVariant, SecretProof}

@@ -2,7 +2,7 @@
 function createGenericClassFromJson<T>(json: any, ttype: string) {
     switch(ttype) {
         case "string":
-            json as string
+            return json as string
         case "document":
             return CustomDocument.fromJson(json)
         case "image":
@@ -12,7 +12,7 @@ function createGenericClassFromJson<T>(json: any, ttype: string) {
 
 function throwIfNotPresent(...args: any) {
     for (let arg of args) {
-        if (typeof arg[Symbol.iterator] === 'function') {
+        if (arg instanceof Map || arg instanceof Set || arg instanceof Array) {
             for (let entry of arg) {
                 throwIfNotPresent(entry)
             }
@@ -24,32 +24,11 @@ function throwIfNotPresent(...args: any) {
     }
 }
 
-enum Language {
-    DE = "DE",
-    EN = "EN",
-    FR = "FR",
-    FI = "FI",
-    IT = "IT",
-    PL = "PL",
-    NL = "NL",
-    CZ = "CZ",
-    ES = "ES",
-    NO = "NO",
-    DK = "DK",
-    ROU = "ROU",
-    SVK = "SVK",
-    SE = "SE",
-    RU = "RU",
-    HU = "HU",
-    AR = "AR"
-}
+type Language = "DE"|"EN"|"FR"|"FI"|"IT"|"PL"|"NL"|"CZ"|"ES"|"NO"|"DK"|"ROU"|"SVK"|"SE"|"RU"|"HU"|"AR"
 
-enum ObjectType {
-    DOCUMENT = "document",
-    BLOCK = "block",
-    INLINE = "inline",
-    TEXT = "text"
-}
+
+type ObjectType = "document"|"block"|"inline"|"text"
+
 
 class CustomDocument {
     public constructor(
@@ -62,8 +41,8 @@ class CustomDocument {
     public static fromJson(documentJson: any) {
         let data = documentJson.data as Map<String, String>
         let nodes = documentJson.nodes as Array<String>
-        let object = ObjectType[documentJson.object]
-        if (object != ObjectType.DOCUMENT) {
+        let object: ObjectType = documentJson.object as ObjectType
+        if (object != "document") {
             throw new Error("Invalid object type")
         }
         return new CustomDocument(data, nodes, object)
@@ -90,7 +69,7 @@ abstract class Content {
         throwIfNotPresent(value, contentType)
     }
     public static generateContentFromJson(contentJson: any): Content {
-        switch(contentJson.value) {
+        switch(contentJson.contentType) {
             case "TEXT": return ContentText.fromJson(contentJson)
             case "RICH_TEXT": return ContentRichText.fromJson(contentJson)
         }
@@ -128,8 +107,8 @@ class I18n<T> {
         let defaultIn = createGenericClassFromJson<T>(i18nJson.default, ttype)
         let value = new Map<Language, T>()
         const valueMap: Map<string, string> = i18nJson.value as Map<string, string>
-        for (var language in valueMap.keys()) {
-            var lang = Language[language]
+        for (var language in valueMap.keys) {
+            var lang: Language = language as Language
             value.set(lang, createGenericClassFromJson<T>(valueMap.get(language), ttype) as T)
         }
         return new I18n<T>(defaultIn as T, value)
