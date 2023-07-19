@@ -28,6 +28,14 @@ function numberToBuf(input: number) {
     return buf
 }
 
+function bufToNumber(input: Uint8Array): number {
+    let output = 0
+    for (let t = 0; t < input.length; t++) {
+        output = output + Math.pow(256, t)
+    }
+    return output
+}
+
 function hexToBuf(hex: string, addLeadingZero?: boolean): Uint8Array {
     if (hex.length % 2) { hex = '0' + hex }
   
@@ -78,4 +86,4 @@ function toUint8Array(input: string|Uint8Array|number|bigint, length?: number): 
     }
 }
 
-export {hexToBuf, bufToBn, toUint8Array, bufToHex}
+export {hexToBuf, bufToBn, toUint8Array, bufToHex, bufToNumber}

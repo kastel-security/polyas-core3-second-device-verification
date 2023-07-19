@@ -1,10 +1,10 @@
 import { ProjectivePoint } from "@noble/secp256k1"
-import { Ballot, Core3Ballot, SecretProof } from "./classes/ballot"
+import { Ballot, Core3Ballot, Proof, SecretProof } from "./classes/ballot"
 import * as constants from "./constants"
 import randomBytes from 'randombytes';
-import { bufToBn, hexToBuf, toUint8Array} from "./utils";
+import { bufToBn, bufToNumber, hexToBuf, toUint8Array} from "./utils";
 import * as crypto from "crypto"
-import { SecondDeviceLoginResponse } from "./classes/communication";
+import { SecondDeviceFinalMessage, SecondDeviceInitialMsg, SecondDeviceLoginResponse } from "./classes/communication";
 import * as openpgp from "openpgp"
 
 /**
@@ -107,14 +107,11 @@ function getBallotAsNormalizedBytestring(ballot: Ballot) {
 }
 
 async function checkSignature(response: SecondDeviceLoginResponse): Promise<boolean> {
-    let publicKey: string = response.initialMessageDecoded.secondDeviceParameterDecoded.verificationKey
-    let publicKeyArmored: string = "-----BEGIN PGP PUBLIC KEY BLOCK-----\r\n\r\n" + publicKey + "\r\n-----END PGP PUBLIC KEY BLOCK-----"
-    let pgpKey= await(openpgp.readKey({ armoredKey: publicKeyArmored }))
-    let message = await openpgp.createMessage({ text: computeFingerprint(response), format:"text" })
-    const signature = await openpgp.readSignature({
-        armoredSignature: response.initialMessageDecoded.signatureHex // parse detached signature
-    })
-    return false
+    let publicKeyHex: string = response.initialMessageDecoded.secondDeviceParameterDecoded.verificationKey
+    let publicKeyDecoded = await crypto.subtle.importKey("spki", hexToBuf(publicKeyHex, false), {name: "RSASSA-PKCS1-v1_5", hash: "SHA-256"}, true, ["verify"])
+    let message = hexToBuf(computeFingerprint(response)) 
+    let signature = hexToBuf(response.initialMessageDecoded.signatureHex, false)
+    return crypto.subtle.verify("RSASSA-PKCS1-v1_5", publicKeyDecoded, signature, message);
 }
 
 function kdfCounterMode(length: number, seed: Uint8Array, label: string, context: string) {
@@ -138,18 +135,17 @@ class NumbersInRangeFromSeed {
     private i:number
     private seed: Uint8Array
     private range: bigint
-    public constructor(seed: string, range: bigint) {
+    public constructor(seed: string|Uint8Array, range: bigint) {
         this.i = 1
         this.seed = toUint8Array(seed)
         this.range = range
     }
     public getNextNumber(): bigint {
-        const length = Math.ceil(Math.log2(Number(this.range)))
-        const byteCount = Math.ceil(length / 8)
+        const rangeBytes = hexToBuf(this.range.toString(16))
+        const firstByteBitCount = Math.floor(Math.log2(rangeBytes[0])) + 1
+        const byteCount = rangeBytes.length
         let bytes = kdfCounterMode(byteCount, new Uint8Array([...this.seed, ...toUint8Array(this.i, 4)]), 'generator', 'Polyas')
-        if (byteCount * 8 != length) {
-            bytes[0] = bytes[0] % Math.pow(2, 8 + length - byteCount * 8)
-        }
+        bytes[0] = bytes[0] % Math.pow(2, firstByteBitCount)
         const num = bufToBn(bytes)
         this.i++
         if (num < this.range) {
@@ -160,5 +156,72 @@ class NumbersInRangeFromSeed {
     }
 }
 
+function checkZKP(initialMessage: SecondDeviceInitialMsg, finalMessage: SecondDeviceFinalMessage, proof: SecretProof, randomCoinSeed: bigint) {
+    const cipherLength = initialMessage.ballot.encryptedChoice.ciphertexts.length
+    if(!(initialMessage.factorA.length == cipherLength && initialMessage.factorB.length == cipherLength &&
+         initialMessage.factorX.length == cipherLength && initialMessage.factorY.length == cipherLength && finalMessage.z.length == cipherLength)) {
+        return false;
+    }
+    const gElem = ProjectivePoint.fromHex(constants.g)
+    const hElem = ProjectivePoint.fromHex(initialMessage.secondDeviceParameterDecoded.publicKey)
+    const q = BigInt("0x" +  constants.q)
+    for (let t = 0; t < cipherLength; t++) {
+        const x = initialMessage.factorX[t].toString(16)
+        const y = initialMessage.factorY[t].toString(16)
+        const xElem = ProjectivePoint.fromHex(x.padStart(constants.pointLength, "0"))
+        const yElem = ProjectivePoint.fromHex(y.padStart(constants.pointLength, "0"))
+        const aCalc = gElem.mul(finalMessage.z[t] % q, true).add(xElem.mul(proof.e, true).negate())
+        const bCalc = hElem.mul(finalMessage.z[t] % q, true).add(yElem.mul(proof.e, true).negate())
+        if (aCalc.toHex() != initialMessage.factorA[t].toString(16).padStart(constants.pointLength, "0") || 
+            bCalc.toHex() != initialMessage.factorB[t].toString(16).padStart(constants.pointLength, "0")) {
+            return false
+        }
+    }
+    const numbersInRange = new NumbersInRangeFromSeed(toUint8Array(randomCoinSeed), q)
+    for (let t = 0; t < cipherLength; t++) {
+        //const uElem = new ProjectivePoint(initialMessage.ballot.encryptedChoice.ciphertexts[t].x, initialMessage.ballot.encryptedChoice.ciphertexts[t].y, BigInt(1))
+        const uElem = ProjectivePoint.fromHex(initialMessage.ballot.encryptedChoice.ciphertexts[t].x.toString(16).padStart(constants.pointLength, "0"))
+        const x = initialMessage.factorX[t].toString(16)
+        const xElem = ProjectivePoint.fromHex(x.padStart(constants.pointLength, "0"))
+        const r = numbersInRange.getNextNumber()
+        if (!(uElem.add(xElem).toHex() === gElem.mul(r, true).toHex())) {
+            return false
+        }
+    }
+    return true
+}
+
+function decodeMultiPlaintext(multiPlaintext: Uint8Array) {
+    console.log(multiPlaintext)
+    const k = bufToNumber(multiPlaintext.subarray(0, 2))
+    const zeroBytes = multiPlaintext.subarray(multiPlaintext.length - k, multiPlaintext.length)
+    for (let t = 0; t < k; t++) {
+        if (zeroBytes[t] != 0) {
+            throw Error("Invalid multiplaintext")
+        }
+    }
+    return multiPlaintext.subarray(2, multiPlaintext.length - k)
+
+}
+
+function decryptBallot(initialMessage: SecondDeviceInitialMsg, proof: SecretProof, randomCoinSeed: bigint): Uint8Array {
+    const cipherLength = initialMessage.ballot.encryptedChoice.ciphertexts.length
+    const gElem = ProjectivePoint.fromHex(constants.g)
+    const q = BigInt("0x" +  constants.q)
+    const numbersInRange = new NumbersInRangeFromSeed(toUint8Array(randomCoinSeed), q)
+    const hElem = ProjectivePoint.fromHex(initialMessage.secondDeviceParameterDecoded.publicKey)
+    let c: Uint8Array = new Uint8Array(0)
+    for (let t = 0; t < cipherLength; t++) {
+        const y = initialMessage.factorY[t].toString(16)
+        const yElem = ProjectivePoint.fromHex(y.padStart(constants.pointLength, "0"))
+        const u = initialMessage.ballot.encryptedChoice.ciphertexts[t].x.toString(16)
+        const uElem = ProjectivePoint.fromHex(u.padStart(constants.pointLength, "0"))
+        const r = numbersInRange.getNextNumber()
+        const ci = uElem.add(yElem).add((hElem.mul(r, true)).negate())
+        c = new Uint8Array([...c, ...toUint8Array((ci.x - BigInt(1)) / BigInt(constants.decodingK), constants.plaintextBlockSize)])
+    }
+    return decodeMultiPlaintext(c)
+}
+
 export {generateRandomProof, generateSecretProof, checkSecondDeviceParameters, computeFingerprint, computeBytesToBeSigned, put, putWithLength,
-kdfCounterMode, generateComKey, getBallotAsNormalizedBytestring, NumbersInRangeFromSeed}
+kdfCounterMode, generateComKey, getBallotAsNormalizedBytestring, NumbersInRangeFromSeed, checkSignature, checkZKP, decryptBallot}

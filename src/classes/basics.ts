@@ -1,12 +1,14 @@
 
-function createGenericClassFromJson<T>(json: any, ttype: string) {
+function createGenericClassFromJson<T>(json: any, ttype: string): T {
     switch(ttype) {
         case "string":
-            return json as string
+            return json as string as any as T
         case "document":
-            return CustomDocument.fromJson(json)
+            return CustomDocument.fromJson(json) as any as T
         case "image":
-            return ImageRef.fromJson(json)
+            return ImageRef.fromJson(json) as any as T
+        default: 
+            throw new Error("Type is not recognized" + ttype)
     }
 }
 
@@ -17,7 +19,7 @@ function throwIfNotPresent(...args: any) {
                 throwIfNotPresent(entry)
             }
         } else {
-            if (!arg) {
+            if (arg == undefined) {
                 throw new Error("Argument must not be undefined")
             }
         }
@@ -96,7 +98,7 @@ class ContentRichText extends Content {
 }
 
 class I18n<T> {
-    private static readonly validTypes = ["document", "image", "text"] // Have to be in an order such that for type i, all types j<i fail
+    private static readonly validTypes = ["document", "image", "string"] // Have to be in an order such that for type i, all types j<i fail
     public constructor(
         private readonly defaultInt: T,
         public readonly value: Map<Language, T>
@@ -105,19 +107,15 @@ class I18n<T> {
     }
     public static fromJson<T>(i18nJson: any, ttype: string): I18n<T> {
         let defaultIn = createGenericClassFromJson<T>(i18nJson.default, ttype)
-        let value = new Map<Language, T>()
-        const valueMap: Map<string, string> = i18nJson.value as Map<string, string>
-        for (var language in valueMap.keys) {
-            var lang: Language = language as Language
-            value.set(lang, createGenericClassFromJson<T>(valueMap.get(language), ttype) as T)
-        }
+        let value = new Map<Language, T>(
+            Object.entries(i18nJson.value).map(([key, val]) => [key as Language, createGenericClassFromJson<T>(val, ttype)]))
         return new I18n<T>(defaultIn as T, value)
     } 
     public static fromJsonGeneric(i18nJson: any): I18n<any> {
-        for (let type in I18n.validTypes) {
+        for (let type of I18n.validTypes) {
             try {
                 return I18n.fromJson(i18nJson, type)
-            } catch {
+            } catch(e) {
                 //try next type
             }
         }

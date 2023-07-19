@@ -43,10 +43,9 @@ class SecondDeviceFinalMessage {
         throwIfNotPresent(z)
     }
     public static fromJson(messageJson: any): SecondDeviceFinalMessage {
-        let z = new Array<bigint>()
-        for (let num of messageJson.z) {
-            z.push(BigInt("0x" + num))
-        }
+        let z = new Array<bigint>(
+            ...Object.entries(messageJson.z).map(([key, val]) => BigInt(val as string))
+        )
         return new SecondDeviceFinalMessage(z)
     }
 }
@@ -151,4 +150,4 @@ class VerifiableSecondDeviceParameters {
     }
 }
 
-export{ElectionData, LoginRequest, SecondDeviceLogin, SecondDeviceLoginResponse}
+export{ElectionData, LoginRequest, SecondDeviceLogin, SecondDeviceLoginResponse, SecondDeviceInitialMsg, SecondDeviceFinalMessage}
