@@ -31,7 +31,7 @@ function numberToBuf(input: number) {
 function bufToNumber(input: Uint8Array): number {
     let output = 0
     for (let t = 0; t < input.length; t++) {
-        output = output + Math.pow(256, t)
+        output = output + input[t] * Math.pow(256, input.length - t - 1)
     }
     return output
 }
@@ -82,7 +82,7 @@ function toUint8Array(input: string|Uint8Array|number|bigint, length?: number): 
     } else if (length < bytesOfInput.length) {
         return bytesOfInput.subarray(0, length)
     } else {
-        return new Uint8Array([... new Uint8Array(length - bytesOfInput.length), ...bytesOfInput])
+        return new Uint8Array([...new Uint8Array(length - bytesOfInput.length), ...bytesOfInput])
     }
 }
 

@@ -124,7 +124,6 @@ class CandidateList {
             candidates.push(CandidateSpec.fromJson(cand))
         }
         for (let header of listJson.columnHeaders) {
-            console.log(header)
             columnHeaders.push(I18n.fromJsonGeneric(header))
         }
 
