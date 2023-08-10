@@ -1,10 +1,10 @@
 import { ProjectivePoint } from "@noble/secp256k1"
-import { SecretProof } from "../classes/ballot"
+import { Ballot, SecretProof } from "../classes/ballot"
 import * as constants from "../constants"
 import { bufToBn, bufToNumber, hexToBuf, toUint8Array} from "../utils";
 import * as crypto from "crypto"
 import { SecondDeviceFinalMessage, SecondDeviceInitialMsg, SecondDeviceLoginResponse } from "../classes/communication";
-import { computeFingerprint } from "./signature"
+import { computeFingerprint, getBallotAsNormalizedBytestring } from "./signature"
 import {kdfCounterMode, NumbersInRangeFromSeed, decodePoint, decodeMultiPlaintext} from "./basics"
 
 /**
@@ -23,6 +23,29 @@ function generateComKey(ballotNorm: Uint8Array, comSeed: string) {
     return kdfCounterMode(32, key_derivation_key, '', '')
 }
 
+async function aesDecrypt(c: string, comKey: Uint8Array): Promise<Uint8Array> {
+    const decode = Buffer.from(c, 'base64')
+    let iv = decode.subarray(0, 12)
+    let tag = decode.subarray(12, 28)
+    let data = decode.subarray(28,60)
+    let ciphertext = new Uint8Array([...data, ...tag])
+    let aesKey = await crypto.subtle.importKey("raw", comKey, "AES-GCM", false, ["decrypt"])
+    const decrypt = await crypto.subtle.decrypt({ name: "AES-GCM", iv }, aesKey, ciphertext)
+    return new Uint8Array(decrypt)
+}
+
+/**
+ * Decrypting the QR Code
+ * @param c param c of QR Code
+ * @param initialMessage InitialMessage From SecondDeviceLoginResponse
+ * @returns the decrypted QR Code
+ */
+async function decrytQRCode(c: string, initialMessage: SecondDeviceInitialMsg): Promise<Uint8Array> {
+    const ballotNorm = getBallotAsNormalizedBytestring(initialMessage.ballot)
+    const comKey = generateComKey(ballotNorm, initialMessage.comSeed)
+    return aesDecrypt(c, comKey)
+}
+
 /**
  * 
  * @param initialMessage Checks the ZKP of the final message sent by the election server
@@ -31,7 +54,7 @@ function generateComKey(ballotNorm: Uint8Array, comSeed: string) {
  * @param randomCoinSeed 
  * @returns 
  */
-function checkZKP(initialMessage: SecondDeviceInitialMsg, finalMessage: SecondDeviceFinalMessage, proof: SecretProof, randomCoinSeed: bigint) {
+function checkZKP(initialMessage: SecondDeviceInitialMsg, finalMessage: SecondDeviceFinalMessage, proof: SecretProof, randomCoinSeed: Uint8Array) {
     const cipherLength = initialMessage.ballot.encryptedChoice.ciphertexts.length
     if(!(initialMessage.factorA.length == cipherLength && initialMessage.factorB.length == cipherLength &&
          initialMessage.factorX.length == cipherLength && initialMessage.factorY.length == cipherLength && finalMessage.z.length == cipherLength)) {
@@ -72,10 +95,10 @@ function checkZKP(initialMessage: SecondDeviceInitialMsg, finalMessage: SecondDe
  * @param randomCoinSeed 
  * @returns 
  */
-function decryptBallot(initialMessage: SecondDeviceInitialMsg, randomCoinSeed: bigint): Uint8Array {
+function decryptBallot(initialMessage: SecondDeviceInitialMsg, randomCoinSeed: Uint8Array): Uint8Array {
     const cipherLength = initialMessage.ballot.encryptedChoice.ciphertexts.length
     const q = BigInt("0x" +  constants.q)
-    const numbersInRange = new NumbersInRangeFromSeed(toUint8Array(randomCoinSeed), q)
+    const numbersInRange = new NumbersInRangeFromSeed(randomCoinSeed, q)
     const hElem = ProjectivePoint.fromHex(initialMessage.secondDeviceParameterDecoded.publicKey)
     let c: Uint8Array = new Uint8Array(0)
     for (let t = 0; t < cipherLength; t++) {
@@ -107,4 +130,4 @@ function generateReceiptText(loginResponse: SecondDeviceLoginResponse) {
     return string
 }
 
-export {checkSecondDeviceParameters, generateComKey, checkZKP, decryptBallot, generateReceiptText}
+export {checkSecondDeviceParameters, generateComKey, checkZKP, decryptBallot, generateReceiptText, aesDecrypt, decrytQRCode}

@@ -5,4 +5,5 @@ const decodingK = 80
 const fingerprint = "b7e8e76c369d6a9ca268e40cde8347ac443040d6c4a1df3035744ace05b94e00849abf083ae5baa8fee462a723823054858387ec35462a49f93c2ea40b2fc876"
 const pointLength = 66
 const plaintextBlockSize = 31
-export{k, g, q, fingerprint, pointLength, plaintextBlockSize, decodingK}
+const baseURL = ""
+export{k, g, q, fingerprint, pointLength, plaintextBlockSize, decodingK, baseURL}

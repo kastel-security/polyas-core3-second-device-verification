@@ -72,6 +72,7 @@ async function checkSignature(response: SecondDeviceLoginResponse): Promise<bool
     let publicKeyHex: string = response.initialMessageDecoded.secondDeviceParameterDecoded.verificationKey
     let publicKeyDecoded = await crypto.subtle.importKey("spki", hexToBuf(publicKeyHex, false), {name: "RSASSA-PKCS1-v1_5", hash: "SHA-256"}, true, ["verify"])
     let message = hexToBuf(computeFingerprint(response)) 
+    console.log((publicKeyDecoded.algorithm as any).publicExponent)
     let signature = hexToBuf(response.initialMessageDecoded.signatureHex, false)
     return crypto.subtle.verify("RSASSA-PKCS1-v1_5", publicKeyDecoded, signature, message);
 }

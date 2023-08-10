@@ -12,7 +12,7 @@ import { bufToBn } from "../utils"
 function getRandomInRange(limit: bigint) {
     let random: bigint = limit
     while(random >= limit) {
-        random = bufToBn(randomBytes(limit.toString(8).length))
+        random = bufToBn(randomBytes(Math.ceil(limit.toString(16).length / 2)))
     }
     return random
 }

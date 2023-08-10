@@ -53,7 +53,7 @@ class SecondDeviceFinalMessage {
 class SecondDeviceInitialMsg {
     public constructor(
         public readonly ballot: Ballot,
-        public readonly comSeed: Uint8Array,
+        public readonly comSeed: string,
         public readonly factorA: Array<bigint>,
         public readonly factorB: Array<bigint>,
         public readonly factorX: Array<bigint>,
@@ -66,11 +66,7 @@ class SecondDeviceInitialMsg {
     }
     public static fromJson(msgJson: any): SecondDeviceInitialMsg {
         let ballot = Ballot.fromJson(msgJson.ballot)
-        let comSeedstring = msgJson.comSeed as string
-        let comSeed = new Uint8Array(comSeedstring.length / 2)
-        for (let i = 1; i < comSeed.length; i++) {
-            comSeed[i] = parseInt(comSeedstring[2*i] + comSeed[2*i + 1], 16)
-        }
+        let comSeed = msgJson.comSeed as string
         let factorA = new Array<bigint>()
         let factorB = new Array<bigint>()
         let factorX = new Array<bigint>()
