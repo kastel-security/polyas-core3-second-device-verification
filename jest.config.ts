@@ -1,6 +1,6 @@
 /** @type {import('ts-jest').JestConfigWithTsJest} */
 
-module.exports = {
+export default {
     preset: 'ts-jest/presets/js-with-ts',
     testEnvironment: 'node',
     transformIgnorePatterns: [],
