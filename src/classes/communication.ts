@@ -42,7 +42,8 @@ class SecondDeviceFinalMessage {
     ) {
         throwIfNotPresent(z)
     }
-    public static fromJson(messageJson: any): SecondDeviceFinalMessage {
+    public static fromJson(messageString: any): SecondDeviceFinalMessage {
+        const messageJson = JSON.parse(messageString)
         let z = new Array<bigint>(
             ...Object.entries(messageJson.z).map(([key, val]) => BigInt(val as string))
         )

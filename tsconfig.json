@@ -9,6 +9,7 @@
       "allowUnusedLabels": true,
       "allowJs": true,
       "esModuleInterop": true,
-      "moduleResolution": "Node"
+      "moduleResolution": "Node",
+      "resolveJsonModule": true
     },
   }
