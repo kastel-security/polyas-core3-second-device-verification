@@ -1,8 +1,8 @@
 import { ProjectivePoint } from "@noble/secp256k1"
 import { SecretProof } from "../classes/ballot"
-import * as constants from "../constants"
+import * as constants from "../main/constants"
 import randomBytes from 'randombytes';
-import { bufToBn } from "../utils"
+import { bufToBn } from "../main/utils"
 
 /**
  * 

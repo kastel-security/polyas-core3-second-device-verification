@@ -1,5 +1,5 @@
 import { Ballot } from "../classes/ballot"
-import { hexToBuf, toUint8Array} from "../utils"
+import { hexToBuf, toUint8Array} from "../main/utils"
 import * as crypto from "crypto"
 import { SecondDeviceLoginResponse } from "../classes/communication"
 

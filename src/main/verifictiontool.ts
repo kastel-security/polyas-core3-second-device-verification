@@ -1,5 +1,5 @@
 import axios from "axios"
-import { baseURL } from "../constants"
+import { baseURL } from "./constants"
 import { ElectionData, SecondDeviceFinalMessage, SecondDeviceLoginResponse } from "../classes/communication"
 import { Proof, SecretProof } from "../classes/ballot"
 import { generateRandomProof, generateSecretProof } from "../algorithms/proof"

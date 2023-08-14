@@ -1,6 +1,6 @@
 import { ProjectivePoint } from "@noble/secp256k1"
-import * as constants from "../constants"
-import { bufToBn, bufToNumber, hexToBuf, toUint8Array} from "../utils";
+import * as constants from "../main/constants"
+import { bufToBn, bufToNumber, hexToBuf, toUint8Array} from "../main/utils";
 import * as crypto from "crypto"
 
 /**
