@@ -64,7 +64,6 @@ class Verificatiotool {
                 return this.resolveFail(ErrorType.FORMAT, error.message)
             }
         }).catch((error: any) => {
-            console.log(error)
             return Promise.reject()
         })
     }
@@ -119,6 +118,7 @@ class Verificatiotool {
             return Promise.resolve(new ResponseBeanOk(this._secondDeviceLoginResponse))
         })
         .catch((error: any) => {
+            console.log(error)
             return Promise.reject()
         })
     }
@@ -157,7 +157,7 @@ class Verificatiotool {
             return Promise.resolve(new ResponseBeanOk(this._secondDeviceFinalMessage))
         })
         .catch((error: any) => {
-            return Promise.reject()
+            return Promise.reject(new ResponseBeanError(ErrorType.BALLOT_ACK))
         })
     }
 
@@ -168,7 +168,6 @@ class Verificatiotool {
      */
     public decodeBallot(): ResponseBean<Uint8Array> {
         if (!this._secondDeviceLoginResponse || !this._randomCoinSeed) {
-            console.log(this._secondDeviceLoginResponse, this._randomCoinSeed)
             return new ResponseBeanError(ErrorType.INVALID_OPERATION)
         }
         this._decodedBallot = decryptBallot(this._secondDeviceLoginResponse.initialMessageDecoded, this._randomCoinSeed)
@@ -184,19 +183,14 @@ class Verificatiotool {
      * @returns A ResponseBean, either containing the decoded Ballot or information about an error if one of the steps failed
      */
     public async fullLogin(voterId: string, nonce: string, password: string, c: string): Promise<ResponseBean<Uint8Array>> {
-        await this.login(voterId, nonce, password, c)
-        .then((loginResult) => {
-            if (loginResult.status == ResponseBean.errorStatus) {
-                return Promise.resolve(loginResult as ResponseBeanError)
-            }
-        })
-        .catch((error: any) => {return Promise.reject()})
-        await this.finalMessage().then((zkpResult) => {
-            if (zkpResult.status == ResponseBean.errorStatus) {
-                return Promise.resolve(zkpResult as ResponseBeanError)
-            }
-        })
-        .catch((error: any) => {return Promise.reject()})
+        const loginResponse = await this.login(voterId, nonce, password, c)
+        if (loginResponse.status == ResponseBean.errorStatus) {
+            return Promise.resolve(loginResponse as ResponseBeanError)
+        }
+        const finalMessage = await this.finalMessage()
+        if (finalMessage.status == ResponseBean.errorStatus) {
+            return Promise.resolve(finalMessage as ResponseBeanError)
+        }
 
         return Promise.resolve(this.decodeBallot())
     }

@@ -1,0 +1,238 @@
+import data from "./data.json"
+import axios from "axios"
+import * as proof from "../src/algorithms/proof"
+import * as decrypt from "../src/algorithms/decryption"
+import * as sign from "../src/algorithms/signature"
+import { hexToBuf } from "../src/utils"
+import {ResponseBeanError, ResponseBeanOk, Verificatiotool} from "../src/main/verifictiontool"
+import { ElectionData, SecondDeviceFinalMessage, SecondDeviceLoginResponse } from "../src/classes/communication"
+import { ErrorType } from "../src/main/error"
+
+async function validAxios(request: any) {
+    if(request.url == "/electionData") {
+        if (request.data != undefined) {
+            return Promise.reject("Invalid request value")
+        }
+        return Promise.resolve(
+            {
+                status: "OK",
+                data: data.electionData
+            })
+    } else if (request.url == "/login") {
+        if (JSON.stringify(request.data) != JSON.stringify(data.loginRequest)) {
+            return Promise.reject("Invalid request value")
+        }
+        return Promise.resolve(
+            {
+                status: "OK",
+                data: {
+                    status: "OK",
+                    value: data.loginResponse
+                }
+            })
+    } else if (request.url == "/challenge") {
+        if (JSON.stringify(request.data) != JSON.stringify(data.challenge)) {
+            return Promise.reject("Invalid request value")
+        }
+        return Promise.resolve(
+            {
+                status: "OK",
+                data: {
+                    status: "OK",
+                    value: data.finalMessage
+                }
+            })
+    }
+    else {
+        console.log(request)
+        return Promise.reject("Invalid url")
+    }
+}
+
+const mockedAxios = jest.spyOn(axios, 'request')
+const mockedProof = jest.spyOn(proof, 'generateRandomProof')
+const mockedDecrypt = jest.spyOn(decrypt, 'decrytQRCode')
+const randomCoinSeed = "1e89b5f95deae82f6f823b52709117405f057783eda018d72cbd83141d394fbd"
+const e = BigInt("108039209026641834721998202775536164454916176078442584841940316235417705823230")
+const r = BigInt("44267717001895006656767798790813376597351395807170189462353830054915294464906")
+const secProof = proof.generateSecretProof(e, r)
+
+beforeEach(() => {
+    mockedAxios.mockImplementation(validAxios)
+    mockedProof.mockReturnValue(secProof)
+    mockedDecrypt.mockResolvedValue(hexToBuf(randomCoinSeed))
+})
+
+test("test verificationtool valid", async () => {
+    const verificationtool = new Verificatiotool()
+    const electionData = await verificationtool.loadElectionData()
+    expect(electionData.status).toBe("OK")
+    expect((electionData as ResponseBeanOk<ElectionData>).value).toStrictEqual(ElectionData.fromJson(data.electionData))
+
+    const login = await verificationtool.login(data.vid, data.nonce, data.password, data.c)
+    expect(login.status).toBe("OK")
+    expect((login as ResponseBeanOk<SecondDeviceLoginResponse>).value).toStrictEqual(SecondDeviceLoginResponse.fromJson(data.loginResponse))
+
+    const finalMessage = await verificationtool.finalMessage()
+    expect(finalMessage.status).toBe("OK")
+    expect((finalMessage as ResponseBeanOk<SecondDeviceFinalMessage>).value).toStrictEqual(SecondDeviceFinalMessage.fromJson(data.finalMessage))
+
+    const decodedBallot = verificationtool.decodeBallot()
+    expect(decodedBallot.status).toBe("OK")
+    expect((decodedBallot as ResponseBeanOk<Uint8Array>).value).toStrictEqual(new Uint8Array([0, 0, 0, 1]))
+})
+
+test("test verificationtool fullLogin valid", async () => {
+    const verificationtool = new Verificatiotool()
+    const decodedBallot = await verificationtool.fullLogin(data.vid, data.nonce, data.password, data.c)
+    expect(decodedBallot.status).toBe("OK")
+    expect((decodedBallot as ResponseBeanOk<Uint8Array>).value).toStrictEqual(new Uint8Array([0, 0, 0, 1]))
+})
+
+test("test invalid format", async () => {
+    const invalidResponse = {
+        status: "OK",
+        data: {
+            status: "OK",
+            value: {a:1}
+        }
+    }
+    const invalidResponseData = {
+        status: "OK",
+        data: {a:1}
+    }
+    const verificationtool = new Verificatiotool()
+    mockedAxios.mockResolvedValueOnce(invalidResponseData)
+    const electionData = await verificationtool.loadElectionData()
+    expect(electionData.status).toBe("ERROR")
+    expect((electionData as ResponseBeanError).error).toBe(ErrorType.FORMAT)
+
+    mockedAxios.mockResolvedValueOnce(invalidResponse)
+    const login = await verificationtool.login(data.vid, data.nonce, data.password, data.c)
+    expect(login.status).toBe("ERROR")
+    expect((login as ResponseBeanError).error).toBe(ErrorType.FORMAT)
+
+    await verificationtool.login(data.vid, data.nonce, data.password, data.c)
+    mockedAxios.mockResolvedValueOnce(invalidResponse)
+    const final = await verificationtool.finalMessage()
+    expect(final.status).toBe("ERROR")
+    expect((final as ResponseBeanError).error).toBe(ErrorType.FORMAT)
+})
+
+test("test backend error", async () => {
+    const invalidResponse = {
+        status: "OK",
+        data: {
+            status: "ERROR",
+            value: {a:1}
+        }
+    }
+    const verificationtool = new Verificatiotool()
+
+    mockedAxios.mockResolvedValueOnce(invalidResponse)
+    const login = await verificationtool.login(data.vid, data.nonce, data.password, data.c)
+    expect(login.status).toBe("ERROR")
+    expect((login as ResponseBeanError).error).toBe(ErrorType.EXTERN)
+
+    await verificationtool.login(data.vid, data.nonce, data.password, data.c)
+    mockedAxios.mockResolvedValueOnce(invalidResponse)
+    const final = await verificationtool.finalMessage()
+    expect(final.status).toBe("ERROR")
+    expect((final as ResponseBeanError).error).toBe(ErrorType.EXTERN)
+})
+
+test("invalid sdpp", async () => {
+    const mockedSDPP = jest.spyOn(decrypt, "checkSecondDeviceParameters")
+    mockedSDPP.mockReturnValueOnce(false)
+    const verificationtool = new Verificatiotool()
+    const login = await verificationtool.login(data.vid, data.nonce, data.password, data.c)
+    expect(login.status).toBe("ERROR")
+    expect((login as ResponseBeanError).error).toBe(ErrorType.SDPP)
+    expect((login as ResponseBeanError).message).not.toBeDefined()
+})
+
+test("test signature error", async () => {
+    const mockedSignature = jest.spyOn(sign, "checkSignature")
+    mockedSignature.mockRejectedValueOnce(new Error("test"))
+    const verificationtool = new Verificatiotool()
+    const login = await verificationtool.login(data.vid, data.nonce, data.password, data.c)
+    expect(login.status).toBe("ERROR")
+    expect((login as ResponseBeanError).error).toBe(ErrorType.BALLOT_ACK_FAIL)
+    expect((login as ResponseBeanError).message).toBe("test")
+})
+
+test("test signature fail", async () => {
+    const mockedSignature = jest.spyOn(sign, "checkSignature")
+    mockedSignature.mockResolvedValueOnce(false)
+    const verificationtool = new Verificatiotool()
+    const login = await verificationtool.login(data.vid, data.nonce, data.password, data.c)
+    expect(login.status).toBe("ERROR")
+    expect((login as ResponseBeanError).error).toBe(ErrorType.BALLOT_ACK)
+    expect((login as ResponseBeanError).message).not.toBeDefined()
+})
+
+test("test qrDecrypt error", async () => {
+    const mockedDecrypt = jest.spyOn(decrypt, "decrytQRCode")
+    mockedDecrypt.mockRejectedValueOnce(new Error("test"))
+    const verificationtool = new Verificatiotool()
+    const login = await verificationtool.login(data.vid, data.nonce, data.password, data.c)
+    expect(login.status).toBe("ERROR")
+    expect((login as ResponseBeanError).error).toBe(ErrorType.DECRYPT)
+    expect((login as ResponseBeanError).message).toBe("test")
+})
+
+test("test checkZKP fail", async() => {
+    const mockedZKP = jest.spyOn(decrypt, "checkZKP")
+    mockedZKP.mockReturnValueOnce(false)
+    const verificationtool = new Verificatiotool()
+    await verificationtool.login(data.vid, data.nonce, data.password, data.c)
+    const final = await verificationtool.finalMessage()
+    expect(final.status).toBe("ERROR")
+    expect((final as ResponseBeanError).error).toBe(ErrorType.ZKP_INV)
+    expect((final as ResponseBeanError).message).not.toBeDefined()
+})
+
+test("test invalid order", async() => {
+    const verificationtool = new Verificatiotool()
+    const final = await verificationtool.finalMessage()
+    expect(final.status).toBe("ERROR")
+    expect((final as ResponseBeanError).error).toBe(ErrorType.INVALID_OPERATION)
+    expect((final as ResponseBeanError).message).not.toBeDefined()
+
+    const decode = verificationtool.decodeBallot()
+    expect(decode.status).toBe("ERROR")
+    expect((decode as ResponseBeanError).error).toBe(ErrorType.INVALID_OPERATION)
+    expect((decode as ResponseBeanError).message).not.toBeDefined()
+})
+
+test("test error in fullLogin in login", async () => {
+    const mockedSDPP = jest.spyOn(decrypt, "checkSecondDeviceParameters")
+    mockedSDPP.mockReturnValueOnce(false)
+    const verificationtool = new Verificatiotool()
+    const login = await verificationtool.fullLogin(data.vid, data.nonce, data.password, data.c)
+    expect(login.status).toBe("ERROR")
+    expect((login as ResponseBeanError).error).toBe(ErrorType.SDPP)
+    expect((login as ResponseBeanError).message).not.toBeDefined()
+})
+
+test("test error in fullLogin in finalMessage", async () => {
+    const mockedZKP = jest.spyOn(decrypt, "checkZKP")
+    mockedZKP.mockReturnValueOnce(false)
+    const verificationtool = new Verificatiotool()
+    const final = await verificationtool.fullLogin(data.vid, data.nonce, data.password, data.c)
+    expect(final.status).toBe("ERROR")
+    expect((final as ResponseBeanError).error).toBe(ErrorType.ZKP_INV)
+    expect((final as ResponseBeanError).message).not.toBeDefined()
+})
+
+test("test connection error in fullLogin", async() => {
+    mockedAxios.mockRejectedValueOnce("No comment")
+    const verificationtool = new Verificatiotool()
+    verificationtool.fullLogin(data.vid, data.nonce, data.password, data.c)
+    .then(() => {
+        expect(true).toBe(false) // this should not happen
+    })
+    .catch((error: any) => {
+        expect(error).toBe(undefined) 
+    })
+})
