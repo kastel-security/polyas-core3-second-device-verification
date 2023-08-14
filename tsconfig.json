@@ -1,19 +1,17 @@
 {
-    "include": ["src/*", "test/*"],
-    "compilerOptions": {
-      "allowUnusedLabels": true,
-      "module": "ESNext",
-      "target": "ESNext",
-      "lib": ["ESNext", "DOM"],
-      "types": ["jest"],
-      "strictNullChecks": true,
-      //Only for development
-      "allowJs": true,
-      "esModuleInterop": true,
-      "moduleResolution": "Node",
-      "resolveJsonModule": true,
-      "jsx": "preserve",
-      "jsxImportSource": "vue",
-      "verbatimModuleSyntax": true
-    },
+  "include": ["env.d.ts", "src/**/*", "src/**/*.vue"],
+  "exclude": ["src/**/__tests__/*"],
+  "compilerOptions": {
+    "moduleResolution": "Node",
+    "resolveJsonModule": true,
+    "types": ["jest"],
+    "target": "ES2020",
+    "lib": ["ES2020", "DOM"],
+    "strictNullChecks": true,
+    //Only for development
+    "allowUnusedLabels": true,
+    "allowJs": true,
+    "esModuleInterop": true,
+    "composite": true,
   }
+}
