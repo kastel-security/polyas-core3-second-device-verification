@@ -1,4 +1,4 @@
-import {Content, I18n, ImageRef, Language, throwIfNotPresent} from "./basics"
+import {Content, I18n, ImageRef, type Language, throwIfNotPresent} from "./basics"
 import {Ballot, Core3Ballot} from "./ballot"
 
 class ElectionData {

@@ -1,4 +1,4 @@
-import axios, { AxiosInstance } from "axios"
+import axios from "axios"
 import { baseURL } from "../constants"
 import { ElectionData, SecondDeviceFinalMessage, SecondDeviceLoginResponse } from "../classes/communication"
 import { Proof, SecretProof } from "../classes/ballot"
