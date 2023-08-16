@@ -80,11 +80,11 @@ abstract class Content {
 }
 
 class ContentText extends Content {
-    public constructor(value: I18n<String>) {
+    public constructor(value: I18n<string>) {
         super(value, "TEXT")
     }
     public static fromJson(contentJson: any) {
-        return new ContentText(I18n.fromJson<String>(contentJson.value, "string"))
+        return new ContentText(I18n.fromJson<string>(contentJson.value, "string"))
     }
 }
 
@@ -106,6 +106,9 @@ class I18n<T> {
         throwIfNotPresent(defaultInt, value)
     }
     public static fromJson<T>(i18nJson: any, ttype: string): I18n<T> {
+        if (ttype == "image") {
+            console.log(i18nJson)
+        }
         let defaultIn = createGenericClassFromJson<T>(i18nJson.default, ttype)
         let value = new Map<Language, T>(
             Object.entries(i18nJson.value).map(([key, val]) => [key as Language, createGenericClassFromJson<T>(val, ttype)]))
@@ -127,4 +130,4 @@ class I18n<T> {
 }
 
 
-export {ImageRef, Content, I18n, Language, CustomDocument, throwIfNotPresent}
+export {ImageRef, Content, ContentText, ContentRichText, I18n, Language, CustomDocument, throwIfNotPresent}

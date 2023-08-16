@@ -1,0 +1,79 @@
+<script setup lang="ts">
+import { Ballot, Core3StandardBallot } from '../classes/ballot';
+import { Content, ImageRef, Language, I18n} from '../classes/basics';
+import { extractText, extractTextFromJson, extractImage } from './basic';
+import BallotView from './BallotView.vue';
+
+import text from "./text.json"
+import ContentView from './ContentView.vue';
+import { SecondDeviceLoginResponse } from '../classes/communication';
+import { onMounted, ref } from 'vue';
+import { LanguageServiceMode, PropertySignature } from 'typescript';
+
+const props = defineProps<{
+    loginResponse: SecondDeviceLoginResponse
+    result: Uint8Array,
+    language: Language|undefined
+}>()
+const ballotResult = ref(new Map<string, Uint8Array>())
+const ballotSheets = ref<Array<Core3StandardBallot>>()
+onMounted(() => {
+    ballotSheets.value = new Array()
+    const ballotSheetLabels = props.loginResponse.publicLabel.split(":")
+    for (let ballotSheet of props.loginResponse.initialMessageDecoded.secondDeviceParameterDecoded.ballots) {
+        const ballotSheetStandard = ballotSheet as Core3StandardBallot
+        if (ballotSheetLabels.includes(ballotSheetStandard.id)) {
+            ballotSheets.value.push(ballotSheetStandard)
+        }
+    }
+    let start = 0
+    for (let ballotSheet of ballotSheets.value) {
+        let bytesOfBallotSheet = 1
+        for (let list of ballotSheet.lists) {
+            bytesOfBallotSheet += list.candidates.length + 1
+        }
+        if (start + bytesOfBallotSheet < props.result.length) {
+            throw new Error("Result format does not match ")
+        }
+        ballotResult.value.set(ballotSheet.id, props.result.subarray(start, start + bytesOfBallotSheet))
+        start = start + bytesOfBallotSheet
+    }
+})
+
+function getImgUrl(img: I18n<ImageRef>): string {
+    return extractImage(img, props.language).url as string
+  }
+</script>
+
+<template>
+    <div class="verifiedText">
+        <h1>{{ extractTextFromJson(text.verified.verified, props.language) }}</h1>
+        <text>{{ extractTextFromJson(text.verified.explanation, props.language) }}</text>
+    </div>
+    <br>
+    <div class="id">
+        <text>{{ extractTextFromJson(text.verified.electionId, language) + props.loginResponse.electionId }}</text>
+        <br>
+        <text>{{ extractTextFromJson(text.verified.voterId, language) + props.loginResponse.ballotVoterId }}</text>
+        <br>
+        <text>{{ extractTextFromJson(text.verified.label, language) + props.loginResponse.publicLabel }}</text>
+    </div>
+    <br>
+    <div class="logo" v.if="loginResponse.logo">
+        <img :src="getImgUrl(loginResponse.logo!)" ref="test"/>
+    </div>
+    <div class="messages">
+        <text v-for="key in loginResponse.messages.keys()">key: {{ extractText(loginResponse.messages.get(key), language) }}</text>
+    </div>
+    <br>
+    <div class="contentAbove" v-if="loginResponse.contentAbove">
+        <ContentView :content="loginResponse.contentAbove" :language="language"/>
+    </div>
+    <div class="ballot">
+        <BallotView
+        v-for="ballot in ballotSheets"
+        :ballot="ballot"
+        :result="ballotResult.get(ballot.id)!"
+        :language="language"/>
+    </div>
+</template>

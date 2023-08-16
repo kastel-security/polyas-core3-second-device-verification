@@ -1,0 +1,62 @@
+<script setup lang="ts">
+import { onMounted, ref, vModelCheckbox } from 'vue';
+import { CandidateList, Core3StandardBallot } from '../classes/ballot';
+import { Language } from '../classes/basics';
+import { extractText, extractTextFromJson } from './basic';
+import CandidateListView from './CandidateListView.vue'
+import ContentView from './ContentView.vue';
+import text from "./text.json"
+
+const listResults = ref(new Map<String, Uint8Array>())
+
+const props = defineProps<{
+    ballot: Core3StandardBallot,
+    result: Uint8Array,
+    language: Language|undefined
+}>()
+
+onMounted(() => {
+    console.log(props.result)
+    let start = 1
+    for (let list of props.ballot.lists) {
+        const listBytes = 1 + list.candidates.length
+        console.log(list.id, listBytes)
+        if (start + listBytes > props.result.length) {
+            throw new Error("result format does not match ballot formats")
+        }
+        listResults.value.set(list.id, props.result.subarray(start, start + listBytes))
+        start = start + listBytes
+    }
+    console.log("!!", listResults.value.get("A1"))
+})
+</script>
+
+<template>
+    <div class="title">
+        <h2>{{ extractText(props.ballot.title, props.language) }}</h2>
+    </div>
+    <div class="ext" v-if="ballot.externalIdentification">
+        <h3>{{ props.ballot.externalIdentification}}</h3>
+    </div>
+    <div class="contentAbove" v-if="ballot.contentAbove">
+        <ContentView :content="ballot.contentAbove" :language="language"/>
+    </div>
+    <div class="Questions">
+        <CandidateListView
+        v-for="candidateList in ballot.lists"
+        :candidateList="candidateList"
+        :result="listResults.get(candidateList.id)!"
+        :language="language"/>
+    </div>
+    <div class="invalid" v-if="ballot.showInvalidOption">
+        <label for="check">{{ extractTextFromJson(text.ballot.invalidOption, language) }}</label>
+        <input type="checkbox" name="check" :checked="result[0]==1"/>
+    </div>
+    <div class="abstain" v-if="ballot.showAbstainOption">
+        <label for="check">{{ extractTextFromJson(text.ballot.abstainOption, language) }}</label>
+        <input type="checkbox" name="check" :checked="false"/>
+    </div>
+    <div class="contentBelow" v-if="ballot.contentBelow">
+        <ContentView :content="ballot.contentBelow" :language="language"/>
+    </div>
+</template>

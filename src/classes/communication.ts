@@ -122,10 +122,12 @@ class SecondDeviceLoginResponse {
         let title = I18n.fromJson<string>(respJson.title, "string")
         let contentAbove = respJson.contentAbove ? Content.generateContentFromJson(respJson.contentAbove) : undefined
         let logo = respJson.logo ? I18n.fromJson<ImageRef>(respJson.logo, "image"): undefined
+        console.log("Failed after here")
         respJson.languages.forEach((element: any) => {languages.push(element as Language)}); 
         let messages: Map<string, I18n<any>> = new Map(
             Object.entries(respJson.messages).map(([key, val]) => [key as string, I18n.fromJsonGeneric(val)])
           )
+        console.log("Works so far")
         return new SecondDeviceLoginResponse(respJson.allowInvalid as boolean, respJson.ballotVoterId as string,
             respJson.electionId as string, respJson.initialMessage as string, languages, messages,
             respJson.publicLabel as string, title, respJson.token as string, contentAbove, logo)

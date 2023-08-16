@@ -1,0 +1,90 @@
+{
+    "header": {
+        "title": {
+            "default": "Polyas second device verification tool",
+            "value": {
+                "DE": "Polyas Second Device Verifizierungstool"
+            }
+        },
+        "election": {
+            "default": "Election: ",
+            "value": {
+                "DE": "Wahltitel: "
+            }
+        },
+        "language": {
+            "default": "Select language: ",
+            "value": {
+                "DE": "Sprachauswahl: "
+            } 
+        }
+    },
+    "login": {
+        "loginReq": {
+            "default": "Enter one time code",
+            "value": {
+                "DE": "Einmalpassword eingeben"
+            }
+        },
+        "loginButton": {
+            "default": "login",
+            "value": {}
+        }   
+    },
+    "verified": {
+        "verified": {
+            "default": "Your ballot was successfully verified",
+            "value": {
+                "DE": "Ihr Stimmzettel wurde erfolgreich verifiziert"
+            }
+        },
+        "explanation": {
+            "default": "Please note that the following is an image of your ballot in the ballot box. You can no longer change your submitted ballot. You can edit the image to hide your vote, but doing so will not impact your submitted ballot.",
+            "value": {
+                "DE": "Bitte beachten Sie: Im folgenden sehen sie eine Abbildung ihres Stimmzettels in der Wahlurne. Sie können ihren Stimmzettel nicht mehr ändern. Allerdings können Sie das folgende Bild ändern, um Ihre Stimmabgabe zu verbergen. Dies wird aber Ihren abgegebenen Stimmzettel in der Wahlurne nicht beeinflussen. "
+            }
+        },
+        "verifiedFor": {
+            "default": "Verified for: ",
+            "value": {}
+        },
+        "electionId": {
+            "default": "Election: ",
+            "value": {}
+        },
+        "voterId": {
+            "default": "Voter: ",
+            "value": {}
+        },
+        "label": {
+            "default": "Ballot sheets: ",
+            "value": {}
+        }
+
+    },
+    "ballot": {
+        "invalidOption": {
+            "default": "Your ballot ist marked as invalid",
+            "value": {
+                "DE": "Stimmzettel als ungültig markieren"
+            } 
+        },
+        "abstainOption": {
+            "default": "Your ballot is explicitly marked as abstention",
+            "value": {
+                "DE": "Stimmzettel als Enthaltung markiert"
+            } 
+        },
+        "listVote": {
+            "default": "Vote for list",
+            "value": {}
+        },
+        "defaultColumn": {
+            "contentType": "TEXT",
+            "value": {
+                "default": "unknown",
+                "value": {}
+            }
+        }
+    }
+}

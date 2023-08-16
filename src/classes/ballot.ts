@@ -13,7 +13,7 @@ class Ciphertext {
 class MultiCiphertext {
     public constructor(
         public readonly ciphertexts: Array<Ciphertext>,
-        public readonly auxData?: Map<String, String>) {
+        public readonly auxData?: Map<string, string>) {
             throwIfNotPresent(ciphertexts)
         }
     public static fromJson(cipherJson: any) {
@@ -72,30 +72,30 @@ abstract class Core3Ballot {
 class Core3StandardBallot extends Core3Ballot{
     public readonly type = "STANDARD_BALLOT"
     public constructor(
-    public readonly id: String,
+    public readonly id: string,
     public readonly lists: Array<CandidateList>,
     public readonly showAbstainOption: boolean,
     public readonly showInvalidOption: boolean,
-    public readonly title: I18n<String>,
-    public readonly colorSchema?: String,
+    public readonly title: I18n<string>,
+    public readonly colorSchema?: string,
     public readonly contentAbove?: Content,
     public readonly contentBelow?: Content,
-    public readonly externalIdentification?: String) {
+    public readonly externalIdentification?: string) {
         super()
         throwIfNotPresent(id, lists, showAbstainOption, showInvalidOption, title)
     }
 
     public static fromJson(ballotJson: any) {
         let lists = new Array<CandidateList>()
-        let title = I18n.fromJson<String>(ballotJson.title, "string")
+        let title = I18n.fromJson<string>(ballotJson.title, "string")
         let contentAbove = ballotJson.contentAbove != undefined ? Content.generateContentFromJson(ballotJson.contentAbove) : undefined
         let contentBelow = ballotJson.contentBelow != undefined ? Content.generateContentFromJson(ballotJson.contentBelow) : undefined
         for (let list of ballotJson.lists) {
             lists.push(CandidateList.fromJson(list))
         }
-        return new Core3StandardBallot(ballotJson.id as String, lists, ballotJson.showAbstainOption as boolean,
-            ballotJson.showInvalidOption as boolean, title, ballotJson.colorSchema as String, contentAbove, contentBelow,
-             ballotJson.externalIdentification as String)
+        return new Core3StandardBallot(ballotJson.id as string, lists, ballotJson.showAbstainOption as boolean,
+            ballotJson.showInvalidOption as boolean, title, ballotJson.colorSchema as string, contentAbove, contentBelow,
+             ballotJson.externalIdentification as string)
     }
 
 
@@ -105,12 +105,13 @@ class CandidateList {
     public constructor(
         public readonly candidates: Array<CandidateSpec>,
         public readonly columnHeaders: Array<I18n<any>>,
-        public readonly id: String,
+        public readonly id: string,
+        public readonly maxVotesForList: number,
         public readonly columnProperties?: Array<ColumnProperties>,
         public readonly contentAbove?: Content,
         public readonly derivedListVotes?: DerivedListVotesSpecVariant, //DO we need this here?
-        public readonly externalIdentification?: String,
-        public readonly title?: String) {
+        public readonly externalIdentification?: string,
+        public readonly title?: I18n<string>) {
             throwIfNotPresent(candidates, columnHeaders, id)
         }
 
@@ -139,8 +140,9 @@ class CandidateList {
         if (listJson.derivedListVotes != undefined) {
             derivedListVotes = listJson.derivedListVotes
         }
-        return new CandidateList(candidates, columnHeaders, listJson.id as String, columnProperties, 
-            contentAbove, derivedListVotes, listJson.externalIdentification as String, listJson.title as String)
+        const title = I18n.fromJson<string>(listJson.title, "string")
+        return new CandidateList(candidates, columnHeaders, listJson.id as string, listJson.maxVotesForList as number,
+            columnProperties, contentAbove, derivedListVotes, listJson.externalIdentification as string, title)
     }
 
 }
@@ -149,8 +151,9 @@ class CandidateSpec {
 
     public constructor(    
         public readonly columns: Array<Content>,
-        public readonly id: String,
-        public readonly externalIdentification?: String,
+        public readonly id: string,
+        public readonly maxVotes,
+        public readonly externalIdentification?: string,
         //TODO include validation rules?,
         public readonly writeInSize?: number) {
             throwIfNotPresent(columns, id)
@@ -160,7 +163,8 @@ class CandidateSpec {
         for (let columnJson of candJson.columns) {
             columns.push(Content.generateContentFromJson(columnJson))
         }
-        return new CandidateSpec(columns, candJson.id as String, candJson.externalIdentification as String, candJson.writeInSize as number)
+        return new CandidateSpec(columns, candJson.id as string, candJson.maxVotes as number,
+             candJson.externalIdentification as string, candJson.writeInSize as number)
     }
 }
 
@@ -177,4 +181,4 @@ type DerivedListVotesSpecVariant = "EACH_VOTE_COUNTS"|"AT_MOST_ONE"
 
 
 
-export{Ciphertext, MultiCiphertext, Proof, Ballot, Core3Ballot, CandidateList, CandidateSpec, ColumnProperties, DerivedListVotesSpecVariant, SecretProof}
+export{Ciphertext, MultiCiphertext, Proof, Ballot, Core3Ballot, CandidateList, CandidateSpec, ColumnProperties, DerivedListVotesSpecVariant, SecretProof, Core3StandardBallot}

@@ -35,6 +35,14 @@
           },
           "contentType": "TEXT"
         },
+        "logo": {
+          "default": {
+            "url": "https://upload.wikimedia.org/wikipedia/de/thumb/3/31/Adolf_Schlatter_vor_1907.jpg/155px-Adolf_Schlatter_vor_1907.jpg",
+            "alt": "man",
+            "hash": "12345"
+          },
+          "value": {}
+        },
         "publicLabel": "A",
         "messages": {},
         "allowInvalid": true,
