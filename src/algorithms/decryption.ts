@@ -2,7 +2,6 @@ import { ProjectivePoint } from "@noble/secp256k1"
 import { Ballot, SecretProof } from "../classes/ballot"
 import * as constants from "../main/constants"
 import { bufToBn, bufToHex, bufToNumber, hexToBuf, toUint8Array} from "../main/utils";
-import * as crypto from "crypto"
 import { SecondDeviceFinalMessage, SecondDeviceInitialMsg, SecondDeviceLoginResponse } from "../classes/communication";
 import { computeFingerprint, getBallotAsNormalizedBytestring } from "./signature"
 import {kdfCounterMode, NumbersInRangeFromSeed, decodePoint, decodeMultiPlaintext} from "./basics"
@@ -12,14 +11,15 @@ import {kdfCounterMode, NumbersInRangeFromSeed, decodePoint, decodeMultiPlaintex
  * @param parametersJson 
  * @returns 
  */
-function checkSecondDeviceParameters(parametersJson: string) {
-    const hash = crypto.createHash("SHA512").update(parametersJson, 'utf-8').digest().toString('hex')
+async function checkSecondDeviceParameters(parametersJson: string) {
+    const hashBytes = await crypto.subtle.digest("SHA-512", Buffer.from(parametersJson))
+    const hash = bufToHex(new Uint8Array(hashBytes))
     return hash == constants.fingerprint
 }
 
-function generateComKey(ballotNorm: Uint8Array, comSeed: string) {
-    const hashBallot = crypto.createHash("SHA256").update(ballotNorm).digest()
-    const key_derivation_key = new Uint8Array([...hexToBuf(comSeed, false), ...hashBallot])
+async function generateComKey(ballotNorm: Uint8Array, comSeed: string) {
+    const hashBallot = await crypto.subtle.digest("SHA512", ballotNorm)
+    const key_derivation_key = new Uint8Array([...hexToBuf(comSeed, false), ...new Uint8Array(hashBallot)])
     return kdfCounterMode(32, key_derivation_key, '', '')
 }
 
@@ -42,7 +42,7 @@ async function aesDecrypt(c: string, comKey: Uint8Array): Promise<Uint8Array> {
  */
 async function decrytQRCode(c: string, initialMessage: SecondDeviceInitialMsg): Promise<Uint8Array> {
     const ballotNorm = getBallotAsNormalizedBytestring(initialMessage.ballot)
-    const comKey = generateComKey(ballotNorm, initialMessage.comSeed)
+    const comKey = await generateComKey(ballotNorm, initialMessage.comSeed)
     return aesDecrypt(c, comKey)
 }
 
@@ -54,7 +54,7 @@ async function decrytQRCode(c: string, initialMessage: SecondDeviceInitialMsg): 
  * @param randomCoinSeed 
  * @returns 
  */
-function checkZKP(initialMessage: SecondDeviceInitialMsg, finalMessage: SecondDeviceFinalMessage, proof: SecretProof, randomCoinSeed: Uint8Array) {
+async function checkZKP(initialMessage: SecondDeviceInitialMsg, finalMessage: SecondDeviceFinalMessage, proof: SecretProof, randomCoinSeed: Uint8Array) {
     const cipherLength = initialMessage.ballot.encryptedChoice.ciphertexts.length
     if(!(initialMessage.factorA.length == cipherLength && initialMessage.factorB.length == cipherLength &&
          initialMessage.factorX.length == cipherLength && initialMessage.factorY.length == cipherLength && finalMessage.z.length == cipherLength)) {
@@ -81,7 +81,7 @@ function checkZKP(initialMessage: SecondDeviceInitialMsg, finalMessage: SecondDe
         const uElem = ProjectivePoint.fromHex(initialMessage.ballot.encryptedChoice.ciphertexts[t].x.toString(16).padStart(constants.pointLength, "0"))
         const x = initialMessage.factorX[t].toString(16)
         const xElem = ProjectivePoint.fromHex(x.padStart(constants.pointLength, "0"))
-        const r = numbersInRange.getNextNumber()
+        const r = await numbersInRange.getNextNumber()
         if (!(uElem.add(xElem).toHex() === gElem.mul(r, true).toHex())) {
             return false
         }
@@ -95,7 +95,7 @@ function checkZKP(initialMessage: SecondDeviceInitialMsg, finalMessage: SecondDe
  * @param randomCoinSeed 
  * @returns 
  */
-function decryptBallot(initialMessage: SecondDeviceInitialMsg, randomCoinSeed: Uint8Array): Uint8Array {
+async function decryptBallot(initialMessage: SecondDeviceInitialMsg, randomCoinSeed: Uint8Array): Promise<Uint8Array> {
     const cipherLength = initialMessage.ballot.encryptedChoice.ciphertexts.length
     const q = BigInt("0x" +  constants.q)
     const numbersInRange = new NumbersInRangeFromSeed(randomCoinSeed, q)
@@ -106,7 +106,7 @@ function decryptBallot(initialMessage: SecondDeviceInitialMsg, randomCoinSeed: U
         const yElem = ProjectivePoint.fromHex(y.padStart(constants.pointLength, "0"))
         const u = initialMessage.ballot.encryptedChoice.ciphertexts[t].y.toString(16)
         const uElem = ProjectivePoint.fromHex(u.padStart(constants.pointLength, "0"))
-        const r = numbersInRange.getNextNumber()
+        const r = await numbersInRange.getNextNumber()
         const ci = uElem.add(yElem).add((hElem.mul(r, true)).negate())
         c = new Uint8Array([...c, ...decodePoint(ci)])
     }
@@ -118,10 +118,10 @@ function decryptBallot(initialMessage: SecondDeviceInitialMsg, randomCoinSeed: U
  * @param loginResponse 
  * @returns 
  */
-function generateReceiptText(loginResponse: SecondDeviceLoginResponse) {
+async function generateReceiptText(loginResponse: SecondDeviceLoginResponse) {
     const electionId: string = loginResponse.electionId
     const voterId: string = loginResponse.ballotVoterId
-    const fingerprint: string = computeFingerprint(loginResponse)
+    const fingerprint: string = await computeFingerprint(loginResponse)
     const shortenedFingerprint: string = fingerprint.substring(0, 10)
     const signature: string = loginResponse.initialMessageDecoded.signatureHex
     let string = `Project ID: ${electionId}\nVoter Id: ${voterId}\nBallot Fingerprint: ${shortenedFingerprint}\n\n`

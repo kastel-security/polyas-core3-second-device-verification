@@ -16,24 +16,23 @@ const props = defineProps<{
 const columnHeaders = ref<Array<I18n<string>>>()
 const columnProperties = ref(props.candidateList.columnProperties)
 const candidateResult = ref(new Map<string, Uint8Array>())
+const rendered = ref(false)
 onMounted(() => {
-    console.log("!!!", props.candidateList.id, props.result)
     const len = props.candidateList.columnHeaders.length
     columnHeaders.value = new Array()
-    /*
     for (let i = 0; i < len; i++) {
         if (props.candidateList.columnProperties && !props.candidateList.columnProperties[i].hide)
         columnHeaders.value.push(props.candidateList.columnHeaders[i])
     }
-    let start = 0
+    let start = 1
     for (let candidate of props.candidateList.candidates) {
         if (start + 1 > props.result.length) {
             throw new Error("Result format does not match ballot format")
         }
         candidateResult.value.set(candidate.id, props.result.subarray(start, start + 1))
+        start++
     }
-    */
-
+    rendered.value = true
 })
 </script>
 
@@ -60,7 +59,7 @@ onMounted(() => {
             <input type="checkbox" name="listVote" value="result[0]"/>
         </div>
     </div>
-    <div class="candidates">
+    <div class="candidates" v-if="rendered">
         <table>
             <tr>
                 <th></th>

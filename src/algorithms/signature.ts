@@ -1,6 +1,5 @@
 import { Ballot } from "../classes/ballot"
-import { hexToBuf, toUint8Array} from "../main/utils"
-import * as crypto from "crypto"
+import { bufToHex, hexToBuf, toUint8Array} from "../main/utils"
 import { SecondDeviceLoginResponse } from "../classes/communication"
 
 function put(bytes: Uint8Array, input: string|Uint8Array|number|bigint, length?: number) {
@@ -34,9 +33,10 @@ function computeBytesToBeSigned(response: SecondDeviceLoginResponse): Uint8Array
  * @param response the response to the login request
  * @return The fingerprint of the ballot
  */
-function computeFingerprint(response: SecondDeviceLoginResponse): string {
+async function computeFingerprint(response: SecondDeviceLoginResponse): Promise<string> {
     let bytes = computeBytesToBeSigned(response)
-    return crypto.createHash("SHA256").update(bytes).digest().toString('hex')
+    const fingerprintBytes = await crypto.subtle.digest("SHA-256", Buffer.from(bytes))
+    return bufToHex(new Uint8Array(fingerprintBytes))
 }
 
 /**
@@ -71,8 +71,7 @@ function getBallotAsNormalizedBytestring(ballot: Ballot) {
 async function checkSignature(response: SecondDeviceLoginResponse): Promise<boolean> {
     let publicKeyHex: string = response.initialMessageDecoded.secondDeviceParameterDecoded.verificationKey
     let publicKeyDecoded = await crypto.subtle.importKey("spki", hexToBuf(publicKeyHex, false), {name: "RSASSA-PKCS1-v1_5", hash: "SHA-256"}, true, ["verify"])
-    let message = hexToBuf(computeFingerprint(response)) 
-    console.log((publicKeyDecoded.algorithm as any).publicExponent)
+    let message = hexToBuf(await computeFingerprint(response))
     let signature = hexToBuf(response.initialMessageDecoded.signatureHex, false)
     return crypto.subtle.verify("RSASSA-PKCS1-v1_5", publicKeyDecoded, signature, message);
 }

@@ -1,7 +1,6 @@
 import { ProjectivePoint } from "@noble/secp256k1"
 import { SecretProof } from "../classes/ballot"
 import * as constants from "../main/constants"
-import randomBytes from 'randombytes';
 import { bufToBn } from "../main/utils"
 
 /**
@@ -12,7 +11,7 @@ import { bufToBn } from "../main/utils"
 function getRandomInRange(limit: bigint) {
     let random: bigint = limit
     while(random >= limit) {
-        random = bufToBn(randomBytes(Math.ceil(limit.toString(16).length / 2)))
+        random = bufToBn(crypto.getRandomValues(new Uint8Array(Math.ceil(limit.toString(16).length / 2))))
     }
     return random
 }

@@ -1,7 +1,6 @@
 import { ProjectivePoint } from "@noble/secp256k1"
 import * as constants from "../main/constants"
 import { bufToBn, bufToNumber, hexToBuf, toUint8Array} from "../main/utils";
-import * as crypto from "crypto"
 
 /**
  * 
@@ -43,11 +42,11 @@ class NumbersInRangeFromSeed {
         this.seed = toUint8Array(seed)
         this.range = range
     }
-    public getNextNumber(): bigint {
+    public async getNextNumber(): Promise<bigint> {
         const rangeBytes = hexToBuf(this.range.toString(16))
         const firstByteBitCount = Math.floor(Math.log2(rangeBytes[0])) + 1
         const byteCount = rangeBytes.length
-        let bytes = kdfCounterMode(byteCount, new Uint8Array([...this.seed, ...toUint8Array(this.i, 4)]), 'generator', 'Polyas')
+        let bytes = await kdfCounterMode(byteCount, new Uint8Array([...this.seed, ...toUint8Array(this.i, 4)]), 'generator', 'Polyas')
         bytes[0] = bytes[0] % Math.pow(2, firstByteBitCount)
         const num = bufToBn(bytes)
         this.i++
@@ -67,13 +66,15 @@ class NumbersInRangeFromSeed {
  * @param context 
  * @returns 
  */
-function kdfCounterMode(length: number, seed: Uint8Array, label: string, context: string) {
+async function kdfCounterMode(length: number, seed: Uint8Array, label: string, context: string) {
     let blockCount = Math.ceil(length / 64)
     let kdf = new Uint8Array()
     for (let t = 0; t < blockCount; t++) {
-        let bytesToHash = new Uint8Array([...toUint8Array(t, 4), ...toUint8Array(label), 0, ...toUint8Array(context), ...toUint8Array(length, 4)])
-        let hashedBytes = crypto.createHmac('sha512', seed).update(bytesToHash).digest()
-        kdf = new Uint8Array([...kdf, ...hashedBytes])
+        const bytesToHash = new Uint8Array([...toUint8Array(t, 4), ...toUint8Array(label), 0, ...toUint8Array(context), ...toUint8Array(length, 4)])
+        const key = await crypto.subtle.importKey("raw", seed, {name: "HMAC", hash: "SHA-512"}, false, ["sign"])
+        const hashedBytes = await crypto.subtle.sign("HMAC", key, bytesToHash)
+        //hashedBytes = crypto.createHmac('sha512', seed).update(bytesToHash).digest()
+        kdf = new Uint8Array([...kdf, ...new Uint8Array(hashedBytes)])
     }
     return kdf.subarray(0, length)
 }

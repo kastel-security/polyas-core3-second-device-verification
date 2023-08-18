@@ -8,6 +8,7 @@ import ContentView from './ContentView.vue';
 import text from "./text.json"
 
 const listResults = ref(new Map<String, Uint8Array>())
+const rendered = ref(false)
 
 const props = defineProps<{
     ballot: Core3StandardBallot,
@@ -16,7 +17,6 @@ const props = defineProps<{
 }>()
 
 onMounted(() => {
-    console.log(props.result)
     let start = 1
     for (let list of props.ballot.lists) {
         const listBytes = 1 + list.candidates.length
@@ -27,7 +27,7 @@ onMounted(() => {
         listResults.value.set(list.id, props.result.subarray(start, start + listBytes))
         start = start + listBytes
     }
-    console.log("!!", listResults.value.get("A1"))
+    rendered.value = true
 })
 </script>
 
@@ -41,7 +41,7 @@ onMounted(() => {
     <div class="contentAbove" v-if="ballot.contentAbove">
         <ContentView :content="ballot.contentAbove" :language="language"/>
     </div>
-    <div class="Questions">
+    <div class="Questions" v-if="rendered">
         <CandidateListView
         v-for="candidateList in ballot.lists"
         :candidateList="candidateList"

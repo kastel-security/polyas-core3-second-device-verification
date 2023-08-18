@@ -1,5 +1,14 @@
 import {generateRandomProof, generateSecretProof} from "../src/algorithms/proof"
 import data from "./data.json"
+import crypto from "crypto"
+
+Object.defineProperty(globalThis, 'crypto', {
+    value: {
+      getRandomValues: arr => crypto.randomBytes(arr.length),
+      subtle: crypto.subtle
+    }
+  });
+
 
 test("test generateRandomProof terminates", () => {
     const randomProof = generateRandomProof()

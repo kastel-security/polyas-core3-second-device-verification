@@ -17,6 +17,7 @@ const props = defineProps<{
 }>()
 const ballotResult = ref(new Map<string, Uint8Array>())
 const ballotSheets = ref<Array<Core3StandardBallot>>()
+const rendered = ref(false)
 onMounted(() => {
     ballotSheets.value = new Array()
     const ballotSheetLabels = props.loginResponse.publicLabel.split(":")
@@ -38,6 +39,7 @@ onMounted(() => {
         ballotResult.value.set(ballotSheet.id, props.result.subarray(start, start + bytesOfBallotSheet))
         start = start + bytesOfBallotSheet
     }
+    rendered.value = true
 })
 
 function getImgUrl(img: I18n<ImageRef>): string {
@@ -69,7 +71,7 @@ function getImgUrl(img: I18n<ImageRef>): string {
     <div class="contentAbove" v-if="loginResponse.contentAbove">
         <ContentView :content="loginResponse.contentAbove" :language="language"/>
     </div>
-    <div class="ballot">
+    <div class="ballot" v-if="rendered">
         <BallotView
         v-for="ballot in ballotSheets"
         :ballot="ballot"

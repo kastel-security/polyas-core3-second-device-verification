@@ -86,5 +86,73 @@
                 "value": {}
             }
         }
+    },
+    "error": {
+        "rejected": {
+            "default": "Your ballot could not verified",
+            "value": {
+                "DE": "Ihr Stimmzettel konnte nicht verifiziert werden"
+            }
+        },
+        "connection": {
+            "default": "A connection issue occured.",
+            "value": {
+                "DE": "Ein Verbindungsfehler ist aufgetreten."
+            }
+        },
+        "extern": {
+            "default": "The exchange was rejected by the polyas election server. Did you enter the password incorrectly or did the time limit for the verification run out?",
+            "value": {
+                "DE": "Der cryptographische Austausch wurde vom Polyas Wahlserver zurückgewiesen. Überprüfen Sie, dass Sie das Einmalpassword richtig eingegeben haben und ob das Zeitlimit abgelaufen ist."
+            }
+        },
+        "sdpp": {
+            "default": "The second device parameters returned by the polyas election server do not match the pre-configured fingerprint. This could be caused by a third party attack. Please contact the election administration.",
+            "value": {
+                "DE": "Die Second Device Parameter des Wahlservers passen nicht zu dem voreingestellen Fingerprint. Dies könnte auf einen Angriff einer dritten Partei hindeuten. Bitte setzten Sie sich mit der Wahlleitung in Verbindung."
+            }
+        },
+        "ack": {
+            "default": "The ballot acknowledgement sent by the polyas election server is invalid. This could be caused by a third party attack.",
+            "value": {
+                "DE": "Die Bestätigung des Stimmzettels durch den Polyas Wahlserver ist ungültig. Dies könnte auf einen Angriff einer dritten Partei hindeuten."
+            }
+        },
+        "decrypt": {
+            "default": "A parameter passed in the link was invalid. This could be caused by a third party attack.",
+            "value": {
+                "DE": "Ein Parameter der URL ist ungültig. Dies könnte auf einen Angriff einer dritten Partei hindeuten."
+            }
+        },
+        "format": {
+            "default": "The format of a message passed by the polyas election server is invalid.",
+            "value": {
+                "DE": "Eine Nachricht vom Polyas Wahlserver hat ein ungültiges Format"
+            }
+        },
+        "zkp_inv": {
+            "default": "The zero-knowledge proof provided by the polyas election server is invalid. This could be caused by a third party attack.",
+            "value": {
+                "DE": "Der Zero-Knowledge Beweis des Polyas Wahlservers ist ungültig. Dies könnte auf einen Angriff einer dritten Partei hindeuten."
+            }
+        },
+        "other": {
+            "default": "An error occured. This is likely the result of a programming mistake of the verification tool, not a mistake by the polyas election server or an attack by a third party.",
+            "value": {
+                "DE": "Ein Fehler ist aufgetreten, der wahrscheinlich durch einen Programmierfehler des Verifikationstools und nicht durch einen Fehler des Polyas Wahlservers oder einen Angriff einer dritten Partei ausgelöst wurde."
+            }
+        },
+        "decode": {
+            "default": "The decoded ballot does not fit the format required by the ballot sheet.",
+            "value": {
+                "DE": "Der dekodierte Stimmzettel passt nicht zum Format der Stimmzettel"
+            }
+        },
+        "reset": {
+            "default": "Retry login",
+            "value": {
+                "DE": "Login wiederholen"
+            }
+        }
     }
 }

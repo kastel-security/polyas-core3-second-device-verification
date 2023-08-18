@@ -1,7 +1,7 @@
 import axios from "axios"
 import { baseURL } from "./constants"
 import { ElectionData, SecondDeviceFinalMessage, SecondDeviceLoginResponse } from "../classes/communication"
-import { Proof, SecretProof } from "../classes/ballot"
+import { Core3StandardBallot, Proof, SecretProof } from "../classes/ballot"
 import { generateRandomProof, generateSecretProof } from "../algorithms/proof"
 import { ErrorType } from "./error"
 import { checkSecondDeviceParameters, checkZKP, decryptBallot, decrytQRCode, generateReceiptText } from "../algorithms/decryption"
@@ -98,7 +98,7 @@ class Verificatiotool {
             } catch(error: any) {
                 return this.resolveFail(ErrorType.FORMAT, error.message)
             }
-            if (!checkSecondDeviceParameters(this._secondDeviceLoginResponse.initialMessageDecoded.secondDeviceParameter)) {
+            if (!await checkSecondDeviceParameters(this._secondDeviceLoginResponse.initialMessageDecoded.secondDeviceParameter)) {
                 return this.resolveFail(ErrorType.SDPP)
             }
             let validAck = false
@@ -151,7 +151,7 @@ class Verificatiotool {
             } catch(error: any) {
                 return this.resolveFail(ErrorType.FORMAT, error.message)
             }
-            if (!checkZKP(this._secondDeviceLoginResponse!.initialMessageDecoded, this._secondDeviceFinalMessage, this._zkProof!, this._randomCoinSeed!)) {
+            if (!await checkZKP(this._secondDeviceLoginResponse!.initialMessageDecoded, this._secondDeviceFinalMessage, this._zkProof!, this._randomCoinSeed!)) {
                 return this.resolveFail(ErrorType.ZKP_INV)
             }
             return Promise.resolve(new ResponseBeanOk(this._secondDeviceFinalMessage))
@@ -166,12 +166,25 @@ class Verificatiotool {
      * Should only be called after finalMessage was successfully executed
      * @returns Ballot choices as Uint8Array
      */
-    public decodeBallot(): ResponseBean<Uint8Array> {
+    public async decodeBallot(): Promise<ResponseBean<Uint8Array>> {
         if (!this._secondDeviceLoginResponse || !this._randomCoinSeed) {
-            return new ResponseBeanError(ErrorType.INVALID_OPERATION)
+            return Promise.resolve(new ResponseBeanError(ErrorType.INVALID_OPERATION))
         }
-        this._decodedBallot = decryptBallot(this._secondDeviceLoginResponse.initialMessageDecoded, this._randomCoinSeed)
-        return new ResponseBeanOk(this._decodedBallot)
+        this._decodedBallot = await decryptBallot(this._secondDeviceLoginResponse.initialMessageDecoded, this._randomCoinSeed)
+        let expectedLength = 0
+        for (let ballotSheet of this._secondDeviceLoginResponse.initialMessageDecoded.secondDeviceParameterDecoded.ballots) {
+            const sheet = ballotSheet as Core3StandardBallot
+            if (this._secondDeviceLoginResponse.publicLabel.split(":").includes(sheet.id)) {
+                expectedLength += 1
+                for (let list of sheet.lists) {
+                    expectedLength += 1 + list.candidates.length
+                }
+            }
+        }
+        if (this._decodedBallot.length != expectedLength) {
+            return Promise.resolve(new ResponseBeanError(ErrorType.DECODE))
+        }
+        return Promise.resolve(new ResponseBeanOk(this._decodedBallot))
     }
 
     /**
@@ -199,11 +212,11 @@ class Verificatiotool {
      * Should only be called after login or fullLogin is successfully executed
      * @returns Text of the ballot cast confirmation
      */
-    public getReceiptText(): ResponseBean<string> {
+    public async getReceiptText(): Promise<ResponseBean<string>> {
         if (!this._secondDeviceLoginResponse) {
             return new ResponseBeanError(ErrorType.INVALID_OPERATION)
         }
-        return new ResponseBeanOk(generateReceiptText(this._secondDeviceLoginResponse))
+        return new ResponseBeanOk(await generateReceiptText(this._secondDeviceLoginResponse))
     }
 
     public get electionData(): ElectionData|undefined {

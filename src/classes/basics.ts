@@ -106,9 +106,6 @@ class I18n<T> {
         throwIfNotPresent(defaultInt, value)
     }
     public static fromJson<T>(i18nJson: any, ttype: string): I18n<T> {
-        if (ttype == "image") {
-            console.log(i18nJson)
-        }
         let defaultIn = createGenericClassFromJson<T>(i18nJson.default, ttype)
         let value = new Map<Language, T>(
             Object.entries(i18nJson.value).map(([key, val]) => [key as Language, createGenericClassFromJson<T>(val, ttype)]))

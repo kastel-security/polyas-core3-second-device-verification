@@ -3,7 +3,7 @@ import axios from "axios"
 import * as proof from "../src/algorithms/proof"
 import * as decrypt from "../src/algorithms/decryption"
 import * as sign from "../src/algorithms/signature"
-import { hexToBuf } from "../src/utils"
+import { hexToBuf } from "../src/main/utils"
 import {ResponseBeanError, ResponseBeanOk, Verificatiotool} from "../src/main/verifictiontool"
 import { ElectionData, SecondDeviceFinalMessage, SecondDeviceLoginResponse } from "../src/classes/communication"
 import { ErrorType } from "../src/main/error"
@@ -57,6 +57,15 @@ const e = BigInt("10803920902664183472199820277553616445491617607844258484194031
 const r = BigInt("44267717001895006656767798790813376597351395807170189462353830054915294464906")
 const secProof = proof.generateSecretProof(e, r)
 
+import crypto from "crypto"
+
+Object.defineProperty(globalThis, 'crypto', {
+    value: {
+      getRandomValues: arr => crypto.randomBytes(arr.length),
+      subtle: crypto.subtle
+    }
+  });
+
 beforeEach(() => {
     mockedAxios.mockImplementation(validAxios)
     mockedProof.mockReturnValue(secProof)
@@ -77,7 +86,7 @@ test("test verificationtool valid", async () => {
     expect(finalMessage.status).toBe("OK")
     expect((finalMessage as ResponseBeanOk<SecondDeviceFinalMessage>).value).toStrictEqual(SecondDeviceFinalMessage.fromJson(data.finalMessage))
 
-    const decodedBallot = verificationtool.decodeBallot()
+    const decodedBallot = await verificationtool.decodeBallot()
     expect(decodedBallot.status).toBe("OK")
     expect((decodedBallot as ResponseBeanOk<Uint8Array>).value).toStrictEqual(new Uint8Array([0, 0, 0, 1]))
 })
@@ -143,7 +152,7 @@ test("test backend error", async () => {
 
 test("invalid sdpp", async () => {
     const mockedSDPP = jest.spyOn(decrypt, "checkSecondDeviceParameters")
-    mockedSDPP.mockReturnValueOnce(false)
+    mockedSDPP.mockResolvedValueOnce(false)
     const verificationtool = new Verificatiotool()
     const login = await verificationtool.login(data.vid, data.nonce, data.password, data.c)
     expect(login.status).toBe("ERROR")
@@ -183,7 +192,7 @@ test("test qrDecrypt error", async () => {
 
 test("test checkZKP fail", async() => {
     const mockedZKP = jest.spyOn(decrypt, "checkZKP")
-    mockedZKP.mockReturnValueOnce(false)
+    mockedZKP.mockResolvedValueOnce(false)
     const verificationtool = new Verificatiotool()
     await verificationtool.login(data.vid, data.nonce, data.password, data.c)
     const final = await verificationtool.finalMessage()
@@ -199,7 +208,7 @@ test("test invalid order", async() => {
     expect((final as ResponseBeanError).error).toBe(ErrorType.INVALID_OPERATION)
     expect((final as ResponseBeanError).message).not.toBeDefined()
 
-    const decode = verificationtool.decodeBallot()
+    const decode = await verificationtool.decodeBallot()
     expect(decode.status).toBe("ERROR")
     expect((decode as ResponseBeanError).error).toBe(ErrorType.INVALID_OPERATION)
     expect((decode as ResponseBeanError).message).not.toBeDefined()
@@ -207,7 +216,7 @@ test("test invalid order", async() => {
 
 test("test error in fullLogin in login", async () => {
     const mockedSDPP = jest.spyOn(decrypt, "checkSecondDeviceParameters")
-    mockedSDPP.mockReturnValueOnce(false)
+    mockedSDPP.mockResolvedValueOnce(false)
     const verificationtool = new Verificatiotool()
     const login = await verificationtool.fullLogin(data.vid, data.nonce, data.password, data.c)
     expect(login.status).toBe("ERROR")
@@ -217,7 +226,7 @@ test("test error in fullLogin in login", async () => {
 
 test("test error in fullLogin in finalMessage", async () => {
     const mockedZKP = jest.spyOn(decrypt, "checkZKP")
-    mockedZKP.mockReturnValueOnce(false)
+    mockedZKP.mockResolvedValueOnce(false)
     const verificationtool = new Verificatiotool()
     const final = await verificationtool.fullLogin(data.vid, data.nonce, data.password, data.c)
     expect(final.status).toBe("ERROR")

@@ -8,6 +8,7 @@ enum ErrorType {
     ZKP_REJECT,
     ZKP_INV,
     INVALID_OPERATION,
+    DECODE,
     OTHER
 }
 
