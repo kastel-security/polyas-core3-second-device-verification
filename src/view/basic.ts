@@ -1,4 +1,4 @@
-import { I18n, ImageRef, Language } from "../classes/basics"
+import { ContentRichText, I18n, ImageRef, Language } from "../classes/basics"
 import * as text from "./text.json"
 
 export function extractTextFromJson(text: any, language: Language|undefined): string {
@@ -16,15 +16,17 @@ export function extractText(text: I18n<string> | undefined, language: Language|u
     }
 }
 
-export function extractImage(image: I18n<ImageRef>, language: Language|undefined): ImageRef {
-    if (image && language && image.value.has(language)) {
-        return image.value.get(language)!
+export function extractGeneric<T>(data: I18n<T>, language: Language|undefined): T {
+    if (language && data.value.has(language)) {
+        return data.value.get(language)!
     } else {
-        return image.default
+        return data.default
     }
 }
 
+
 export enum State {
+    LOADING,
     LOGIN,
     ERROR,
     VERIFIED

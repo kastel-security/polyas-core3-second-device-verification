@@ -1,3 +1,4 @@
+import { GenericNode } from "./nodes"
 
 function createGenericClassFromJson<T>(json: any, ttype: string): T {
     switch(ttype) {
@@ -35,14 +36,16 @@ type ObjectType = "document"|"block"|"inline"|"text"
 class CustomDocument {
     public constructor(
         public readonly data: Map<String, String>,
-        public readonly nodes: Array<String>,
+        public readonly nodes: Array<GenericNode>,
         public readonly object: ObjectType
     ) {
         throwIfNotPresent(data, nodes, object)
     }
     public static fromJson(documentJson: any) {
-        let data = documentJson.data as Map<String, String>
-        let nodes = documentJson.nodes as Array<String>
+        let data  = new Map(Object.entries(documentJson.data).map(([key, val]) => [key as string, val as string]))
+        let nodes = new Array<GenericNode>(
+            ...Object.entries(documentJson.nodes).map(([key, val]) => GenericNode.generateNodeFromJson(val))
+        )
         let object: ObjectType = documentJson.object as ObjectType
         if (object != "document") {
             throw new Error("Invalid object type")

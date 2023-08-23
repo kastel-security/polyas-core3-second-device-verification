@@ -21,7 +21,7 @@ test("test checkSecondDevicePublicParameter", async () => {
     expect(valid).toBe(true)
 })
 
-test.skip("test generateComKey", async () => {
+test.only("test generateComKey", async () => {
     const result = "dd96a88777267c645ff14648c9e03f6c9f56652a07fa3bf72e8a5f63f4288307"
     const comSeed = loginResponse.initialMessageDecoded.comSeed
     const ballotNorm = getBallotAsNormalizedBytestring(loginResponse.initialMessageDecoded.ballot)

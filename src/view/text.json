@@ -29,7 +29,11 @@
         "loginButton": {
             "default": "login",
             "value": {}
-        }   
+        },
+        "voterId": {
+            "default": "Voter ID: ",
+            "value": {}
+        }
     },
     "verified": {
         "verified": {
@@ -88,6 +92,12 @@
         }
     },
     "error": {
+        "params": {
+            "default": "The URL you have opened is not valid. Please make sure that you entered this page by scanning the QR code offered by your voting application without modifying the URL",
+            "value": {
+                "DE": "Der eingegebene Link ist ungültig. Bitte rufen Sie dieses Seite durch Scannen des QR Codes der Wahlanwendung, ohne diesen zu modifizieren."
+            }
+        },
         "rejected": {
             "default": "Your ballot could not verified",
             "value": {

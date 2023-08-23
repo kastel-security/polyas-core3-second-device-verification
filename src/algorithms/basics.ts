@@ -1,6 +1,6 @@
 import { ProjectivePoint } from "@noble/secp256k1"
 import * as constants from "../main/constants"
-import { bufToBn, bufToNumber, hexToBuf, toUint8Array} from "../main/utils";
+import { bufToBn, bufToHex, bufToNumber, hexToBuf, toUint8Array} from "../main/utils";
 
 /**
  * 
@@ -73,7 +73,7 @@ async function kdfCounterMode(length: number, seed: Uint8Array, label: string, c
         const bytesToHash = new Uint8Array([...toUint8Array(t, 4), ...toUint8Array(label), 0, ...toUint8Array(context), ...toUint8Array(length, 4)])
         const key = await crypto.subtle.importKey("raw", seed, {name: "HMAC", hash: "SHA-512"}, false, ["sign"])
         const hashedBytes = await crypto.subtle.sign("HMAC", key, bytesToHash)
-        //hashedBytes = crypto.createHmac('sha512', seed).update(bytesToHash).digest()
+        //hashedBytes = crypto.createHmac('sha512', seed).update(bytesToHasssh).digest()
         kdf = new Uint8Array([...kdf, ...new Uint8Array(hashedBytes)])
     }
     return kdf.subarray(0, length)

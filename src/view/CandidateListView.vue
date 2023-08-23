@@ -37,7 +37,7 @@ onMounted(() => {
 </script>
 
 <template>
-        <div class="title" v-if="candidateList.title">
+    <div class="title" v-if="candidateList.title">
         <h3>{{ extractText(candidateList.title, language) }}</h3>
     </div>
     <div class="id" v-else>
@@ -74,3 +74,15 @@ onMounted(() => {
         </table>
     </div>
 </template>
+
+<style scoped>
+.title {
+    text-align: left;
+    margin:0;
+    background: #444;
+    padding: 2pt 6pt;
+    border-bottom: 1px solid #444;
+    height: fit-content;
+    color: #fff;
+}
+</style>

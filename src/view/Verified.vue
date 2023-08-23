@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Ballot, Core3StandardBallot } from '../classes/ballot';
 import { Content, ImageRef, Language, I18n} from '../classes/basics';
-import { extractText, extractTextFromJson, extractImage } from './basic';
+import { extractGeneric, extractText, extractTextFromJson } from './basic';
 import BallotView from './BallotView.vue';
 
 import text from "./text.json"
@@ -43,13 +43,16 @@ onMounted(() => {
 })
 
 function getImgUrl(img: I18n<ImageRef>): string {
-    return extractImage(img, props.language).url as string
+    return extractGeneric<ImageRef>(img, props.language).url as string
   }
 </script>
 
 <template>
+    <div class="logo" v.if="loginResponse.logo">
+        <img :src="getImgUrl(loginResponse.logo!)" ref="test"/>
+    </div>
     <div class="verifiedText">
-        <h1>{{ extractTextFromJson(text.verified.verified, props.language) }}</h1>
+        <h1 class="verified">{{ extractTextFromJson(text.verified.verified, props.language) }}</h1>
         <text>{{ extractTextFromJson(text.verified.explanation, props.language) }}</text>
     </div>
     <br>
@@ -60,16 +63,14 @@ function getImgUrl(img: I18n<ImageRef>): string {
         <br>
         <text>{{ extractTextFromJson(text.verified.label, language) + props.loginResponse.publicLabel }}</text>
     </div>
-    <br>
-    <div class="logo" v.if="loginResponse.logo">
-        <img :src="getImgUrl(loginResponse.logo!)" ref="test"/>
-    </div>
-    <div class="messages">
-        <text v-for="key in loginResponse.messages.keys()">key: {{ extractText(loginResponse.messages.get(key), language) }}</text>
-    </div>
-    <br>
-    <div class="contentAbove" v-if="loginResponse.contentAbove">
-        <ContentView :content="loginResponse.contentAbove" :language="language"/>
+    <div class="above">
+        <div class="messages">
+            <text v-for="key in loginResponse.messages.keys()">key: {{ extractText(loginResponse.messages.get(key), language) }}</text>
+        </div>
+        <br>
+        <div class="contentAbove" v-if="loginResponse.contentAbove">
+            <ContentView :content="loginResponse.contentAbove" :language="language"/>
+        </div>
     </div>
     <div class="ballot" v-if="rendered">
         <BallotView
@@ -79,3 +80,35 @@ function getImgUrl(img: I18n<ImageRef>): string {
         :language="language"/>
     </div>
 </template>
+
+<style scoped>
+
+.verifiedText {
+    text-align: center;
+}
+.verified {
+    color: #0a0;
+}
+.id {
+    text-align:center
+}
+.above {
+    text-align:center
+}
+.ballot {
+  margin: 36pt 0;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,.1);
+  border: solid 1px;
+  border-radius: 3pt;
+}
+.logo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-end;
+  margin-top: 0.5rem !important;
+  margin-right: 1.5rem !important;
+  position: absolute;
+  right: 0;
+}
+</style>

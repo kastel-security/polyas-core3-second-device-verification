@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { Content, ContentText, Language } from '../classes/basics';
-import { extractText, extractTextFromJson } from './basic';
+import { Content, ContentRichText, ContentText, CustomDocument, Language } from '../classes/basics';
+import NodeView from './NodeView.vue';
+import { extractText, extractGeneric } from './basic';
 import text from "./text.json"
 
 const props = defineProps<{
@@ -16,6 +17,8 @@ const props = defineProps<{
     </div>
     <div class="rich"
     v-if="content.contentType=='RICH_TEXT'">
-        <label>Not supported</label>
+        <NodeView v-for="node in extractGeneric<CustomDocument>(content.value, language).nodes"
+        :node="node"
+        :language="language"/>
     </div>
 </template>

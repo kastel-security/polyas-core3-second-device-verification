@@ -9,6 +9,7 @@ enum ErrorType {
     ZKP_INV,
     INVALID_OPERATION,
     DECODE,
+    PARAMS,
     OTHER
 }
 

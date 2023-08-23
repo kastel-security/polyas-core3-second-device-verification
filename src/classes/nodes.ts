@@ -1,5 +1,8 @@
 import {throwIfNotPresent} from "./basics"
 abstract class GenericNode {
+    public constructor(
+        public readonly object
+    ) {}
     public static generateNodeFromJson(nodeJson: any): GenericNode {
         switch(nodeJson.object) {
             case "block": return NodeBlock.fromJson(nodeJson)
@@ -11,12 +14,12 @@ abstract class GenericNode {
 }
 
 class NodeBlock extends GenericNode {
-    public readonly object = "block"
+    public static readonly object = "block"
     public constructor(    
         public readonly data: Map<String, String>,
         public readonly nodes: Array<GenericNode>,
         public readonly type: String) {
-        super()
+        super(NodeBlock.object)
         throwIfNotPresent(data, nodes, type)
     }
     public static fromJson(nodeJson: any): GenericNode {
@@ -34,12 +37,12 @@ class NodeBlock extends GenericNode {
 }
 
 class NodeInline extends GenericNode {
-    public readonly object = "inline"
+    public static readonly object = "inline"
     public constructor(    
         public readonly data: Map<String, String>,
         public readonly nodes: Array<GenericNode>,
         public readonly type: String) {
-        super()
+        super(NodeInline.object)
         throwIfNotPresent(data, nodes, type)
     }
     public static fromJson(nodeJson: any): GenericNode {
@@ -75,12 +78,12 @@ class NodeMark {
 }
 
 class NodeText extends GenericNode {
-    public readonly object: String = "text" 
+    public static readonly object: String = "text" 
 
     public constructor(    
         public readonly marks: Set<NodeMark>,
         public readonly text: String) {
-        super()
+        super(NodeText.object)
         throwIfNotPresent(marks, text)
     }
 

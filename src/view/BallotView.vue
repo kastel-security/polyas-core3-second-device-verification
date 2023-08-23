@@ -41,7 +41,7 @@ onMounted(() => {
     <div class="contentAbove" v-if="ballot.contentAbove">
         <ContentView :content="ballot.contentAbove" :language="language"/>
     </div>
-    <div class="Questions" v-if="rendered">
+    <div class="questions" v-if="rendered">
         <CandidateListView
         v-for="candidateList in ballot.lists"
         :candidateList="candidateList"
@@ -60,3 +60,37 @@ onMounted(() => {
         <ContentView :content="ballot.contentBelow" :language="language"/>
     </div>
 </template>
+
+<style scoped>
+.title {
+    text-align: center;
+    margin:0;
+    background: #ddd;
+    padding: 2pt 6pt;
+    border-bottom: 1px solid #ddd;
+}
+.ext {
+    margin-left: 10pt;
+}
+.contentAbove {
+    margin-left:10pt
+}
+.questions {
+    margin-left:10pt;
+    margin-top: 20pt;
+    margin-bottom: 10pt;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,.1);
+    border: solid 1px;
+    border-radius: 3pt;
+}
+.invalid {
+    margin-left: 10pt;
+}
+.abstain {
+    margin-left: 10pt;
+}
+.contentBelow {
+    margin-left: 10pt;
+}
+
+</style>

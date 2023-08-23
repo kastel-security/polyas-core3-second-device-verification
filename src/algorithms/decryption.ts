@@ -18,8 +18,11 @@ async function checkSecondDeviceParameters(parametersJson: string) {
 }
 
 async function generateComKey(ballotNorm: Uint8Array, comSeed: string) {
-    const hashBallot = await crypto.subtle.digest("SHA512", ballotNorm)
+    const hashBallot = await crypto.subtle.digest("SHA-256", ballotNorm)
+    console.log("1", bufToHex(hexToBuf(comSeed, false)))
+    console.log("2", bufToHex(new Uint8Array(hashBallot)))
     const key_derivation_key = new Uint8Array([...hexToBuf(comSeed, false), ...new Uint8Array(hashBallot)])
+    console.log("3", bufToHex(key_derivation_key))
     return kdfCounterMode(32, key_derivation_key, '', '')
 }
 
