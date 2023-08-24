@@ -2,14 +2,13 @@
 import StartPage from "./view/StartPage.vue"
 import { onMounted, ref } from 'vue';
 import { ElectionData, SecondDeviceLoginResponse } from './classes/communication';
-import data from "./view/data.json"
 import text from "./view/text.json"
 import { I18n, Language } from './classes/basics';
 import { extractText, extractTextFromJson, State } from "./view/basic";
 import Verified from "./view/Verified.vue";
 import { Core3StandardBallot } from "./classes/ballot";
 import { ErrorType } from "./main/error";
-import { ResponseBean, ResponseBeanError, ResponseBeanOk, Verificatiotool } from "./main/verifictiontool";
+import { ResponseBean, ResponseBeanError, ResponseBeanOk, Verificationtool, VerificationtoolImplementation, VerificationtoolMock } from "./main/verifictiontool";
 import ErrorView from "./view/ErrorView.vue";
     const language = ref<Language|undefined>()
     let languages: Array<Language|undefined>
@@ -18,10 +17,11 @@ import ErrorView from "./view/ErrorView.vue";
     const voterId = ref<string>()
     const nonce = ref<string>()
     const c = ref<string>()
-    const verificationtool = ref(new Verificatiotool())
+    const verificationtool = ref<Verificationtool>()
     const title = ref<I18n<string>>()
     const loginResponse = ref<SecondDeviceLoginResponse>()
     const result = ref<Uint8Array>()
+    const receiptText = ref<Array<string>>()
     onMounted(async () => {
       let urlParams = new URLSearchParams(window.location.search);
       if (!urlParams.has("c") || !urlParams.has("vid") || !urlParams.has("nonce")) {
@@ -29,49 +29,64 @@ import ErrorView from "./view/ErrorView.vue";
         state.value = State.ERROR
         language.value = undefined
         languages = ["DE", "EN", undefined]
-      } else {
-        voterId.value = urlParams.get("vid")!
-        nonce.value = urlParams.get("nonce")!
-        c.value = urlParams.get("c")!
-        const electionData = await verificationtool.value.loadElectionData()
-        if (electionData.status == ResponseBean.okStatus) {
-          language.value = undefined
-          languages = new Array(...(electionData as ResponseBeanOk<ElectionData>).value.languages, undefined)
-          title.value = (electionData as ResponseBeanOk<ElectionData>).value.title
-        } else {
-          error.value = electionData as ResponseBeanError
-          state.value = State.ERROR
-        }
+        return
       }
+      voterId.value = urlParams.get("vid")!
+      nonce.value = urlParams.get("nonce")!
+      c.value = urlParams.get("c")!
+      //loadData()
     })
+
+   async function loadData() {
+    verificationtool.value = import.meta.env.VITE_MOCK == 'true' ? new VerificationtoolMock() : new VerificationtoolImplementation()
+      const electionData = await verificationtool.value.loadElectionData()
+      if (electionData.status == ResponseBean.okStatus) {
+        language.value = undefined
+        languages = new Array(...(electionData as ResponseBeanOk<ElectionData>).value.languages, undefined)
+        title.value = (electionData as ResponseBeanOk<ElectionData>).value.title
+        state.value = State.LOGIN
+      } else {
+        error.value = electionData as ResponseBeanError
+        state.value = State.ERROR
+      }
+   }
+
     async function login(password: string) {
       state.value = State.LOADING
-      const login = await verificationtool.value.login(voterId.value!, nonce.value!, c.value!, password)
+      const login = await verificationtool.value!.login(voterId.value!, nonce.value!, c.value!, password)
       if(login.status == ResponseBean.errorStatus) {
         state.value = State.ERROR
         error.value = login as ResponseBeanError
         return;
       }
       loginResponse.value = (login as ResponseBeanOk<SecondDeviceLoginResponse>).value
-      const finalMessage = await verificationtool.value.finalMessage()
+      const finalMessage = await verificationtool.value!.finalMessage()
       if(finalMessage.status == ResponseBean.errorStatus) {
         state.value = State.ERROR
         error.value = finalMessage as ResponseBeanError
         return;
       }
-      const res = await verificationtool.value.decodeBallot()
+      const res = await verificationtool.value!.decodeBallot()
       if(res.status == ResponseBean.errorStatus) {
         state.value = State.ERROR
         error.value = res as ResponseBeanError
         return;
       }
       result.value = (res as ResponseBeanOk<Uint8Array>).value
+      const receipt = await verificationtool.value!.getReceiptText()
+      if(receipt.status == ResponseBean.errorStatus) {
+        state.value = State.ERROR
+        error.value = receipt as ResponseBeanError
+        return;
+      }
+      receiptText.value = (receipt as ResponseBeanOk<string[]>).value
       state.value = State.VERIFIED
     }
 
     function reset() {
       error.value = new ResponseBeanError(ErrorType.OTHER)
-      state.value = State.LOGIN
+      state.value = State.LOADING
+      loadData()
     }
 </script>
 
@@ -104,13 +119,17 @@ import ErrorView from "./view/ErrorView.vue";
     v-if="state==State.VERIFIED"
     :loginResponse="loginResponse!"
     :result="result!"
-    :language="language"/>
+    :language="language"
+    :receipt-text="receiptText!"/>
     <ErrorView
     v-if="state==State.ERROR"
     :errorType="error.error"
     :message="error.message"
     :language="language"
     @reset="reset"/>
+    <div v-else class="loading">
+      <img src="./view/Spinner-1s-200px.svg"/>
+    </div>
   </div>
   </div>
 </template>
@@ -149,6 +168,10 @@ import ErrorView from "./view/ErrorView.vue";
   padding: 0 12pt;
   margin: auto auto 8rem auto;
   line-height: 1.5;
+}
+
+.loading {
+  text-align: center;
 }
 
 </style>

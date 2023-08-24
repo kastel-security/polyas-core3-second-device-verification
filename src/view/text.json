@@ -63,6 +63,14 @@
         "label": {
             "default": "Ballot sheets: ",
             "value": {}
+        },
+        "downloadText": {
+            "default": "You can download a receipt that contains a confirmation of the Polays voting server that your ballot is included in the ballot box. You can use the receipt with a universal verification tool to confirm that your ballot is included in the tally.",
+            "value": {}
+        },
+        "download": {
+            "default": "Download receipt",
+            "value": {}
         }
 
     },

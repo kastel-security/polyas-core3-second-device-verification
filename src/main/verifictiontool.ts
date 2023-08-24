@@ -6,6 +6,7 @@ import { generateRandomProof, generateSecretProof } from "../algorithms/proof"
 import { ErrorType } from "./error"
 import { checkSecondDeviceParameters, checkZKP, decryptBallot, decrytQRCode, generateReceiptText } from "../algorithms/decryption"
 import { checkSignature } from "../algorithms/signature"
+import data from "../mock/data.json"
 
 type ResponseStatus = "OK"|"ERROR" 
 class ResponseBean<T> {
@@ -29,7 +30,15 @@ class ResponseBeanOk<T> extends ResponseBean<T> {
     }
 }
 
-class Verificatiotool {
+interface Verificationtool {
+    loadElectionData: () => Promise<ResponseBean<ElectionData>>
+    login: (voterId: string, nonce: string, password: string, c: string) => Promise<ResponseBean<SecondDeviceLoginResponse>>
+    finalMessage: () => Promise<ResponseBean<SecondDeviceFinalMessage>>
+    decodeBallot: () => Promise<ResponseBean<Uint8Array>>
+    getReceiptText: () => Promise<ResponseBean<Array<string>>>
+}
+
+class VerificationtoolImplementation implements Verificationtool {
     private static readonly responseOk: ResponseStatus = "OK"
     private static readonly responseError : ResponseStatus = "ERROR" 
     private _electionData?: ElectionData
@@ -64,7 +73,7 @@ class Verificatiotool {
                 return this.resolveFail(ErrorType.FORMAT, error.message)
             }
         }).catch((error: any) => {
-            return Promise.reject()
+            return Promise.resolve(this.resolveFail(ErrorType.CONNECTION, error))
         })
     }
 
@@ -90,7 +99,7 @@ class Verificatiotool {
             }
         })
         .then(async (response) => {
-            if (response.data.status != Verificatiotool.responseOk) {
+            if (response.data.status != VerificationtoolImplementation.responseOk) {
                 return this.resolveFail(ErrorType.EXTERN, response.data.error)
             }
             try {
@@ -119,7 +128,7 @@ class Verificatiotool {
         })
         .catch((error: any) => {
             console.log(error)
-            return Promise.reject()
+            return Promise.resolve(this.resolveFail(ErrorType.CONNECTION, error))
         })
     }
 
@@ -143,7 +152,7 @@ class Verificatiotool {
             }
         })
         .then(async (response) => {
-            if (response.data.status != Verificatiotool.responseOk) {
+            if (response.data.status != VerificationtoolImplementation.responseOk) {
                 return this.resolveFail(ErrorType.EXTERN, response.data.error)
             }
             try {
@@ -212,7 +221,7 @@ class Verificatiotool {
      * Should only be called after login or fullLogin is successfully executed
      * @returns Text of the ballot cast confirmation
      */
-    public async getReceiptText(): Promise<ResponseBean<string>> {
+    public async getReceiptText(): Promise<ResponseBean<Array<string>>> {
         if (!this._secondDeviceLoginResponse) {
             return new ResponseBeanError(ErrorType.INVALID_OPERATION)
         }
@@ -228,4 +237,26 @@ class Verificatiotool {
     }
 }
 
-export {ResponseBean, ResponseBeanOk, ResponseBeanError, Verificatiotool}
+class VerificationtoolMock implements Verificationtool {
+    public async loadElectionData(): Promise<ResponseBean<ElectionData>> {
+        const electionData = ElectionData.fromJson(data.electionData)
+        return Promise.resolve(new ResponseBeanOk<ElectionData>(electionData))
+    }
+    public async login(voterId: string, nonce: string, c: string, password: string) {
+        const loginResponse = SecondDeviceLoginResponse.fromJson(data.loginResponse)
+        return Promise.resolve(new ResponseBeanOk<SecondDeviceLoginResponse>(loginResponse))
+    }
+    public async finalMessage(): Promise<ResponseBeanOk<SecondDeviceFinalMessage>> {
+        const finalMessage = SecondDeviceFinalMessage.fromJson(data.finalMessage)
+        return Promise.resolve(new ResponseBeanOk<SecondDeviceFinalMessage>(finalMessage))
+    }
+    public async decodeBallot(): Promise<ResponseBeanOk<Uint8Array>> {
+        const ballot = new Uint8Array(data.decoded)
+        return Promise.resolve(new ResponseBeanOk<Uint8Array>(ballot))
+    }
+    public async getReceiptText(): Promise<ResponseBean<Array<string>>> {
+        return Promise.resolve(new ResponseBeanOk(data.receipt))
+    }
+}
+
+export {ResponseBean, ResponseBeanOk, ResponseBeanError, Verificationtool, VerificationtoolImplementation, VerificationtoolMock}

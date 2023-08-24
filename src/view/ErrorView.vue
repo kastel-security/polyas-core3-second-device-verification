@@ -25,6 +25,7 @@ onMounted(() => {
     </div>
     <div class="cause">
         <h3 v-if="errorType==ErrorType.PARAMS">{{ extractTextFromJson(text.error.params, language) }}</h3>
+        <h3 v-else-if="errorType==ErrorType.CONNECTION">{{ extractTextFromJson(text.error.connection, language) }}</h3>
         <h3 v-else-if="errorType==ErrorType.EXTERN">{{ extractTextFromJson(text.error.extern, language) }}</h3>
         <h3 v-else-if="errorType==ErrorType.BALLOT_ACK||errorType==ErrorType.BALLOT_ACK_FAIL">{{ extractTextFromJson(text.error.ack, language) }}</h3>
         <h3 v-else-if="errorType==ErrorType.DECRYPT">{{ extractTextFromJson(text.error.decrypt, language) }}</h3>
@@ -35,9 +36,21 @@ onMounted(() => {
     </div>
     <div class = "action">
         <button 
-        v-if="errorType==ErrorType.EXTERN||errorType==ErrorType.FORMAT||errorType==ErrorType.OTHER"
+        v-if="errorType==ErrorType.EXTERN||errorType==ErrorType.FORMAT||errorType==ErrorType.CONNECTION||errorType==ErrorType.OTHER"
         @click="$emit('reset')">
             {{ extractTextFromJson(text.error.reset, language) }}
         </button>
     </div>
 </template>
+
+<style scoped>
+.error{
+    text-align: center;
+}
+.cause{
+    text-align: center;
+}
+.action {
+    text-align: center;
+}
+</style>

@@ -8,12 +8,14 @@ import text from "./text.json"
 import ContentView from './ContentView.vue';
 import { SecondDeviceLoginResponse } from '../classes/communication';
 import { onMounted, ref } from 'vue';
+import {jsPDF } from "jspdf"
 import { LanguageServiceMode, PropertySignature } from 'typescript';
 
 const props = defineProps<{
     loginResponse: SecondDeviceLoginResponse
     result: Uint8Array,
-    language: Language|undefined
+    language: Language|undefined,
+    receiptText: Array<string>
 }>()
 const ballotResult = ref(new Map<string, Uint8Array>())
 const ballotSheets = ref<Array<Core3StandardBallot>>()
@@ -45,10 +47,22 @@ onMounted(() => {
 function getImgUrl(img: I18n<ImageRef>): string {
     return extractGeneric<ImageRef>(img, props.language).url as string
   }
+
+function downloadPDF() {
+    console.log("clicked")
+    const doc = new jsPDF('p', 'px', 'a4');
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const left = 60;
+    doc.setFontSize(16)
+    doc.text(props.receiptText, 60, 120, {maxWidth:pageWidth - 2*left})
+
+    doc.save(`vote-receipt-${doc.text[2]}.pdf`)
+
+}
 </script>
 
 <template>
-    <div class="logo" v.if="loginResponse.logo">
+    <div class="logo" v-if="loginResponse.logo">
         <img :src="getImgUrl(loginResponse.logo!)" ref="test"/>
     </div>
     <div class="verifiedText">
@@ -78,6 +92,11 @@ function getImgUrl(img: I18n<ImageRef>): string {
         :ballot="ballot"
         :result="ballotResult.get(ballot.id)!"
         :language="language"/>
+    </div>
+    <div class="download">
+        <text class="text">{{ extractTextFromJson(text.verified.downloadText, language) }}</text>
+        <br>
+        <button v-on:click="downloadPDF">{{ extractTextFromJson(text.verified.download, language) }}</button>
     </div>
 </template>
 
@@ -110,5 +129,12 @@ function getImgUrl(img: I18n<ImageRef>): string {
   margin-right: 1.5rem !important;
   position: absolute;
   right: 0;
+}
+.download {
+    text-align: center;
+    max-width: 600pt;
+    padding: 0 12pt;
+    margin: auto auto 8rem auto;
+    line-height: 1.5;
 }
 </style>

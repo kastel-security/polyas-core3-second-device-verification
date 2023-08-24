@@ -1,4 +1,5 @@
 enum ErrorType {
+    CONNECTION,
     EXTERN,
     SDPP,
     BALLOT_ACK,

@@ -1,7 +1,7 @@
 import { checkSignature, computeFingerprint, getBallotAsNormalizedBytestring } from "../src/algorithms/signature"
 import { SecondDeviceLoginResponse } from "../src/classes/communication"
 import { bufToHex } from "../src/main/utils"
-import data from "./data.json"
+import data from "../src/mock/data.json"
 
 import crypto from "crypto"
 

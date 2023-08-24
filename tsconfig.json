@@ -3,6 +3,7 @@
   "exclude": ["src/**/__tests__/*"],
   "compilerOptions": {
     "moduleResolution": "Node",
+    "module": "ES2020",
     "resolveJsonModule": true,
     "types": ["jest"],
     "target": "ES2020",

@@ -1,5 +1,5 @@
 import {generateRandomProof, generateSecretProof} from "../src/algorithms/proof"
-import data from "./data.json"
+import data from "../src/mock/data.json"
 import crypto from "crypto"
 
 Object.defineProperty(globalThis, 'crypto', {

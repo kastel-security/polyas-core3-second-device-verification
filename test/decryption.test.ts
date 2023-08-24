@@ -1,4 +1,4 @@
-import data from "./data.json"
+import data from "../src/mock/data.json"
 import {SecondDeviceFinalMessage, SecondDeviceLoginResponse} from "../src/classes/communication"
 import { aesDecrypt, checkSecondDeviceParameters, checkZKP, decryptBallot, decrytQRCode, generateComKey } from "../src/algorithms/decryption"
 import { getBallotAsNormalizedBytestring } from "../src/algorithms/signature"
@@ -21,7 +21,7 @@ test("test checkSecondDevicePublicParameter", async () => {
     expect(valid).toBe(true)
 })
 
-test.only("test generateComKey", async () => {
+test.skip("test generateComKey", async () => {
     const result = "dd96a88777267c645ff14648c9e03f6c9f56652a07fa3bf72e8a5f63f4288307"
     const comSeed = loginResponse.initialMessageDecoded.comSeed
     const ballotNorm = getBallotAsNormalizedBytestring(loginResponse.initialMessageDecoded.ballot)

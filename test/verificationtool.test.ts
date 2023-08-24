@@ -1,10 +1,10 @@
-import data from "./data.json"
+import data from "../src/mock/data.json"
 import axios from "axios"
 import * as proof from "../src/algorithms/proof"
 import * as decrypt from "../src/algorithms/decryption"
 import * as sign from "../src/algorithms/signature"
 import { hexToBuf } from "../src/main/utils"
-import {ResponseBeanError, ResponseBeanOk, Verificatiotool} from "../src/main/verifictiontool"
+import {ResponseBean, ResponseBeanError, ResponseBeanOk, VerificationtoolImplementation} from "../src/main/verifictiontool"
 import { ElectionData, SecondDeviceFinalMessage, SecondDeviceLoginResponse } from "../src/classes/communication"
 import { ErrorType } from "../src/main/error"
 
@@ -73,7 +73,7 @@ beforeEach(() => {
 })
 
 test("test verificationtool valid", async () => {
-    const verificationtool = new Verificatiotool()
+    const verificationtool = new VerificationtoolImplementation()
     const electionData = await verificationtool.loadElectionData()
     expect(electionData.status).toBe("OK")
     expect((electionData as ResponseBeanOk<ElectionData>).value).toStrictEqual(ElectionData.fromJson(data.electionData))
@@ -92,7 +92,7 @@ test("test verificationtool valid", async () => {
 })
 
 test("test verificationtool fullLogin valid", async () => {
-    const verificationtool = new Verificatiotool()
+    const verificationtool = new VerificationtoolImplementation()
     const decodedBallot = await verificationtool.fullLogin(data.vid, data.nonce, data.password, data.c)
     expect(decodedBallot.status).toBe("OK")
     expect((decodedBallot as ResponseBeanOk<Uint8Array>).value).toStrictEqual(new Uint8Array([0, 0, 0, 1]))
@@ -110,7 +110,7 @@ test("test invalid format", async () => {
         status: "OK",
         data: {a:1}
     }
-    const verificationtool = new Verificatiotool()
+    const verificationtool = new VerificationtoolImplementation()
     mockedAxios.mockResolvedValueOnce(invalidResponseData)
     const electionData = await verificationtool.loadElectionData()
     expect(electionData.status).toBe("ERROR")
@@ -136,7 +136,7 @@ test("test backend error", async () => {
             value: {a:1}
         }
     }
-    const verificationtool = new Verificatiotool()
+    const verificationtool = new VerificationtoolImplementation()
 
     mockedAxios.mockResolvedValueOnce(invalidResponse)
     const login = await verificationtool.login(data.vid, data.nonce, data.password, data.c)
@@ -153,7 +153,7 @@ test("test backend error", async () => {
 test("invalid sdpp", async () => {
     const mockedSDPP = jest.spyOn(decrypt, "checkSecondDeviceParameters")
     mockedSDPP.mockResolvedValueOnce(false)
-    const verificationtool = new Verificatiotool()
+    const verificationtool = new VerificationtoolImplementation()
     const login = await verificationtool.login(data.vid, data.nonce, data.password, data.c)
     expect(login.status).toBe("ERROR")
     expect((login as ResponseBeanError).error).toBe(ErrorType.SDPP)
@@ -163,7 +163,7 @@ test("invalid sdpp", async () => {
 test("test signature error", async () => {
     const mockedSignature = jest.spyOn(sign, "checkSignature")
     mockedSignature.mockRejectedValueOnce(new Error("test"))
-    const verificationtool = new Verificatiotool()
+    const verificationtool = new VerificationtoolImplementation()
     const login = await verificationtool.login(data.vid, data.nonce, data.password, data.c)
     expect(login.status).toBe("ERROR")
     expect((login as ResponseBeanError).error).toBe(ErrorType.BALLOT_ACK_FAIL)
@@ -173,7 +173,7 @@ test("test signature error", async () => {
 test("test signature fail", async () => {
     const mockedSignature = jest.spyOn(sign, "checkSignature")
     mockedSignature.mockResolvedValueOnce(false)
-    const verificationtool = new Verificatiotool()
+    const verificationtool = new VerificationtoolImplementation()
     const login = await verificationtool.login(data.vid, data.nonce, data.password, data.c)
     expect(login.status).toBe("ERROR")
     expect((login as ResponseBeanError).error).toBe(ErrorType.BALLOT_ACK)
@@ -183,7 +183,7 @@ test("test signature fail", async () => {
 test("test qrDecrypt error", async () => {
     const mockedDecrypt = jest.spyOn(decrypt, "decrytQRCode")
     mockedDecrypt.mockRejectedValueOnce(new Error("test"))
-    const verificationtool = new Verificatiotool()
+    const verificationtool = new VerificationtoolImplementation()
     const login = await verificationtool.login(data.vid, data.nonce, data.password, data.c)
     expect(login.status).toBe("ERROR")
     expect((login as ResponseBeanError).error).toBe(ErrorType.DECRYPT)
@@ -193,7 +193,7 @@ test("test qrDecrypt error", async () => {
 test("test checkZKP fail", async() => {
     const mockedZKP = jest.spyOn(decrypt, "checkZKP")
     mockedZKP.mockResolvedValueOnce(false)
-    const verificationtool = new Verificatiotool()
+    const verificationtool = new VerificationtoolImplementation()
     await verificationtool.login(data.vid, data.nonce, data.password, data.c)
     const final = await verificationtool.finalMessage()
     expect(final.status).toBe("ERROR")
@@ -202,7 +202,7 @@ test("test checkZKP fail", async() => {
 })
 
 test("test invalid order", async() => {
-    const verificationtool = new Verificatiotool()
+    const verificationtool = new VerificationtoolImplementation()
     const final = await verificationtool.finalMessage()
     expect(final.status).toBe("ERROR")
     expect((final as ResponseBeanError).error).toBe(ErrorType.INVALID_OPERATION)
@@ -217,7 +217,7 @@ test("test invalid order", async() => {
 test("test error in fullLogin in login", async () => {
     const mockedSDPP = jest.spyOn(decrypt, "checkSecondDeviceParameters")
     mockedSDPP.mockResolvedValueOnce(false)
-    const verificationtool = new Verificatiotool()
+    const verificationtool = new VerificationtoolImplementation()
     const login = await verificationtool.fullLogin(data.vid, data.nonce, data.password, data.c)
     expect(login.status).toBe("ERROR")
     expect((login as ResponseBeanError).error).toBe(ErrorType.SDPP)
@@ -227,7 +227,7 @@ test("test error in fullLogin in login", async () => {
 test("test error in fullLogin in finalMessage", async () => {
     const mockedZKP = jest.spyOn(decrypt, "checkZKP")
     mockedZKP.mockResolvedValueOnce(false)
-    const verificationtool = new Verificatiotool()
+    const verificationtool = new VerificationtoolImplementation()
     const final = await verificationtool.fullLogin(data.vid, data.nonce, data.password, data.c)
     expect(final.status).toBe("ERROR")
     expect((final as ResponseBeanError).error).toBe(ErrorType.ZKP_INV)
@@ -236,12 +236,8 @@ test("test error in fullLogin in finalMessage", async () => {
 
 test("test connection error in fullLogin", async() => {
     mockedAxios.mockRejectedValueOnce("No comment")
-    const verificationtool = new Verificatiotool()
-    verificationtool.fullLogin(data.vid, data.nonce, data.password, data.c)
-    .then(() => {
-        expect(true).toBe(false) // this should not happen
-    })
-    .catch((error: any) => {
-        expect(error).toBe(undefined) 
-    })
+    const verificationtool = new VerificationtoolImplementation()
+    const loginFail = await verificationtool.fullLogin(data.vid, data.nonce, data.password, data.c)
+    expect(loginFail.status).toBe(ResponseBean.errorStatus)
+    expect((loginFail as ResponseBeanError).error).toBe(ErrorType.CONNECTION)
 })
