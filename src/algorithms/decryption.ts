@@ -1,7 +1,7 @@
 import { ProjectivePoint } from "@noble/secp256k1"
 import { Ballot, SecretProof } from "../classes/ballot"
 import * as constants from "../main/constants"
-import { bufToBn, bufToHex, bufToNumber, hexToBuf, toUint8Array} from "../main/utils";
+import { bufToBn, bufToHex, bufToNumber, decodeBase64, hexToBuf, toUint8Array} from "../main/utils";
 import { SecondDeviceFinalMessage, SecondDeviceInitialMsg, SecondDeviceLoginResponse } from "../classes/communication";
 import { computeFingerprint, getBallotAsNormalizedBytestring } from "./signature"
 import {kdfCounterMode, NumbersInRangeFromSeed, decodePoint, decodeMultiPlaintext} from "./basics"
@@ -12,22 +12,42 @@ import {kdfCounterMode, NumbersInRangeFromSeed, decodePoint, decodeMultiPlaintex
  * @returns 
  */
 async function checkSecondDeviceParameters(parametersJson: string) {
-    const hashBytes = await crypto.subtle.digest("SHA-512", Buffer.from(parametersJson))
+    const hashBytes = await crypto.subtle.digest("SHA-512", toUint8Array(parametersJson))
     const hash = bufToHex(new Uint8Array(hashBytes))
-    return hash == constants.fingerprint
+    return hash == constants.EnvironmentVariables.instance.fingerprint
 }
 
 async function generateComKey(ballotNorm: Uint8Array, comSeed: string) {
     const hashBallot = await crypto.subtle.digest("SHA-256", ballotNorm)
-    console.log("1", bufToHex(hexToBuf(comSeed, false)))
-    console.log("2", bufToHex(new Uint8Array(hashBallot)))
     const key_derivation_key = new Uint8Array([...hexToBuf(comSeed, false), ...new Uint8Array(hashBallot)])
-    console.log("3", bufToHex(key_derivation_key))
     return kdfCounterMode(32, key_derivation_key, '', '')
 }
 
+/**
+ * This matches the Polyas implementation but is likely incorrect
+ * @param ballotNorm The normalized ballot representation
+ * @param comSeed comSeed from the SecondDeviceInitialMessage
+ * @returns 
+ */
+async function generateComKey2(ballotNorm: Uint8Array, comSeed: string) {
+    let comSeedBytes = new Array<number>()
+    for (let i = 0; i < comSeed.length; i++) {
+        comSeedBytes.push(comSeed.charCodeAt(i))
+    }
+    const hashBallot = await crypto.subtle.digest("SHA-256", ballotNorm)
+    const key_derivation_key = new Uint8Array([...new Uint8Array(comSeedBytes), ...new Uint8Array(hashBallot)])
+    return kdfCounterMode(32, key_derivation_key, '', '')
+}
+
+/**
+ * Decrypts a message using AES in GCM with the first 12 bytes as initialization vector, the next 16 bytes as tag and
+ * the final 32 bytes as ciphertext 
+ * @param c Decrypted message
+ * @param comKey key used for encryption
+ * @returns 
+ */
 async function aesDecrypt(c: string, comKey: Uint8Array): Promise<Uint8Array> {
-    const decode = Buffer.from(c, 'base64')
+    const decode = decodeBase64(c)
     let iv = decode.subarray(0, 12)
     let tag = decode.subarray(12, 28)
     let data = decode.subarray(28,60)
@@ -45,7 +65,7 @@ async function aesDecrypt(c: string, comKey: Uint8Array): Promise<Uint8Array> {
  */
 async function decrytQRCode(c: string, initialMessage: SecondDeviceInitialMsg): Promise<Uint8Array> {
     const ballotNorm = getBallotAsNormalizedBytestring(initialMessage.ballot)
-    const comKey = await generateComKey(ballotNorm, initialMessage.comSeed)
+    const comKey = await generateComKey2(ballotNorm, initialMessage.comSeed)
     return aesDecrypt(c, comKey)
 }
 
@@ -127,10 +147,10 @@ async function generateReceiptText(loginResponse: SecondDeviceLoginResponse) {
     const fingerprint: string = await computeFingerprint(loginResponse)
     const shortenedFingerprint: string = fingerprint.substring(0, 10)
     const signature: string = loginResponse.initialMessageDecoded.signatureHex
-    let string = new Array<string>('Project ID: ${electionId}', 'Voter Id: ${voterId}', 'Ballot Fingerprint: ${shortenedFingerprint}',
-    '-----BEGIN FINGERPRINT-----${fingerprint}', '-----END FINGERPRINT-----', '-----BEGIN SIGNATURE-----', '${signature}',
+    let string = new Array<string>(`Project ID: ${electionId}`, `Voter Id: ${voterId}`, `Ballot Fingerprint: ${shortenedFingerprint}`,
+    `-----BEGIN FINGERPRINT-----${fingerprint}`, '-----END FINGERPRINT-----', '-----BEGIN SIGNATURE-----', `${signature}`,
      '-----END SIGNATURE-----')
     return string
 }
 
-export {checkSecondDeviceParameters, generateComKey, checkZKP, decryptBallot, generateReceiptText, aesDecrypt, decrytQRCode}
+export {checkSecondDeviceParameters, generateComKey2, checkZKP, decryptBallot, generateReceiptText, aesDecrypt, decrytQRCode}

@@ -35,7 +35,7 @@ function computeBytesToBeSigned(response: SecondDeviceLoginResponse): Uint8Array
  */
 async function computeFingerprint(response: SecondDeviceLoginResponse): Promise<string> {
     let bytes = computeBytesToBeSigned(response)
-    const fingerprintBytes = await crypto.subtle.digest("SHA-256", Buffer.from(bytes))
+    const fingerprintBytes = await crypto.subtle.digest("SHA-256", bytes)
     return bufToHex(new Uint8Array(fingerprintBytes))
 }
 

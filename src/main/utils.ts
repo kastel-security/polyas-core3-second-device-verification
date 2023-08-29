@@ -86,4 +86,13 @@ function toUint8Array(input: string|Uint8Array|number|bigint, length?: number): 
     }
 }
 
-export {hexToBuf, bufToBn, toUint8Array, bufToHex, bufToNumber}
+function decodeBase64(enc: string) {
+    const dec = atob(enc.replaceAll("-", "+").replaceAll("_", "/"))
+    let bytes = new Array<number>()
+    for (let i = 0; i < dec.length; i++) {
+        bytes.push(dec.charCodeAt(i))
+    }
+    return new Uint8Array(bytes)
+}
+
+export {hexToBuf, bufToBn, toUint8Array, bufToHex, bufToNumber, decodeBase64}

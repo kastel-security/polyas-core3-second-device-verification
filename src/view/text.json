@@ -45,32 +45,44 @@
         "explanation": {
             "default": "Please note that the following is an image of your ballot in the ballot box. You can no longer change your submitted ballot. You can edit the image to hide your vote, but doing so will not impact your submitted ballot.",
             "value": {
-                "DE": "Bitte beachten Sie: Im folgenden sehen sie eine Abbildung ihres Stimmzettels in der Wahlurne. Sie können ihren Stimmzettel nicht mehr ändern. Allerdings können Sie das folgende Bild ändern, um Ihre Stimmabgabe zu verbergen. Dies wird aber Ihren abgegebenen Stimmzettel in der Wahlurne nicht beeinflussen. "
+                "DE": "Bitte beachten Sie: Im folgenden sehen sie eine Abbildung ihres Stimmzettels in der Wahlurne. Sie können ihren Stimmzettel nicht mehr ändern. Allerdings können Sie das folgende Bild ändern, um Ihre Stimmabgabe zu verbergen. Dies wird aber Ihren abgegebenen Stimmzettel in der Wahlurne nicht beeinflussen."
             }
         },
         "verifiedFor": {
             "default": "Verified for: ",
-            "value": {}
+            "value": {
+                "DE": "Verifiziert für: "
+            }
         },
         "electionId": {
             "default": "Election: ",
-            "value": {}
+            "value": {
+                "DE": "Wahl: "
+            }
         },
         "voterId": {
             "default": "Voter: ",
-            "value": {}
+            "value": {
+                "DE": "Wähler: "
+            }
         },
         "label": {
             "default": "Ballot sheets: ",
-            "value": {}
+            "value": {
+                "DE": "Stimmzettel: "
+            }
         },
         "downloadText": {
             "default": "You can download a receipt that contains a confirmation of the Polays voting server that your ballot is included in the ballot box. You can use the receipt with a universal verification tool to confirm that your ballot is included in the tally.",
-            "value": {}
+            "value": {
+                "DE": "Sie können eine Bestätigung des Polyas Wahlservers herunterladen, dass ihr Stimmzettel abgegeben wurde. Bei Verwendung eines universellen Verifizierungstools nach der Wahl können Sie mit der Bestätigung überprüfen, dass ihr Stimmzettel auch in der Auszählung berücksichtigt wurde."
+            }
         },
         "download": {
             "default": "Download receipt",
-            "value": {}
+            "value": {
+                "DE": "Bestätigung herunterladen."
+            }
         }
 
     },
@@ -89,7 +101,9 @@
         },
         "listVote": {
             "default": "Vote for list",
-            "value": {}
+            "value": {
+                "DE": "Stimmen für Kandidatenliste"
+            }
         },
         "defaultColumn": {
             "contentType": "TEXT",

@@ -130,7 +130,7 @@ class CandidateList {
 
         if (listJson.columnProperties != undefined) {
             columnProperties = new Array<ColumnProperties>()
-            for (let prop of listJson.coulmProperties) {
+            for (let prop of listJson.columnProperties) {
                 columnProperties.push(ColumnProperties.fromJson(prop))
             }
         }
@@ -140,7 +140,7 @@ class CandidateList {
         if (listJson.derivedListVotes != undefined) {
             derivedListVotes = listJson.derivedListVotes
         }
-        const title = I18n.fromJson<string>(listJson.title, "string")
+        const title = listJson.title ? I18n.fromJson<string>(listJson.title, "string") : undefined
         return new CandidateList(candidates, columnHeaders, listJson.id as string, listJson.maxVotesForList as number,
             columnProperties, contentAbove, derivedListVotes, listJson.externalIdentification as string, title)
     }

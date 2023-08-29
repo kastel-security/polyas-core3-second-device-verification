@@ -14,7 +14,7 @@
         "voterId": "voter8",
         "nonce": "4bf8cecf3fb4c4b4372005e13a53dce705123fab5b9e9288461e6d8fbf9644ea",
         "password": "196308",
-        "challengeCommitment": "30e1a9be2459151057e9d731b524ca435f1c05bc0a95d3d82b30512d306172b17"
+        "challengeCommitment": "030e1a9be2459151057e9d731b524ca435f1c05bc0a95d3d82b30512d306172b17"
     },
     "loginResponse": {
         "token": "MDIwNWJmMmUxNDQ5NmY2OGMwZjg2ZjZiMzEzZjIxMGE5MzkzZWRiMDgzODIxZGNjNGY5OTE0Y2FiOWM1MWM5ZjJl.UjVXYXRxTlRzdk12QWRwOA==",

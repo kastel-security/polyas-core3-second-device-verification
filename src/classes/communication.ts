@@ -52,6 +52,7 @@ class SecondDeviceFinalMessage {
 }
 
 class SecondDeviceInitialMsg {
+    public readonly secondDeviceParameterDecoded
     public constructor(
         public readonly ballot: Ballot,
         public readonly comSeed: string,
@@ -64,6 +65,7 @@ class SecondDeviceInitialMsg {
         public readonly signatureHex: string
     ) {
         throwIfNotPresent(ballot, comSeed, factorA, factorB, factorX, factorY, publicCredential, secondDeviceParameter, signatureHex)
+        this.secondDeviceParameterDecoded = VerifiableSecondDeviceParameters.fromJson(JSON.parse(this.secondDeviceParameter))
     }
     public static fromJson(msgJson: any): SecondDeviceInitialMsg {
         let ballot = Ballot.fromJson(msgJson.ballot)
@@ -81,9 +83,6 @@ class SecondDeviceInitialMsg {
         msgJson.factorY.forEach((factor: any) => {factorY.push(BigInt("0x" + factor))});
         return new SecondDeviceInitialMsg(ballot, comSeed, factorA, factorB, factorX, factorY, publicCredential, 
             secondDeviceParameterJson, signatureHex)
-    }
-    public get secondDeviceParameterDecoded(): VerifiableSecondDeviceParameters {
-        return VerifiableSecondDeviceParameters.fromJson(JSON.parse(this.secondDeviceParameter))
     }
 }
 

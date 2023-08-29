@@ -4,7 +4,7 @@ import { ErrorType } from '../main/error';
 import { extractTextFromJson } from './basic';
 import text from "./text.json"
 import { Language } from '../classes/basics';
-
+defineEmits(['reset'])
 const props = defineProps<{
     errorType: ErrorType,
     language: Language|undefined

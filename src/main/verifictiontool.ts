@@ -1,12 +1,12 @@
 import axios from "axios"
-import { baseURL } from "./constants"
 import { ElectionData, SecondDeviceFinalMessage, SecondDeviceLoginResponse } from "../classes/communication"
 import { Core3StandardBallot, Proof, SecretProof } from "../classes/ballot"
 import { generateRandomProof, generateSecretProof } from "../algorithms/proof"
 import { ErrorType } from "./error"
 import { checkSecondDeviceParameters, checkZKP, decryptBallot, decrytQRCode, generateReceiptText } from "../algorithms/decryption"
-import { checkSignature } from "../algorithms/signature"
+import { checkSignature, computeFingerprint } from "../algorithms/signature"
 import data from "../mock/data.json"
+import { EnvironmentVariables } from "./constants"
 
 type ResponseStatus = "OK"|"ERROR" 
 class ResponseBean<T> {
@@ -47,8 +47,10 @@ class VerificationtoolImplementation implements Verificationtool {
     private _secondDeviceFinalMessage?: SecondDeviceFinalMessage
     private _randomCoinSeed?: Uint8Array
     private _decodedBallot?: Uint8Array
+    private readonly baseURL: string = ""
     
     public constructor() {
+        this.baseURL = EnvironmentVariables.instance.backendUrl
     }
 
     private async resolveFail(errorType: ErrorType, msg?: string): Promise<ResponseBean<any>> {
@@ -61,9 +63,13 @@ class VerificationtoolImplementation implements Verificationtool {
      */
     public async loadElectionData(): Promise<ResponseBean<ElectionData>> {
         return axios.request({
-            baseURL: baseURL,
+            baseURL: this.baseURL,
             url: "/electionData",
-            method: "get"
+            method: "get",
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Content-Type': 'application/json',
+              }
         })
         .then((response) => {
             try {
@@ -87,16 +93,24 @@ class VerificationtoolImplementation implements Verificationtool {
      */
     public async login(voterId: string, nonce: string, password: string, c: string): Promise<ResponseBean<SecondDeviceLoginResponse>> {
         this._zkProof = generateRandomProof()
+        let challenge = this._zkProof.c.toString(16)
+        if (challenge.length % 2 != 0) {
+            challenge = "0" + challenge
+        }
         return axios.request({
-            baseURL: baseURL,
+            baseURL: this.baseURL,
             url: "/login",
             method: "post",
             data: {
                 voterId: voterId,
                 nonce: nonce,
                 password: password,
-                challengeCommitment: this._zkProof.c.toString(16)
-            }
+                challengeCommitment: challenge 
+            },
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Content-Type': 'application/json',
+            },
         })
         .then(async (response) => {
             if (response.data.status != VerificationtoolImplementation.responseOk) {
@@ -128,7 +142,7 @@ class VerificationtoolImplementation implements Verificationtool {
         })
         .catch((error: any) => {
             console.log(error)
-            return Promise.resolve(this.resolveFail(ErrorType.CONNECTION, error))
+            return Promise.resolve(this.resolveFail(ErrorType.CONNECTION, error.message))
         })
     }
 
@@ -142,10 +156,14 @@ class VerificationtoolImplementation implements Verificationtool {
             return this.resolveFail(ErrorType.INVALID_OPERATION)
         }
         return axios.request({
-            baseURL: baseURL,
+            baseURL: this.baseURL,
             url: "/challenge",
             method: "post",
-            headers: {"AuthToken": this._secondDeviceLoginResponse.token},
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Content-Type': 'application/json',
+                "AuthToken": this._secondDeviceLoginResponse.token
+            },
             data: {
                 challenge: this._zkProof.e.toString(10),
                 challengeRandomCoin: this._zkProof.r.toString(10)
@@ -166,7 +184,7 @@ class VerificationtoolImplementation implements Verificationtool {
             return Promise.resolve(new ResponseBeanOk(this._secondDeviceFinalMessage))
         })
         .catch((error: any) => {
-            return Promise.reject(new ResponseBeanError(ErrorType.BALLOT_ACK))
+            return Promise.resolve(this.resolveFail(ErrorType.CONNECTION, error.message))
         })
     }
 

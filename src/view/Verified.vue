@@ -10,6 +10,7 @@ import { SecondDeviceLoginResponse } from '../classes/communication';
 import { onMounted, ref } from 'vue';
 import {jsPDF } from "jspdf"
 import { LanguageServiceMode, PropertySignature } from 'typescript';
+import { EnvironmentVariables } from '../main/constants';
 
 const props = defineProps<{
     loginResponse: SecondDeviceLoginResponse
@@ -56,7 +57,7 @@ function downloadPDF() {
     doc.setFontSize(16)
     doc.text(props.receiptText, 60, 120, {maxWidth:pageWidth - 2*left})
 
-    doc.save(`vote-receipt-${doc.text[2]}.pdf`)
+    doc.save(`vote-receipt-${EnvironmentVariables.instance.fingerprint.substring(0, 10)}.pdf`)
 
 }
 </script>

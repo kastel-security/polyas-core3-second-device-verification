@@ -1,10 +1,11 @@
 import data from "../src/mock/data.json"
 import {SecondDeviceFinalMessage, SecondDeviceLoginResponse} from "../src/classes/communication"
-import { aesDecrypt, checkSecondDeviceParameters, checkZKP, decryptBallot, decrytQRCode, generateComKey } from "../src/algorithms/decryption"
+import { aesDecrypt, checkSecondDeviceParameters, checkZKP, decryptBallot, decrytQRCode, generateComKey2 } from "../src/algorithms/decryption"
 import { getBallotAsNormalizedBytestring } from "../src/algorithms/signature"
 import { bufToHex, hexToBuf } from "../src/main/utils"
 import { generateSecretProof} from "../src/algorithms/proof"
 import crypto from "crypto"
+import { EnvironmentVariables } from "../src/main/constants"
 
 const loginResponse = SecondDeviceLoginResponse.fromJson(data.loginResponse)
 const randomCoinSeed = "1e89b5f95deae82f6f823b52709117405f057783eda018d72cbd83141d394fbd"
@@ -15,18 +16,19 @@ Object.defineProperty(globalThis, 'crypto', {
     subtle: crypto.subtle
   }
 });
+EnvironmentVariables.init().fingerprint = "b7e8e76c369d6a9ca268e40cde8347ac443040d6c4a1df3035744ace05b94e00849abf083ae5baa8fee462a723823054858387ec35462a49f93c2ea40b2fc876"
 
 test("test checkSecondDevicePublicParameter", async () => {
     const valid = await checkSecondDeviceParameters(loginResponse.initialMessageDecoded.secondDeviceParameter)
     expect(valid).toBe(true)
 })
 
-test.skip("test generateComKey", async () => {
+test("test generateComKey", async () => {
     const result = "dd96a88777267c645ff14648c9e03f6c9f56652a07fa3bf72e8a5f63f4288307"
     const comSeed = loginResponse.initialMessageDecoded.comSeed
     const ballotNorm = getBallotAsNormalizedBytestring(loginResponse.initialMessageDecoded.ballot)
-    const calc = generateComKey(ballotNorm, comSeed)
-    expect(bufToHex(await calc)).toBe(result)
+    const calc = await generateComKey2(ballotNorm, comSeed)
+    expect(bufToHex(calc)).toBe(result)
 })
 
 test("test aesDecrypt", async () => {
@@ -37,9 +39,9 @@ test("test aesDecrypt", async () => {
     expect(bufToHex(result)).toBe(randomCoinSeed)
 })
 
-test.skip("test decrytQRCode", async () => {
+test("test decrytQRCode", async () => {
     const decrypted = await decrytQRCode(data.c, loginResponse.initialMessageDecoded)
-    expect(decrypted).toBe(randomCoinSeed)
+    expect(bufToHex(decrypted)).toBe(randomCoinSeed)
 })
 
 test("test checkZKP", async () => {
