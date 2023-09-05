@@ -16,7 +16,7 @@ Object.defineProperty(globalThis, 'crypto', {
     subtle: crypto.subtle
   }
 });
-EnvironmentVariables.init().fingerprint = "b7e8e76c369d6a9ca268e40cde8347ac443040d6c4a1df3035744ace05b94e00849abf083ae5baa8fee462a723823054858387ec35462a49f93c2ea40b2fc876"
+EnvironmentVariables.init("test").fingerprint = "b7e8e76c369d6a9ca268e40cde8347ac443040d6c4a1df3035744ace05b94e00849abf083ae5baa8fee462a723823054858387ec35462a49f93c2ea40b2fc876"
 
 test("test checkSecondDevicePublicParameter", async () => {
     const valid = await checkSecondDeviceParameters(loginResponse.initialMessageDecoded.secondDeviceParameter)

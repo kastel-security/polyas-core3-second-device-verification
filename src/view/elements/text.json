@@ -88,9 +88,9 @@
     },
     "ballot": {
         "invalidOption": {
-            "default": "Your ballot ist marked as invalid",
+            "default": "invalid",
             "value": {
-                "DE": "Stimmzettel als ungültig markieren"
+                "DE": "ungültig"
             } 
         },
         "abstainOption": {

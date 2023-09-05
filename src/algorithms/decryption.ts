@@ -1,7 +1,7 @@
 import { ProjectivePoint } from "@noble/secp256k1"
-import { Ballot, SecretProof } from "../classes/ballot"
+import { SecretProof } from "../classes/ballot"
 import * as constants from "../main/constants"
-import { bufToBn, bufToHex, bufToNumber, decodeBase64, hexToBuf, toUint8Array} from "../main/utils";
+import { bufToHex, decodeBase64, hexToBuf, toUint8Array} from "../main/utils";
 import { SecondDeviceFinalMessage, SecondDeviceInitialMsg, SecondDeviceLoginResponse } from "../classes/communication";
 import { computeFingerprint, getBallotAsNormalizedBytestring } from "./signature"
 import {kdfCounterMode, NumbersInRangeFromSeed, decodePoint, decodeMultiPlaintext} from "./basics"

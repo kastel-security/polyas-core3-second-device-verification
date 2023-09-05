@@ -1,46 +1,15 @@
 import axios from "axios"
 import { ElectionData, SecondDeviceFinalMessage, SecondDeviceLoginResponse } from "../classes/communication"
-import { Core3StandardBallot, Proof, SecretProof } from "../classes/ballot"
-import { generateRandomProof, generateSecretProof } from "../algorithms/proof"
+import { Core3StandardBallot, SecretProof } from "../classes/ballot"
+import { generateRandomProof } from "../algorithms/proof"
 import { ErrorType } from "./error"
 import { checkSecondDeviceParameters, checkZKP, decryptBallot, decrytQRCode, generateReceiptText } from "../algorithms/decryption"
 import { checkSignature, computeFingerprint } from "../algorithms/signature"
-import data from "../mock/data.json"
 import { EnvironmentVariables } from "./constants"
+import { Comm, Communication, ResponseBean, ResponseBeanError, ResponseBeanOk } from "./communication"
 
-type ResponseStatus = "OK"|"ERROR" 
-class ResponseBean<T> {
-    public static readonly errorStatus = "ERROR"
-    public static readonly okStatus = "OK"
-    public readonly status
-    public constructor(status: ResponseStatus) {
-        this.status = status
-    }
-}
-
-class ResponseBeanError extends ResponseBean<any> {
-    public constructor(public readonly error: ErrorType, public readonly message?: string) {
-        super(ResponseBean.errorStatus)
-    }
-}
-
-class ResponseBeanOk<T> extends ResponseBean<T> {
-    public constructor(public readonly value: T) {
-        super(ResponseBean.okStatus)
-    }
-}
-
-interface Verificationtool {
-    loadElectionData: () => Promise<ResponseBean<ElectionData>>
-    login: (voterId: string, nonce: string, password: string, c: string) => Promise<ResponseBean<SecondDeviceLoginResponse>>
-    finalMessage: () => Promise<ResponseBean<SecondDeviceFinalMessage>>
-    decodeBallot: () => Promise<ResponseBean<Uint8Array>>
-    getReceiptText: () => Promise<ResponseBean<Array<string>>>
-}
-
-class VerificationtoolImplementation implements Verificationtool {
-    private static readonly responseOk: ResponseStatus = "OK"
-    private static readonly responseError : ResponseStatus = "ERROR" 
+class Verificationtool {
+    private readonly comm: Communication
     private _electionData?: ElectionData
     private _zkProof?: SecretProof
     private _secondDeviceLoginResponse?: SecondDeviceLoginResponse
@@ -51,6 +20,7 @@ class VerificationtoolImplementation implements Verificationtool {
     
     public constructor() {
         this.baseURL = EnvironmentVariables.instance.backendUrl
+        this.comm = EnvironmentVariables.instance.comm
     }
 
     private async resolveFail(errorType: ErrorType, msg?: string): Promise<ResponseBean<any>> {
@@ -62,24 +32,7 @@ class VerificationtoolImplementation implements Verificationtool {
      * @returns A ResponseBean containing an object of type ElectionData or information about an error
      */
     public async loadElectionData(): Promise<ResponseBean<ElectionData>> {
-        return axios.request({
-            baseURL: this.baseURL,
-            url: "/electionData",
-            method: "get",
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then((response) => {
-            try {
-                this._electionData = ElectionData.fromJson(response.data)
-                return Promise.resolve(new ResponseBeanOk<ElectionData>(this._electionData))
-            } catch(error: any) {
-                return this.resolveFail(ErrorType.FORMAT, error.message)
-            }
-        }).catch((error: any) => {
-            return Promise.resolve(this.resolveFail(ErrorType.CONNECTION, error))
-        })
+        return await this.comm.electionData()
     }
 
     /**
@@ -91,57 +44,31 @@ class VerificationtoolImplementation implements Verificationtool {
      * @returns A ResponseBean, either containing the LoginResponse or information about an error if one of the steps failed
      */
     public async login(voterId: string, nonce: string, password: string, c: string): Promise<ResponseBean<SecondDeviceLoginResponse>> {
-        this._zkProof = generateRandomProof()
+        this._zkProof = EnvironmentVariables.instance.proofGen.generateProof()
         let challenge = this._zkProof.c.toString(16)
-        if (challenge.length % 2 != 0) {
-            challenge = "0" + challenge
+        const loginResponse: ResponseBean<SecondDeviceLoginResponse> = await this.comm.login(voterId, nonce, password, challenge)
+        if (loginResponse.status == ResponseBean.errorStatus) {
+            return loginResponse
         }
-        return axios.request({
-            baseURL: this.baseURL,
-            url: "/login",
-            method: "post",
-            data: {
-                voterId: voterId,
-                nonce: nonce,
-                password: password,
-                challengeCommitment: challenge 
-            },
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-        .then(async (response) => {
-            if (response.data.status != VerificationtoolImplementation.responseOk) {
-                return this.resolveFail(ErrorType.EXTERN, response.data.error)
-            }
-            try {
-                this._secondDeviceLoginResponse = SecondDeviceLoginResponse.fromJson(response.data.value)
-            } catch(error: any) {
-                return this.resolveFail(ErrorType.FORMAT, error.message)
-            }
-            if (!await checkSecondDeviceParameters(this._secondDeviceLoginResponse.initialMessageDecoded.secondDeviceParameter)) {
-                return this.resolveFail(ErrorType.SDPP)
-            }
-            let validAck = false
-            try {
-                validAck = await checkSignature(this._secondDeviceLoginResponse)
-            } catch(error: any) {
-                return this.resolveFail(ErrorType.BALLOT_ACK_FAIL, error.message)
-            }
-            if (!validAck) {
-                return this.resolveFail(ErrorType.BALLOT_ACK)
-            }
-            try {
-                this._randomCoinSeed = await decrytQRCode(c, this._secondDeviceLoginResponse.initialMessageDecoded)
-            } catch(error: any) {
-                return this.resolveFail(ErrorType.DECRYPT, error.message)
-            }
-            return Promise.resolve(new ResponseBeanOk(this._secondDeviceLoginResponse))
-        })
-        .catch((error: any) => {
-            console.log(error)
-            return Promise.resolve(this.resolveFail(ErrorType.CONNECTION, error.message))
-        })
+        this._secondDeviceLoginResponse = (loginResponse as ResponseBeanOk<SecondDeviceLoginResponse>).value
+        if (!await checkSecondDeviceParameters(this._secondDeviceLoginResponse.initialMessageDecoded.secondDeviceParameter)) {
+            return this.resolveFail(ErrorType.SDPP)
+        }
+        let validAck = false
+        try {
+            validAck = await checkSignature(this._secondDeviceLoginResponse)
+        } catch(error: any) {
+            return this.resolveFail(ErrorType.BALLOT_ACK_FAIL, error.message)
+        }
+        if (!validAck) {
+            return this.resolveFail(ErrorType.BALLOT_ACK)
+        }
+        try {
+            this._randomCoinSeed = await decrytQRCode(c, this._secondDeviceLoginResponse.initialMessageDecoded)
+        } catch(error: any) {
+            return this.resolveFail(ErrorType.DECRYPT, error.message)
+        }
+        return Promise.resolve(new ResponseBeanOk(this._secondDeviceLoginResponse))
     }
 
     /**
@@ -153,36 +80,15 @@ class VerificationtoolImplementation implements Verificationtool {
         if (!this._secondDeviceLoginResponse || !this._zkProof || !this._randomCoinSeed) {
             return this.resolveFail(ErrorType.INVALID_OPERATION)
         }
-        return axios.request({
-            baseURL: this.baseURL,
-            url: "/challenge",
-            method: "post",
-            headers: {
-                'Content-Type': 'application/json',
-                "AuthToken": this._secondDeviceLoginResponse.token
-            },
-            data: {
-                challenge: this._zkProof.e.toString(10),
-                challengeRandomCoin: this._zkProof.r.toString(10)
-            }
-        })
-        .then(async (response) => {
-            if (response.data.status != VerificationtoolImplementation.responseOk) {
-                return this.resolveFail(ErrorType.EXTERN, response.data.error)
-            }
-            try {
-                this._secondDeviceFinalMessage = SecondDeviceFinalMessage.fromJson(response.data.value)
-            } catch(error: any) {
-                return this.resolveFail(ErrorType.FORMAT, error.message)
-            }
-            if (!await checkZKP(this._secondDeviceLoginResponse!.initialMessageDecoded, this._secondDeviceFinalMessage, this._zkProof!, this._randomCoinSeed!)) {
-                return this.resolveFail(ErrorType.ZKP_INV)
-            }
-            return Promise.resolve(new ResponseBeanOk(this._secondDeviceFinalMessage))
-        })
-        .catch((error: any) => {
-            return Promise.resolve(this.resolveFail(ErrorType.CONNECTION, error.message))
-        })
+        const finalResponse = await this.comm.challenge(this._secondDeviceLoginResponse.token, this._zkProof) 
+        if (finalResponse.status == ResponseBean.errorStatus) {
+            return finalResponse
+        }
+        this._secondDeviceFinalMessage = (finalResponse as ResponseBeanOk<SecondDeviceFinalMessage>).value
+        if (!await checkZKP(this._secondDeviceLoginResponse!.initialMessageDecoded, this._secondDeviceFinalMessage, this._zkProof!, this._randomCoinSeed!)) {
+            return this.resolveFail(ErrorType.ZKP_INV)
+        }
+        return Promise.resolve(new ResponseBeanOk(this._secondDeviceFinalMessage))
     }
 
     /**
@@ -253,26 +159,4 @@ class VerificationtoolImplementation implements Verificationtool {
     }
 }
 
-class VerificationtoolMock implements Verificationtool {
-    public async loadElectionData(): Promise<ResponseBean<ElectionData>> {
-        const electionData = ElectionData.fromJson(data.electionData)
-        return Promise.resolve(new ResponseBeanOk<ElectionData>(electionData))
-    }
-    public async login(voterId: string, nonce: string, c: string, password: string) {
-        const loginResponse = SecondDeviceLoginResponse.fromJson(data.loginResponse)
-        return Promise.resolve(new ResponseBeanOk<SecondDeviceLoginResponse>(loginResponse))
-    }
-    public async finalMessage(): Promise<ResponseBeanOk<SecondDeviceFinalMessage>> {
-        const finalMessage = SecondDeviceFinalMessage.fromJson(data.finalMessage)
-        return Promise.resolve(new ResponseBeanOk<SecondDeviceFinalMessage>(finalMessage))
-    }
-    public async decodeBallot(): Promise<ResponseBeanOk<Uint8Array>> {
-        const ballot = new Uint8Array(data.decoded)
-        return Promise.resolve(new ResponseBeanOk<Uint8Array>(ballot))
-    }
-    public async getReceiptText(): Promise<ResponseBean<Array<string>>> {
-        return Promise.resolve(new ResponseBeanOk(data.receipt))
-    }
-}
-
-export {ResponseBean, ResponseBeanOk, ResponseBeanError, Verificationtool, VerificationtoolImplementation, VerificationtoolMock}
+export {Verificationtool}

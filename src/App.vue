@@ -7,10 +7,11 @@ import { I18n, Language } from './classes/basics';
 import { extractText, extractTextFromJson, State } from "./view/basic";
 import Verified from "./view/Verified.vue";
 import { ErrorType } from "./main/error";
-import { ResponseBean, ResponseBeanError, ResponseBeanOk, Verificationtool, VerificationtoolImplementation, VerificationtoolMock } from "./main/verifictiontool";
+import { ResponseBean, ResponseBeanError, ResponseBeanOk } from "./main/communication";
 import ErrorView from "./view/ErrorView.vue";
 import { EnvironmentVariables } from "./main/constants";
-const env = EnvironmentVariables.init()
+import { Verificationtool } from "./main/verifictiontool";
+let env: EnvironmentVariables = new EnvironmentVariables()
 const language = ref<Language|undefined>()
 let languages: Array<Language|undefined>
 const state = ref(State.LOADING)
@@ -24,11 +25,10 @@ const loginResponse = ref<SecondDeviceLoginResponse>()
 const result = ref<Uint8Array>()
 const receiptText = ref<Array<string>>()
 onMounted(async () => {
-  console.log(env)
+  env = EnvironmentVariables.init(import.meta.env.VITE_MODE)
   env.backendUrl = import.meta.env.VITE_BACKEND
-  env.mockMode = import.meta.env.VITE_MOCK == "true"
   env.fingerprint = import.meta.env.VITE_FINGERPRINT
-  console.log(env.fingerprint)
+  console.log(env.backendUrl)
   let urlParams = new URLSearchParams(window.location.search);
   if (!urlParams.has("c") || !urlParams.has("vid") || !urlParams.has("nonce")) {
     error.value = new ResponseBeanError(ErrorType.PARAMS)
@@ -44,7 +44,7 @@ onMounted(async () => {
 })
 
 async function loadData() {
-  verificationtool.value = env.mockMode ? new VerificationtoolMock() : new VerificationtoolImplementation()
+  verificationtool.value = new Verificationtool()
   const electionData = await verificationtool.value.loadElectionData()
   if (electionData.status == ResponseBean.okStatus) {
     language.value = undefined

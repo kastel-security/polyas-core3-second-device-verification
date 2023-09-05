@@ -49,8 +49,8 @@ onMounted(() => {
         :language="language"/>
     </div>
     <div class="invalid" v-if="ballot.showInvalidOption">
-        <label for="check">{{ extractTextFromJson(text.ballot.invalidOption, language) }}</label>
         <input type="checkbox" name="check" :checked="result[0]==1"/>
+        <label for="check">{{ extractTextFromJson(text.ballot.invalidOption, language) }}</label>
     </div>
     <div class="abstain" v-if="ballot.showAbstainOption">
         <label for="check">{{ extractTextFromJson(text.ballot.abstainOption, language) }}</label>
