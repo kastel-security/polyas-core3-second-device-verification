@@ -67,9 +67,8 @@ class VerificationtoolImplementation implements Verificationtool {
             url: "/electionData",
             method: "get",
             headers: {
-                'Access-Control-Allow-Origin': '*',
                 'Content-Type': 'application/json',
-              }
+            }
         })
         .then((response) => {
             try {
@@ -108,7 +107,6 @@ class VerificationtoolImplementation implements Verificationtool {
                 challengeCommitment: challenge 
             },
             headers: {
-                'Access-Control-Allow-Origin': '*',
                 'Content-Type': 'application/json',
             },
         })
@@ -160,7 +158,6 @@ class VerificationtoolImplementation implements Verificationtool {
             url: "/challenge",
             method: "post",
             headers: {
-                'Access-Control-Allow-Origin': '*',
                 'Content-Type': 'application/json',
                 "AuthToken": this._secondDeviceLoginResponse.token
             },
@@ -209,6 +206,7 @@ class VerificationtoolImplementation implements Verificationtool {
             }
         }
         if (this._decodedBallot.length != expectedLength) {
+    
             return Promise.resolve(new ResponseBeanError(ErrorType.DECODE))
         }
         return Promise.resolve(new ResponseBeanOk(this._decodedBallot))

@@ -2,7 +2,7 @@
 import { onMounted } from 'vue';
 import { ErrorType } from '../main/error';
 import { extractTextFromJson } from './basic';
-import text from "./text.json"
+import text from "./elements/text.json"
 import { Language } from '../classes/basics';
 defineEmits(['reset'])
 const props = defineProps<{
@@ -21,7 +21,7 @@ onMounted(() => {
 
 <template>
     <div class="error">
-        <h2>{{ extractTextFromJson(text.error.rejected, language) }}</h2>
+        <h2 class="fail">{{ extractTextFromJson(text.error.rejected, language) }}</h2>
     </div>
     <div class="cause">
         <h3 v-if="errorType==ErrorType.PARAMS">{{ extractTextFromJson(text.error.params, language) }}</h3>
@@ -45,7 +45,16 @@ onMounted(() => {
 
 <style scoped>
 .error{
+    max-width: 500pt;
+    min-height: 80pt;
+    padding: 0 12pt;
+    margin: auto auto 8rem auto;
+    line-height: 1.5;
     text-align: center;
+    background-color: #ff6666;
+    .fail{
+        padding-top: 5%;
+    }
 }
 .cause{
     text-align: center;

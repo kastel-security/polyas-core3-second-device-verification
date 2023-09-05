@@ -7,7 +7,7 @@
   "scripts": {
     "test": "jest",
     "dev": "vite --port 4300",
-    "mock": "vite --mode mock",
+    "mock": "vite --mode mock --port 4300",
     "build": "run-p type-check build-only",
     "preview": "vite preview",
     "build-only": "vite build"

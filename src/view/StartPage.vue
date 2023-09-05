@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue';
 import { I18n, Language } from '../classes/basics';
-import * as text from "./text.json"
+import * as text from "./elements/text.json"
 import { extractText, extractTextFromJson } from './basic';
     let passwordValue: string = ""
 

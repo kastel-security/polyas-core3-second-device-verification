@@ -3,7 +3,7 @@ import { onMounted, ref } from 'vue';
 import { Content, Language } from '../classes/basics';
 import ContentView from './ContentView.vue';
 import { CandidateSpec, ColumnProperties } from '../classes/ballot';
-import text from "./text.json"
+import text from "./elements/text.json"
 
 const props = defineProps<{
     candidate: CandidateSpec,

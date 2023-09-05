@@ -2,7 +2,7 @@
 import StartPage from "./view/StartPage.vue"
 import { onMounted, ref } from 'vue';
 import { ElectionData, SecondDeviceLoginResponse } from './classes/communication';
-import text from "./view/text.json"
+import text from "./view/elements/text.json"
 import { I18n, Language } from './classes/basics';
 import { extractText, extractTextFromJson, State } from "./view/basic";
 import Verified from "./view/Verified.vue";
@@ -99,9 +99,14 @@ function reset() {
 
 <template>
   <div id="all">
-  <div class="header">
-    <div class="select">
-      <label>{{ extractTextFromJson(text.header.language, language) }}</label>
+  <div id="header">
+    <div id="left">
+      <img class="kitlogo" src="./view/elements/kit_de.png"/>
+    </div>
+    <div id="center">
+      <h1>{{ extractTextFromJson(text.header.title, language) }}</h1>
+      <div class="select">
+      <label class="selectLabel">{{ extractTextFromJson(text.header.language, language) }}</label>
       <select 
       class="selectButton"
       v-model="language">
@@ -112,10 +117,11 @@ function reset() {
         :key="lang"
         :id="lang">{{ lang ? lang : "default" }}</option>
       </select>
-    </div>
-    <div class="title">
-      <h1>{{ extractTextFromJson(text.header.title, language) }}</h1>
+      </div>
       <h2>{{ extractTextFromJson(text.header.election, language) + extractText(title, language)}}</h2>
+    </div>
+    <div id="right">
+      <img class="kastellogo" src="./view/elements/kastel.png"/>
     </div>
   </div>
   <div class="main">
@@ -135,7 +141,7 @@ function reset() {
     :language="language"
     @reset="reset"/>
     <div v-else class="loading">
-      <img src="./view/Spinner-1s-200px.svg"/>
+      <img src="./view/elements/Spinner-1s-200px.svg"/>
     </div>
   </div>
   </div>
@@ -143,28 +149,61 @@ function reset() {
 
 <style scoped>
 
-.header {
-  margin-top: 22pt;
-  margin-bottom: 20pt;
-  padding-bottom: 20pt;
-  color: #000000;
+#header {
+  height: 100%;
+  width: 100%;
+  display: flex;
+}
+#left {
+  width: 20%;
+}
+#center {
+  width: 60%;
   text-align: center;
+}
+#right {
+  width: 20%;
+  text-align: right;
+}
 
-  .title {
+.title {
   font-size: 20px;
   font-weight: 600;
   margin:6pt;
   padding: 0 12pt;
 }
+.kitlogo{
+  margin-left: 2rem;
+  margin-top: 1rem;
+  width: 10rem;
+  min-width: 3.3cm;
+}
+.kastellogo{
+  margin-right: 2rem;
+  margin-top: 1rem;
+  width: 10rem;
 }
 
-.select {
+.select{
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   justify-content: flex-end;
-  margin-top: 0.5rem !important;
-  margin-right: 1.5rem !important;
+  .selectButton{
+    margin-right: 1.5rem;
+  }
+  .selectLabel{
+    margin-right: 1.5rem;
+  }
+}
+
+.selectbck {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-end;
+  margin-top: 1.5em !important;
+  margin-right: 18rem !important;
   position: absolute;
   right: 0;
 

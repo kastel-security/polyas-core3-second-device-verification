@@ -4,7 +4,7 @@ import { Content, ImageRef, Language, I18n} from '../classes/basics';
 import { extractGeneric, extractText, extractTextFromJson } from './basic';
 import BallotView from './BallotView.vue';
 
-import text from "./text.json"
+import text from "./elements/text.json"
 import ContentView from './ContentView.vue';
 import { SecondDeviceLoginResponse } from '../classes/communication';
 import { onMounted, ref } from 'vue';

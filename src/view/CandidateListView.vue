@@ -4,7 +4,7 @@ import { CandidateList } from '../classes/ballot';
 import { Content, I18n, Language } from '../classes/basics';
 import ContentView from './ContentView.vue';
 import { extractText, extractTextFromJson } from './basic';
-import text from "./text.json"
+import text from "./elements/text.json"
 import CandidateView from './CandidateView.vue';
 
 const props = defineProps<{

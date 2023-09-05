@@ -5,7 +5,7 @@ import { Language } from '../classes/basics';
 import { extractText, extractTextFromJson } from './basic';
 import CandidateListView from './CandidateListView.vue'
 import ContentView from './ContentView.vue';
-import text from "./text.json"
+import text from "./elements/text.json"
 
 const listResults = ref(new Map<String, Uint8Array>())
 const rendered = ref(false)

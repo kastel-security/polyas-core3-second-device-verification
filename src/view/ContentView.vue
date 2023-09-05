@@ -2,7 +2,7 @@
 import { Content, ContentRichText, ContentText, CustomDocument, Language } from '../classes/basics';
 import NodeView from './NodeView.vue';
 import { extractText, extractGeneric } from './basic';
-import text from "./text.json"
+import text from "./elements/text.json"
 
 const props = defineProps<{
     content: Content
