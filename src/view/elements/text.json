@@ -121,7 +121,7 @@
             }
         },
         "rejected": {
-            "default": "Your ballot could not verified",
+            "default": "Your ballot could not be verified",
             "value": {
                 "DE": "Ihr Stimmzettel konnte nicht verifiziert werden"
             }

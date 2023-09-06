@@ -43,27 +43,3 @@ Then run
 ```bash
 npm run dev
 ```
-
-
-
-
-## Executing
-### Executing the tool in command line
-```bash
-python src/verificationtool.py [-s | --second-device] [-r | --receipt] [--log] [-l | --language lang] src
-src: Absolute path to election files
--s, --second-device: Check second device public parameters in file src/second-device-public-parameters.json
--r, --receipt: Check ballot cast confirmation files (receipts) in src/receipts
---log: Log the status of ballots for all checked ballot cast confirmations
--l, --language: Sets the preferred language. Texts that are available will be displayed in the preferred language, other texts will be displayed in the default language
-
-```
-
-## Deployment
-To deploy the application on a server such as ngix or apache, that server first needs to be configured as a proxy To forward certain requests to the Polyas instance. The URL paths <server>/electionData, <server>/login and <server>/challenge must forward to <polyas>/electionData, <polyas>/login, <polyas>/challenge where <backend> is the url the application is going to run at and <polyas> ist the url of the Polyas instance.
-Open the file env and set VITE_BACKEND to the url where your application will be running and set VITE_FINGERPRINT to the election fingerprint your apllication will be running for.
-Then run
-```bash
-npm run build-only
-```
-The build output will be in folder dist

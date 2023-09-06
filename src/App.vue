@@ -101,7 +101,7 @@ function reset() {
   <div id="all">
   <div id="header">
     <div id="left">
-      <img class="kitlogo" src="./view/elements/kit_de.png"/>
+      <img class="kitlogo" src="./view/elements/Logo_KIT.svg"/>
     </div>
     <div id="center">
       <h1>{{ extractTextFromJson(text.header.title, language) }}</h1>
@@ -153,6 +153,7 @@ function reset() {
   height: 100%;
   width: 100%;
   display: flex;
+  font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 #left {
   width: 20%;
@@ -160,17 +161,12 @@ function reset() {
 #center {
   width: 60%;
   text-align: center;
+  font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 #right {
   width: 20%;
   text-align: right;
-}
-
-.title {
-  font-size: 20px;
-  font-weight: 600;
-  margin:6pt;
-  padding: 0 12pt;
+  font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 .kitlogo{
   margin-left: 2rem;
@@ -214,6 +210,7 @@ function reset() {
   padding: 0 12pt;
   margin: auto auto 8rem auto;
   line-height: 1.5;
+  font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
 .loading {
