@@ -16,10 +16,10 @@
   "license": "ISC",
   "keywords": [],
   "dependencies": {
-    "@noble/secp256k1": "^2.0.0",
     "axios": "^1.4.0",
     "jspdf": "^2.5.1",
-    "vue": "^3.3.4"
+    "vue": "^3.3.4",
+    "@noble/secp256k1": "^2.0.0"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.22.7",
