@@ -1,19 +1,19 @@
 <script setup lang="ts">
-import StartPage from "./view/StartPage.vue"
-import { onMounted, ref } from 'vue';
-import { ElectionData, SecondDeviceLoginResponse } from './classes/communication';
-import text from "./view/elements/text.json"
-import { I18n, Language } from './classes/basics';
-import { extractText, extractTextFromJson, State } from "./view/basic";
-import Verified from "./view/Verified.vue";
-import { ErrorType } from "./main/error";
-import { ResponseBean, ResponseBeanError, ResponseBeanOk } from "./main/communication";
-import ErrorView from "./view/ErrorView.vue";
-import { EnvironmentVariables } from "./main/constants";
-import { Verificationtool } from "./main/verifictiontool";
+import StartPage from './view/StartPage.vue'
+import { onMounted, ref } from 'vue'
+import { type ElectionData, type SecondDeviceLoginResponse } from './classes/communication'
+import text from './view/elements/text.json'
+import { type I18n, type Language } from './classes/basics'
+import { extractText, extractTextFromJson, State } from './view/basic'
+import VerifiedView from './view/VerifiedView.vue'
+import { ErrorType } from './main/error'
+import { ResponseBean, ResponseBeanError, type ResponseBeanOk } from './main/communication'
+import ErrorView from './view/ErrorView.vue'
+import { EnvironmentVariables } from './main/constants'
+import { Verificationtool } from './main/verifictiontool'
 let env: EnvironmentVariables = new EnvironmentVariables()
-const language = ref<Language|undefined>()
-let languages: Array<Language|undefined>
+const language = ref<Language | undefined>()
+let languages: Array<Language | undefined>
 const state = ref(State.LOADING)
 const error = ref(new ResponseBeanError(ErrorType.OTHER))
 const voterId = ref<string>()
@@ -23,32 +23,32 @@ const verificationtool = ref<Verificationtool>()
 const title = ref<I18n<string>>()
 const loginResponse = ref<SecondDeviceLoginResponse>()
 const result = ref<Uint8Array>()
-const receiptText = ref<Array<string>>()
+const receiptText = ref<string[]>()
 onMounted(async () => {
   env = EnvironmentVariables.init(import.meta.env.VITE_MODE)
   env.backendUrl = import.meta.env.VITE_BACKEND
   env.fingerprint = import.meta.env.VITE_FINGERPRINT
   console.log(env.backendUrl)
-  let urlParams = new URLSearchParams(window.location.search);
-  if (!urlParams.has("c") || !urlParams.has("vid") || !urlParams.has("nonce")) {
+  const urlParams = new URLSearchParams(window.location.search)
+  if (!urlParams.has('c') || !urlParams.has('vid') || !urlParams.has('nonce')) {
     error.value = new ResponseBeanError(ErrorType.PARAMS)
     state.value = State.ERROR
     language.value = undefined
-    languages = ["DE", "EN", undefined]
+    languages = ['DE', 'EN', undefined]
     return
   }
-  voterId.value = urlParams.get("vid")!
-  nonce.value = urlParams.get("nonce")!
-  c.value = urlParams.get("c")!
-  loadData()
+  voterId.value = urlParams.get('vid') as string
+  nonce.value = urlParams.get('nonce') as string
+  c.value = urlParams.get('c') as string
+  await loadData()
 })
 
-async function loadData() {
+async function loadData (): Promise<void> {
   verificationtool.value = new Verificationtool()
   const electionData = await verificationtool.value.loadElectionData()
-  if (electionData.status == ResponseBean.okStatus) {
+  if (electionData.status === ResponseBean.okStatus) {
     language.value = undefined
-    languages = new Array(...(electionData as ResponseBeanOk<ElectionData>).value.languages, undefined)
+    languages = [...(electionData as ResponseBeanOk<ElectionData>).value.languages, undefined]
     title.value = (electionData as ResponseBeanOk<ElectionData>).value.title
     state.value = State.LOGIN
   } else {
@@ -57,43 +57,48 @@ async function loadData() {
   }
 }
 
-async function login(password: string) {
+async function login (password: string): Promise<void> {
   console.log(password)
-  state.value = State.LOADING
-  const login = await verificationtool.value!.login(voterId.value!, nonce.value!, password, c.value!)
-  if(login.status == ResponseBean.errorStatus) {
+  if (verificationtool.value === undefined || voterId.value === undefined || nonce.value === undefined || c.value === undefined) {
+    error.value = new ResponseBeanError(ErrorType.OTHER)
     state.value = State.ERROR
-    error.value = login as ResponseBeanError
-    return;
+  } else {
+    state.value = State.LOADING
+    const login = await verificationtool.value.login(voterId.value, nonce.value, password, c.value)
+    if (login.status === ResponseBean.errorStatus) {
+      state.value = State.ERROR
+      error.value = login as ResponseBeanError
+      return
+    }
+    loginResponse.value = (login as ResponseBeanOk<SecondDeviceLoginResponse>).value
+    const finalMessage = await verificationtool.value.finalMessage()
+    if (finalMessage.status === ResponseBean.errorStatus) {
+      state.value = State.ERROR
+      error.value = finalMessage as ResponseBeanError
+      return
+    }
+    const res = await verificationtool.value.decodeBallot()
+    if (res.status === ResponseBean.errorStatus) {
+      state.value = State.ERROR
+      error.value = res as ResponseBeanError
+      return
+    }
+    result.value = (res as ResponseBeanOk<Uint8Array>).value
+    const receipt = await verificationtool.value.getReceiptText()
+    if (receipt.status === ResponseBean.errorStatus) {
+      state.value = State.ERROR
+      error.value = receipt as ResponseBeanError
+      return
+    }
+    receiptText.value = (receipt as ResponseBeanOk<string[]>).value
+    state.value = State.VERIFIED
   }
-  loginResponse.value = (login as ResponseBeanOk<SecondDeviceLoginResponse>).value
-  const finalMessage = await verificationtool.value!.finalMessage()
-  if(finalMessage.status == ResponseBean.errorStatus) {
-    state.value = State.ERROR
-    error.value = finalMessage as ResponseBeanError
-    return;
-  }
-  const res = await verificationtool.value!.decodeBallot()
-  if(res.status == ResponseBean.errorStatus) {
-    state.value = State.ERROR
-    error.value = res as ResponseBeanError
-    return;
-  }
-  result.value = (res as ResponseBeanOk<Uint8Array>).value
-  const receipt = await verificationtool.value!.getReceiptText()
-  if(receipt.status == ResponseBean.errorStatus) {
-    state.value = State.ERROR
-    error.value = receipt as ResponseBeanError
-    return;
-  }
-  receiptText.value = (receipt as ResponseBeanOk<string[]>).value
-  state.value = State.VERIFIED
 }
 
-function reset() {
+async function reset (): Promise<void> {
   error.value = new ResponseBeanError(ErrorType.OTHER)
   state.value = State.LOADING
-  loadData()
+  await loadData()
 }
 </script>
 
@@ -107,7 +112,7 @@ function reset() {
       <h1>{{ extractTextFromJson(text.header.title, language) }}</h1>
       <div class="select">
       <label class="selectLabel">{{ extractTextFromJson(text.header.language, language) }}</label>
-      <select 
+      <select
       class="selectButton"
       v-model="language">
         {{ language ? language : "default" }}
@@ -125,10 +130,10 @@ function reset() {
     </div>
   </div>
   <div class="main">
-    <StartPage 
+    <StartPage
     v-if="state == State.LOGIN"
     :language="language" :voterId="voterId!" @login="(password) => login(password)"/>
-    <Verified
+    <VerifiedView
     v-else-if="state==State.VERIFIED"
     :loginResponse="loginResponse!"
     :result="result!"
@@ -136,7 +141,7 @@ function reset() {
     :receipt-text="receiptText!"/>
     <ErrorView
     v-else-if="state==State.ERROR"
-    :errorType="error.error"
+    :errorType="error.errorType"
     :message="error.message"
     :language="language"
     @reset="reset"/>

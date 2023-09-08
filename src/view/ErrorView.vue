@@ -1,44 +1,44 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
-import { ErrorType } from '../main/error';
-import { extractTextFromJson } from './basic';
-import text from "./elements/text.json"
-import { Language } from '../classes/basics';
+import { onMounted } from 'vue'
+import { ErrorType } from '../main/error'
+import { extractTextFromJson } from './basic'
+import text from './elements/text.json'
+import { type Language } from '../classes/basics'
 defineEmits(['reset'])
 const props = defineProps<{
-    errorType: ErrorType,
-    language: Language|undefined
-    message?: string
+  errorType: ErrorType
+  language: Language | undefined
+  message?: string
 }>()
 
 onMounted(() => {
-    console.log(props.errorType)
-    if (props.message) {
-        console.log(props.message)
-    }
+  console.log(props.errorType)
+  if (props.message !== undefined) {
+    console.log(props.message)
+  }
 })
 </script>
 
 <template>
     <div class="error">
-        <h2 class="fail">{{ extractTextFromJson(text.error.rejected, language) }}</h2>
+        <h2 class="fail">{{ extractTextFromJson(text.error.rejected, props.language) }}</h2>
     </div>
     <div class="cause">
-        <h3 v-if="errorType==ErrorType.PARAMS">{{ extractTextFromJson(text.error.params, language) }}</h3>
-        <h3 v-else-if="errorType==ErrorType.CONNECTION">{{ extractTextFromJson(text.error.connection, language) }}</h3>
-        <h3 v-else-if="errorType==ErrorType.EXTERN">{{ extractTextFromJson(text.error.extern, language) }}</h3>
-        <h3 v-else-if="errorType==ErrorType.BALLOT_ACK||errorType==ErrorType.BALLOT_ACK_FAIL">{{ extractTextFromJson(text.error.ack, language) }}</h3>
-        <h3 v-else-if="errorType==ErrorType.DECRYPT">{{ extractTextFromJson(text.error.decrypt, language) }}</h3>
-        <h3 v-else-if="errorType==ErrorType.FORMAT">{{ extractTextFromJson(text.error.format, language) }}</h3>
-        <h3 v-else-if="errorType==ErrorType.SDPP">{{ extractTextFromJson(text.error.sdpp, language) }}</h3>
-        <h3 v-else-if="errorType==ErrorType.ZKP_INV">{{ extractTextFromJson(text.error.zkp_inv, language) }}</h3>
-        <h3 v-else>{{ extractTextFromJson(text.error.other, language) }}</h3>
+        <h3 v-if="props.errorType==ErrorType.PARAMS">{{ extractTextFromJson(text.error.params, props.language) }}</h3>
+        <h3 v-else-if="props.errorType==ErrorType.CONNECTION">{{ extractTextFromJson(text.error.connection, props.language) }}</h3>
+        <h3 v-else-if="props.errorType==ErrorType.EXTERN">{{ extractTextFromJson(text.error.extern, props.language) }}</h3>
+        <h3 v-else-if="props.errorType==ErrorType.BALLOT_ACK||props.errorType==ErrorType.BALLOT_ACK_FAIL">{{ extractTextFromJson(text.error.ack, props.language) }}</h3>
+        <h3 v-else-if="props.errorType==ErrorType.DECRYPT">{{ extractTextFromJson(text.error.decrypt, props.language) }}</h3>
+        <h3 v-else-if="props.errorType==ErrorType.FORMAT">{{ extractTextFromJson(text.error.format, props.language) }}</h3>
+        <h3 v-else-if="props.errorType==ErrorType.SDPP">{{ extractTextFromJson(text.error.sdpp, props.language) }}</h3>
+        <h3 v-else-if="props.errorType==ErrorType.ZKP_INV">{{ extractTextFromJson(text.error.zkp_inv, props.language) }}</h3>
+        <h3 v-else>{{ extractTextFromJson(text.error.other, props.language) }}</h3>
     </div>
     <div class = "action">
-        <button 
-        v-if="errorType==ErrorType.EXTERN||errorType==ErrorType.FORMAT||errorType==ErrorType.CONNECTION||errorType==ErrorType.OTHER"
+        <button
+        v-if="props.errorType==ErrorType.EXTERN||props.errorType==ErrorType.FORMAT||props.errorType==ErrorType.CONNECTION||props.errorType==ErrorType.OTHER"
         @click="$emit('reset')">
-            {{ extractTextFromJson(text.error.reset, language) }}
+            {{ extractTextFromJson(text.error.reset, props.language) }}
         </button>
     </div>
 </template>
