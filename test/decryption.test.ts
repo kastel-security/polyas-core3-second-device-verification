@@ -3,12 +3,13 @@ import {SecondDeviceFinalMessage, SecondDeviceLoginResponse} from "../src/classe
 import { aesDecrypt, checkSecondDeviceParameters, checkZKP, decryptBallot, decrytQRCode, generateComKey2 } from "../src/algorithms/decryption"
 import { getBallotAsNormalizedBytestring } from "../src/algorithms/signature"
 import { bufToHex, hexToBuf } from "../src/main/utils"
-import { generateSecretProof} from "../src/algorithms/proof"
 import crypto from "crypto"
 import { EnvironmentVariables } from "../src/main/constants"
+import { ProofGeneratorMock } from "../src/algorithms/proof"
 
 const loginResponse = SecondDeviceLoginResponse.fromJson(data.loginResponse)
 const randomCoinSeed = "1e89b5f95deae82f6f823b52709117405f057783eda018d72cbd83141d394fbd"
+
 
 Object.defineProperty(globalThis, 'crypto', {
   value: {
@@ -16,6 +17,7 @@ Object.defineProperty(globalThis, 'crypto', {
     subtle: crypto.subtle
   }
 });
+
 EnvironmentVariables.init("test").fingerprint = "b7e8e76c369d6a9ca268e40cde8347ac443040d6c4a1df3035744ace05b94e00849abf083ae5baa8fee462a723823054858387ec35462a49f93c2ea40b2fc876"
 
 test("test checkSecondDevicePublicParameter", async () => {
@@ -49,7 +51,7 @@ test("test checkZKP", async () => {
     const final = SecondDeviceFinalMessage.fromJson(data.finalMessage)
     const e = "108039209026641834721998202775536164454916176078442584841940316235417705823230"
     const r = "44267717001895006656767798790813376597351395807170189462353830054915294464906"
-    const proof = generateSecretProof(BigInt(e), BigInt(r))
+    const proof = (new ProofGeneratorMock(BigInt(e), BigInt(r))).generateProof()
     const randomCoinSeedArray = hexToBuf(randomCoinSeed)
     const valid = await  checkZKP(init, final, proof, randomCoinSeedArray)
     expect(valid).toBe(true)

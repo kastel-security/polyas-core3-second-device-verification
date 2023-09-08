@@ -1,5 +1,4 @@
 import {ProofGeneratorImpl, ProofGeneratorMock} from "../src/algorithms/proof"
-import data from "../src/mock/data.json"
 import crypto from "crypto"
 
 Object.defineProperty(globalThis, 'crypto', {

@@ -1,6 +1,6 @@
 import data from "../src/mock/data.json"
 import axios from "axios"
-import * as proof from "../src/algorithms/proof"
+//import * as proof from "../src/algorithms/proof"
 import * as decrypt from "../src/algorithms/decryption"
 import * as sign from "../src/algorithms/signature"
 import { hexToBuf } from "../src/main/utils"
@@ -14,12 +14,12 @@ import crypto from "crypto"
 EnvironmentVariables.init("test").fingerprint = "b7e8e76c369d6a9ca268e40cde8347ac443040d6c4a1df3035744ace05b94e00849abf083ae5baa8fee462a723823054858387ec35462a49f93c2ea40b2fc876"
 EnvironmentVariables.instance.comm = new Comm()
 const mockedAxios = jest.spyOn(axios, 'request')
-const mockedProof = jest.spyOn(proof, 'generateRandomProof')
+//const mockedProof = jest.spyOn(proof, 'generateRandomProof')
 const mockedDecrypt = jest.spyOn(decrypt, 'decrytQRCode')
 const randomCoinSeed = "1e89b5f95deae82f6f823b52709117405f057783eda018d72cbd83141d394fbd"
 const e = BigInt("108039209026641834721998202775536164454916176078442584841940316235417705823230")
 const r = BigInt("44267717001895006656767798790813376597351395807170189462353830054915294464906")
-const secProof = proof.generateSecretProof(e, r)
+//const secProof = proof.generateSecretProof(e, r)
 
 Object.defineProperty(globalThis, 'crypto', {
     value: {
@@ -72,7 +72,7 @@ async function validAxios(request: any) {
 
 beforeEach(() => {
     mockedAxios.mockImplementation(validAxios)
-    mockedProof.mockReturnValue(secProof)
+    //mockedProof.mockReturnValue(secProof)
     mockedDecrypt.mockResolvedValue(hexToBuf(randomCoinSeed))
 })
 
@@ -118,18 +118,18 @@ test("test invalid format", async () => {
     mockedAxios.mockResolvedValueOnce(invalidResponseData)
     const electionData = await verificationtool.loadElectionData()
     expect(electionData.status).toBe("ERROR")
-    expect((electionData as ResponseBeanError).error).toBe(ErrorType.FORMAT)
+    expect((electionData as ResponseBeanError).errorType).toBe(ErrorType.FORMAT)
 
     mockedAxios.mockResolvedValueOnce(invalidResponse)
     const login = await verificationtool.login(data.vid, data.nonce, data.password, data.c)
     expect(login.status).toBe("ERROR")
-    expect((login as ResponseBeanError).error).toBe(ErrorType.FORMAT)
+    expect((login as ResponseBeanError).errorType).toBe(ErrorType.FORMAT)
 
     await verificationtool.login(data.vid, data.nonce, data.password, data.c)
     mockedAxios.mockResolvedValueOnce(invalidResponse)
     const final = await verificationtool.finalMessage()
     expect(final.status).toBe("ERROR")
-    expect((final as ResponseBeanError).error).toBe(ErrorType.FORMAT)
+    expect((final as ResponseBeanError).errorType).toBe(ErrorType.FORMAT)
 })
 
 test("test backend error", async () => {
@@ -145,13 +145,13 @@ test("test backend error", async () => {
     mockedAxios.mockResolvedValueOnce(invalidResponse)
     const login = await verificationtool.login(data.vid, data.nonce, data.password, data.c)
     expect(login.status).toBe("ERROR")
-    expect((login as ResponseBeanError).error).toBe(ErrorType.EXTERN)
+    expect((login as ResponseBeanError).errorType).toBe(ErrorType.EXTERN)
 
     await verificationtool.login(data.vid, data.nonce, data.password, data.c)
     mockedAxios.mockResolvedValueOnce(invalidResponse)
     const final = await verificationtool.finalMessage()
     expect(final.status).toBe("ERROR")
-    expect((final as ResponseBeanError).error).toBe(ErrorType.EXTERN)
+    expect((final as ResponseBeanError).errorType).toBe(ErrorType.EXTERN)
 })
 
 test("invalid sdpp", async () => {
@@ -160,7 +160,7 @@ test("invalid sdpp", async () => {
     const verificationtool = new Verificationtool()
     const login = await verificationtool.login(data.vid, data.nonce, data.password, data.c)
     expect(login.status).toBe("ERROR")
-    expect((login as ResponseBeanError).error).toBe(ErrorType.SDPP)
+    expect((login as ResponseBeanError).errorType).toBe(ErrorType.SDPP)
     expect((login as ResponseBeanError).message).not.toBeDefined()
 })
 
@@ -170,7 +170,7 @@ test("test signature error", async () => {
     const verificationtool = new Verificationtool()
     const login = await verificationtool.login(data.vid, data.nonce, data.password, data.c)
     expect(login.status).toBe("ERROR")
-    expect((login as ResponseBeanError).error).toBe(ErrorType.BALLOT_ACK_FAIL)
+    expect((login as ResponseBeanError).errorType).toBe(ErrorType.BALLOT_ACK_FAIL)
     expect((login as ResponseBeanError).message).toBe("test")
 })
 
@@ -180,7 +180,7 @@ test("test signature fail", async () => {
     const verificationtool = new Verificationtool()
     const login = await verificationtool.login(data.vid, data.nonce, data.password, data.c)
     expect(login.status).toBe("ERROR")
-    expect((login as ResponseBeanError).error).toBe(ErrorType.BALLOT_ACK)
+    expect((login as ResponseBeanError).errorType).toBe(ErrorType.BALLOT_ACK)
     expect((login as ResponseBeanError).message).not.toBeDefined()
 })
 
@@ -190,7 +190,7 @@ test("test qrDecrypt error", async () => {
     const verificationtool = new Verificationtool()
     const login = await verificationtool.login(data.vid, data.nonce, data.password, data.c)
     expect(login.status).toBe("ERROR")
-    expect((login as ResponseBeanError).error).toBe(ErrorType.DECRYPT)
+    expect((login as ResponseBeanError).errorType).toBe(ErrorType.DECRYPT)
     expect((login as ResponseBeanError).message).toBe("test")
 })
 
@@ -201,7 +201,7 @@ test("test checkZKP fail", async() => {
     await verificationtool.login(data.vid, data.nonce, data.password, data.c)
     const final = await verificationtool.finalMessage()
     expect(final.status).toBe("ERROR")
-    expect((final as ResponseBeanError).error).toBe(ErrorType.ZKP_INV)
+    expect((final as ResponseBeanError).errorType).toBe(ErrorType.ZKP_INV)
     expect((final as ResponseBeanError).message).not.toBeDefined()
 })
 
@@ -209,12 +209,12 @@ test("test invalid order", async() => {
     const verificationtool = new Verificationtool()
     const final = await verificationtool.finalMessage()
     expect(final.status).toBe("ERROR")
-    expect((final as ResponseBeanError).error).toBe(ErrorType.INVALID_OPERATION)
+    expect((final as ResponseBeanError).errorType).toBe(ErrorType.INVALID_OPERATION)
     expect((final as ResponseBeanError).message).not.toBeDefined()
 
     const decode = await verificationtool.decodeBallot()
     expect(decode.status).toBe("ERROR")
-    expect((decode as ResponseBeanError).error).toBe(ErrorType.INVALID_OPERATION)
+    expect((decode as ResponseBeanError).errorType).toBe(ErrorType.INVALID_OPERATION)
     expect((decode as ResponseBeanError).message).not.toBeDefined()
 })
 
@@ -224,7 +224,7 @@ test("test error in fullLogin in login", async () => {
     const verificationtool = new Verificationtool()
     const login = await verificationtool.fullLogin(data.vid, data.nonce, data.password, data.c)
     expect(login.status).toBe("ERROR")
-    expect((login as ResponseBeanError).error).toBe(ErrorType.SDPP)
+    expect((login as ResponseBeanError).errorType).toBe(ErrorType.SDPP)
     expect((login as ResponseBeanError).message).not.toBeDefined()
 })
 
@@ -234,7 +234,7 @@ test("test error in fullLogin in finalMessage", async () => {
     const verificationtool = new Verificationtool()
     const final = await verificationtool.fullLogin(data.vid, data.nonce, data.password, data.c)
     expect(final.status).toBe("ERROR")
-    expect((final as ResponseBeanError).error).toBe(ErrorType.ZKP_INV)
+    expect((final as ResponseBeanError).errorType).toBe(ErrorType.ZKP_INV)
     expect((final as ResponseBeanError).message).not.toBeDefined()
 })
 
@@ -243,5 +243,5 @@ test("test connection error in fullLogin", async() => {
     const verificationtool = new Verificationtool()
     const loginFail = await verificationtool.fullLogin(data.vid, data.nonce, data.password, data.c)
     expect(loginFail.status).toBe(ResponseBean.errorStatus)
-    expect((loginFail as ResponseBeanError).error).toBe(ErrorType.CONNECTION)
+    expect((loginFail as ResponseBeanError).errorType).toBe(ErrorType.CONNECTION)
 })
