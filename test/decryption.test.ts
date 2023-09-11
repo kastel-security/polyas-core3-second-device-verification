@@ -6,10 +6,8 @@ import { bufToHex, hexToBuf } from "../src/main/utils"
 import crypto from "crypto"
 import { EnvironmentVariables } from "../src/main/constants"
 import { ProofGeneratorMock } from "../src/algorithms/proof"
-
 const loginResponse = SecondDeviceLoginResponse.fromJson(data.loginResponse)
 const randomCoinSeed = "1e89b5f95deae82f6f823b52709117405f057783eda018d72cbd83141d394fbd"
-
 
 Object.defineProperty(globalThis, 'crypto', {
   value: {

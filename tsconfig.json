@@ -5,7 +5,7 @@
     "moduleResolution": "Node",
     "module": "ES2022",
     "resolveJsonModule": true,
-    "types": ["jest"],
+    "types": ["jest", "node"],
     "target": "ES2022",
     "lib": ["ES2022", "DOM"],
     "strictNullChecks": true,
