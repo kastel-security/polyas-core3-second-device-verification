@@ -1,6 +1,6 @@
 # Polyas-Verifier
 
-Polyas-Verifier is a web application for the individual second-device verification of the [POLYAS](https://www.polyas.com/) 3.0 E-Voting System for [individual verifiability](https://gi.de/wahlen/verifikation-der-gi-wahlen-tools-gesucht)] (cast-as-intended verification), see also the original [publication](https://publikationen.bibliothek.kit.edu/1000117999).
+Polyas-Verifier is a web application for the individual second-device verification of the [POLYAS](https://www.polyas.com/) 3.0 E-Voting System for [individual verifiability](https://gi.de/wahlen/verifikation-der-gi-wahlen-tools-gesucht) (cast-as-intended verification), see also the original [publication](https://publikationen.bibliothek.kit.edu/1000117999).
 The POLYAS 3.0 E-Voting System is used in the [elections for the executive and the managing committee](https://gi.de/wahlen/) of the [German Informatics Society](https://gi.de/) in autumn 2023.
 
 ## Requirements
