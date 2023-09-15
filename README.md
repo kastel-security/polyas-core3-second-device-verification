@@ -4,7 +4,7 @@ Polyas-Verifier is a web application for the individual second-device verificati
 The POLYAS 3.0 E-Voting System is used in the [elections for the executive and the managing committee](https://gi.de/wahlen/) of the [German Informatics Society](https://gi.de/) in autumn 2023.
 
 ## Deployment
-### Requirements
+### Requirement
 * [Node.js](https://nodejs.org/en)
 
 ### Installation
@@ -28,8 +28,8 @@ localhost:4300?c=vtWXj-YxxTV2ektefJ5pk7AWc9saoPbu6wJZUZ9R1t8ekU89x7SCYLcg8ODi3fH
 npm run t
 ```
 
-### Testing with a Real Instance
-For testing the application against a real Polyas instance, open ``.env.development`` and set ``VITE_BACKEND`` to the URL of your instance or a proxy to your instance.
+## Configuration of an Election Instance
+For testing the application against a real election instance, open ``.env.development`` and set ``VITE_BACKEND`` to the URL of your instance or a proxy to your instance.
 Set ``VITE_FINGERPRINT`` to the election fingerprint of the election running on your Polyas instance.
 If the URL provided by the instance for the individual (second device) verification links to a localhost port other than 4300, open ``package.json`` and change the line
 ```bash
@@ -44,24 +44,27 @@ Then run
 npm run dev
 ```
 
-### Deployment using Docker
-Requirements: Docker Desktop
-Edit the file docker-compose.yml and change values of keys under args
-FINGERPRINT: The fingerprint of the election the verificationtool is deployed for
-SERVER_NAME: The base URL the tool is running on and that has a valid SSL certificate
-URL: The URL the verificationtool will be available at
-POLYAS: The link to the polyas instance the election is running on
-ADMIN: Email of the server admin (Currently unused, so this does not need to be configured)
-CERT: relative path to server .crt certificate file, has to be under current location 
-KEY: relative path to server .key secret key file, has to be under current location 
+## Building a Docker Instance
+### Requirement
+* Docker Desktop
 
-Then run
+### Configuration
+Edit the file docker-compose.yml and change values of keys under args:
+* FINGERPRINT: The fingerprint of the election the verificationtool is deployed for
+* SERVER_NAME: The base URL the tool is running on and that has a valid SSL certificate
+* URL: The URL the verificationtool will be available at
+* POLYAS: The link to the polyas instance the election is running on
+* ADMIN: Email of the server admin (Currently unused, so this does not need to be configured)
+* CERT: relative path to server .crt certificate file, has to be under current location 
+* KEY: relative path to server .key secret key file, has to be under current location 
+
+### Build and Setup of the Instance
+Run
 ```
 docker compose build
 docker compose up -d
 ```
 to build and start the container
-
 
 ## Licence
 See [LICENSE](LICENSE)
