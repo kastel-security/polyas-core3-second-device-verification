@@ -7,9 +7,10 @@
   "scripts": {
     "test": "jest",
     "dev": "vite --port 4300",
-    "mock": "vite --mode mock --port 4300",
+    "mock": "vite --mode mock --port 4300 --VITE_FINGERPRINT=0",
     "preview": "vite preview",
     "build": "vite build",
+    "build-docker": "vue-tsc --declaration --emitDeclarationOnly && vite build",
     "lint": "eslint --ext .ts,.vue ./src/"
   },
   "author": "",

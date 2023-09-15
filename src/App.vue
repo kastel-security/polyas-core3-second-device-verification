@@ -25,10 +25,10 @@ const loginResponse = ref<SecondDeviceLoginResponse>()
 const result = ref<Uint8Array>()
 const receiptText = ref<string[]>()
 onMounted(async () => {
-  env = EnvironmentVariables.init(import.meta.env.VITE_MODE)
-  env.backendUrl = import.meta.env.VITE_BACKEND
-  env.fingerprint = import.meta.env.VITE_FINGERPRINT
-  console.log(env.backendUrl)
+  env = EnvironmentVariables.init((import.meta as any).env.VITE_MODE)
+  env.backendUrl = (import.meta as any).env.VITE_BACKEND
+  env.fingerprint = (import.meta as any).env.VITE_FINGERPRINT
+  console.log((import.meta as any).env.VITE_FINGERPRINT, "!!!!!!!")
   const urlParams = new URLSearchParams(window.location.search)
   if (!urlParams.has('c') || !urlParams.has('vid') || !urlParams.has('nonce')) {
     error.value = new ResponseBeanError(ErrorType.PARAMS)

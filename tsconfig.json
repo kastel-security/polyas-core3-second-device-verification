@@ -14,5 +14,6 @@
     "allowJs": true,
     "esModuleInterop": true,
     "composite": true,
+    "outDir": "dist"
   }
 }
