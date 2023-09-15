@@ -46,7 +46,7 @@ npm run dev
 
 ## Building a Docker Instance
 ### Requirement
-* Docker Desktop
+* [Docker Desktop](https://www.docker.com/products/docker-desktop/)
 
 ### Configuration
 Edit the file docker-compose.yml and change values of keys under args:
