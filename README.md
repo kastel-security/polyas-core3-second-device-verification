@@ -50,13 +50,13 @@ npm run dev
 
 ### Configuration
 Edit the file docker-compose.yml and change values of keys under args:
-* FINGERPRINT: The fingerprint of the election the verificationtool is deployed for
-* SERVER_NAME: The base URL the tool is running on and that has a valid SSL certificate
-* URL: The URL the verificationtool will be available at
-* POLYAS: The link to the polyas instance the election is running on
-* ADMIN: Email of the server admin (Currently unused, so this does not need to be configured)
-* CERT: relative path to server .crt certificate file, has to be under current location 
-* KEY: relative path to server .key secret key file, has to be under current location 
+* ``FINGERPRINT``: The fingerprint of the election the verificationtool is deployed for
+* ``SERVER_NAME``: The base URL the tool is running on and that has a valid SSL certificate
+* ``URL``: The URL the verificationtool will be available at
+* ``POLYAS``: The link to the polyas instance the election is running on
+* ``ADMIN``: Email of the server admin (Currently unused, so this does not need to be configured)
+* ``CERT``: relative path to server .crt certificate file, has to be under current location 
+* ``KEY``: relative path to server .key secret key file, has to be under current location 
 
 ### Build and Setup of the Instance
 Run
