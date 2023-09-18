@@ -28,7 +28,6 @@ onMounted(async () => {
   env = EnvironmentVariables.init((import.meta as any).env.VITE_MODE)
   env.backendUrl = (import.meta as any).env.VITE_BACKEND
   env.fingerprint = (import.meta as any).env.VITE_FINGERPRINT
-  console.log((import.meta as any).env.VITE_FINGERPRINT, "!!!!!!!")
   const urlParams = new URLSearchParams(window.location.search)
   if (!urlParams.has('c') || !urlParams.has('vid') || !urlParams.has('nonce')) {
     error.value = new ResponseBeanError(ErrorType.PARAMS)
