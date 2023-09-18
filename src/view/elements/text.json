@@ -32,7 +32,7 @@
         },
         "voterId": {
             "default": "Voter ID: ",
-            "value": {}
+            "value": {"DE": "Wähler:innen-ID"}
         }
     },
     "verified": {
@@ -81,7 +81,7 @@
         "download": {
             "default": "Download receipt",
             "value": {
-                "DE": "Bestätigung herunterladen."
+                "DE": "Bestätigung der Stimmabgabe herunterladen."
             }
         }
 
@@ -109,7 +109,7 @@
             "contentType": "TEXT",
             "value": {
                 "default": "unknown",
-                "value": {}
+                "value": {"DE": "unbekannt"}
             }
         }
     },

@@ -29,11 +29,11 @@ onMounted(async () => {
   env.backendUrl = (import.meta as any).env.VITE_BACKEND
   env.fingerprint = (import.meta as any).env.VITE_FINGERPRINT
   const urlParams = new URLSearchParams(window.location.search)
+  languages = ['DE', 'EN', undefined]
+  language.value='DE'
   if (!urlParams.has('c') || !urlParams.has('vid') || !urlParams.has('nonce')) {
     error.value = new ResponseBeanError(ErrorType.PARAMS)
     state.value = State.ERROR
-    language.value = undefined
-    languages = ['DE', 'EN', undefined]
     return
   }
   voterId.value = urlParams.get('vid') as string
