@@ -15,14 +15,14 @@ FROM nginx
 # ENTRYPOINT ["tail", "-f", "/dev/null"] # For debugging only
 ARG SERVER_NAME
 ARG ADMIN
-ARG POLYAS
+ARG INSTANCE
 ARG CERT
 ARG KEY
 COPY --from=builder /app/dist/ /usr/share/nginx/html/
 COPY docker/nginx.conf /etc/nginx/nginx.conf
 COPY docker/mime.types /etc/nginx/mime.types
 RUN SERVER_ESC=$(echo ${SERVER_NAME} | sed -r 's/\//\\\//g'); sed -i "s/##NAME##/${SERVER_ESC}/g" /etc/nginx/nginx.conf
-RUN POLYAS_ESC=$(echo ${POLYAS} | sed -r 's/\//\\\//g'); sed -i "s/##URL##/${POLYAS_ESC}/g" /etc/nginx/nginx.conf
+RUN INSTANCE_ESC=$(echo ${INSTANCE} | sed -r 's/\//\\\//g'); sed -i "s/##URL##/${INSTANCE_ESC}/g" /etc/nginx/nginx.conf
 RUN sed -i "s/##ADMIN##/${ADMIN}/g" /etc/nginx/nginx.conf
 
 COPY ${CERT} /etc/ssl/certs/second-device.crt

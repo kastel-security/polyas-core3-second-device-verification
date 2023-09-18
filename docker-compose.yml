@@ -8,11 +8,11 @@ services:
         FINGERPRINT: 0c25eedfed2d3d28b0c5dc819ee51bbed58abcc2427b85a9d567ce01c42816da47264c9208a516f18cd19cad82da0e43efc3fde66ab509c6aec173fa083fb89e
         SERVER_NAME: localhost
         URL: https://localhost
-        POLYAS: https://elections-k8s-dev.polyas.com/15d8e65f-1ccc-41a3-8fac-03361bc21979/ssd/rest
+        INSTANCE: https://elections-k8s-dev.polyas.com/15d8e65f-1ccc-41a3-8fac-03361bc21979/ssd/rest
         ADMIN: udqps@student.kit.edu
-        CERT: .docker-conf/my-site.crt 
+        CERT: .docker-conf/my-site.crt
         KEY: .docker-conf/my-site.key
       dockerfile: docker/Dockerfile
     ports:
-      - "443:443" 
+      - "443:443"
       - "80:80"
