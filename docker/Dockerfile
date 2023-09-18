@@ -7,9 +7,8 @@ COPY package*.json ./
 RUN npm ci
 
 COPY . ./
-RUN  sed "s/VITE_FINGERPRINT=[0-9a-f]*/VITE_FINGERPRINT=${FINGERPRINT}/g" /app/.env > /app/.env_tmp
-RUN  sed "s/VITE_BACKEND=[a-zA-Z0-9|.]*/VITE_BACKEND=${URL}/g" /app/.env_tmp > /app/.env
-RUN rm /app/.env_tmp
+RUN  sed -i "s/VITE_FINGERPRINT=[0-9a-f]*/VITE_FINGERPRINT=${FINGERPRINT}/g" /app/.env
+RUN URL_ESC=$(echo ${URL} | sed -r 's/\//\\\//g'); sed "s/VITE_BACKEND=[a-zA-Z0-9|.]*/VITE_BACKEND=${URL_ESC}/g" /app/.env
 RUN npm run build
 
 FROM nginx
@@ -22,10 +21,9 @@ ARG KEY
 COPY --from=builder /app/dist/ /usr/share/nginx/html/
 COPY docker/nginx.conf /etc/nginx/nginx.conf
 COPY docker/mime.types /etc/nginx/mime.types
-RUN sed "s/##NAME##/${SERVER_NAME}/g" /etc/nginx/nginx.conf > /etc/nginx/nginx_tmp.conf
-RUN sed "s/##URL##/${POLYAS}/g" /etc/nginx/nginx_tmp.conf > /etc/nginx/nginx.conf
-RUN sed "s/##ADMIN##/${ADMIN}/g" /etc/nginx/nginx.conf > /etc/nginx/nginx_tmp.conf
-RUN mv /etc/nginx/nginx_tmp.conf /etc/nginx/nginx.conf
+RUN SERVER_ESC=$(echo ${SERVER_NAME} | sed -r 's/\//\\\//g'); sed -i "s/##NAME##/${SERVER_ESC}/g" /etc/nginx/nginx.conf
+RUN POLYAS_ESC=$(echo ${POLYAS} | sed -r 's/\//\\\//g'); sed -i "s/##URL##/${POLYAS_ESC}/g" /etc/nginx/nginx.conf
+RUN sed -i "s/##ADMIN##/${ADMIN}/g" /etc/nginx/nginx.conf
 
 COPY ${CERT} /etc/ssl/certs/second-device.crt
 COPY ${KEY} /etc/ssl/private/second-device.key
