@@ -28,6 +28,7 @@ onMounted(async () => {
   env = EnvironmentVariables.init((import.meta as any).env.VITE_MODE)
   env.backendUrl = (import.meta as any).env.VITE_BACKEND
   env.fingerprint = (import.meta as any).env.VITE_FINGERPRINT
+  console.log('!!!', env.fingerprint)
   const urlParams = new URLSearchParams(window.location.search)
   languages = ['DE', 'EN', undefined]
   language.value = 'DE'
