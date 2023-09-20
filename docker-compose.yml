@@ -6,6 +6,7 @@ services:
       VITE_MODE: deploy
       VITE_BACKEND: http://localhost
       VITE_FINGERPRINT: 1
+      VITE_POLYAS: https://election.polyas.com/bcd5805a-3d1a-4bce-b958-4da9ca80254f/ssd/rest
    container_name: vite_docker
    entrypoint: /bin/sh
    ports:
