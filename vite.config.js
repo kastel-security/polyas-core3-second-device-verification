@@ -25,9 +25,8 @@ export default ({ mode }) => {
        },
        proxy: {
         '/electionData': {
-          target: path+'/electionData',
-          changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/api/, '')
+          target: 'https://election.polyas.com/bcd5805a-3d1a-4bce-b958-4da9ca80254f/ssd/rest/electionData',
+          changeOrigin: true
         },
         '/login': {
           target: path+'/login',
