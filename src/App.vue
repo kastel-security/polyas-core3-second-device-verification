@@ -164,11 +164,12 @@ async function reset (): Promise<void> {
   display: flex;
   font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
-#footer{
+#footer {
+  width: 100%;
   text-align: center;
   padding: 3px;
   height: 60px;
-  border-top: 1px solid #FFF;
+  background-color: #404040;
   bottom: 0;
   font-style: italic;
   font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
