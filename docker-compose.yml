@@ -7,8 +7,9 @@ services:
       VITE_BACKEND: http://localhost:5000
       VITE_FINGERPRINT: 1
    container_name: polyas-verifier
+   entrypoint: [/usr/local/bin/npm, run, dev]
    ports:
-     - 5000
+     - 5000:5000
    working_dir: /srv/app/polyas-verifier
    build:
     context: .
