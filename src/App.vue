@@ -150,7 +150,7 @@ async function reset (): Promise<void> {
       </div>
     </div>
     <div id="footer">
-      <a href="https://github.com/kastel-security/polyas-core3-second-device-verification">Polyas-Verifier</a> by KASTEL Security Research Labs at Karlsruhe Institute of Technology (KIT).
+      <a href="https://github.com/kastel-security/polyas-core3-second-device-verification">Polyas-Verifier</a> by KASTEL Security Research Labs &#64; Karlsruhe Institute of Technology (KIT).
     </div>
   </div>
 </template>
@@ -167,7 +167,7 @@ async function reset (): Promise<void> {
   text-align: center;
   padding: 3px;
   height: 60px;
-  border-top: thin solid #FFF;
+  border-top: 1px solid #FFF;
   bottom: 0;
   font-style: italic;
   font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
