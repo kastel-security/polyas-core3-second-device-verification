@@ -5,7 +5,7 @@ services:
    environment:
       VITE_MODE: deploy
       VITE_BACKEND: http://localhost:5000
-      VITE_FINGERPRINT: 1
+      VITE_FINGERPRINT: 10
    container_name: polyas-verifier
    entrypoint: [/usr/local/bin/npm, run, dev]
    ports:
