@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "jest",
-    "dev": "vite --port 4300",
+    "dev": "vite --port 5000",
     "mock": "vite --mode mock --port 4300",
     "preview": "vite preview",
     "build": "vite build",

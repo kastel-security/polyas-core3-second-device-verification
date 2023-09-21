@@ -1,19 +1,16 @@
-version: "3.4"
+version: "2.14.2"
 services:
  vite_docker:
    image: node:alpine
    environment:
       VITE_MODE: deploy
-      VITE_BACKEND: http://localhost:8080
+      VITE_BACKEND: http://localhost:5000
       VITE_FINGERPRINT: 1
-      VITE_POLYAS: https://election.polyas.com/bcd5805a-3d1a-4bce-b958-4da9ca80254f/ssd/rest
-   container_name: vite_docker
-   entrypoint: /bin/sh
+   container_name: polyas-verifier
    ports:
-     - 8080:4300
-   working_dir: /srv/app
-   volumes:
-     - type: bind
-       source: ./
-       target: /srv/app
+     - 5000
+   working_dir: /srv/app/polyas-verifier
+   build:
+    context: .
+    dockerfile: Dockerfile
    tty: true
