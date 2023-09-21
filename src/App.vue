@@ -104,51 +104,54 @@ async function reset (): Promise<void> {
 
 <template>
   <div id="all">
-  <div id="header">
-    <div id="left">
-      <img class="kitlogo" src="./view/elements/Logo_KIT.svg"/>
-    </div>
-    <div id="center">
-      <h1>{{ extractTextFromJson(text.header.title, language) }}</h1>
-      <div class="select">
-      <label class="selectLabel">{{ extractTextFromJson(text.header.language, language) }}</label>
-      <select
-      class="selectButton"
-      v-model="language">
-        {{ language ? language : "default" }}
-        <option
-        v-for="lang in languages"
-        :value="lang"
-        :key="lang"
-        :id="lang">{{ lang ? lang : "default" }}</option>
-      </select>
+    <div id="header">
+      <div id="left">
+        <img class="kitlogo" src="./view/elements/Logo_KIT.svg"/>
       </div>
-      <h2>{{ extractTextFromJson(text.header.election, language) + extractText(title, language)}}</h2>
+      <div id="center">
+        <h1>{{ extractTextFromJson(text.header.title, language) }}</h1>
+        <div class="select">
+          <label class="selectLabel">{{ extractTextFromJson(text.header.language, language) }}</label>
+          <select
+            class="selectButton"
+            v-model="language">
+            {{ language ? language : "default" }}
+            <option
+              v-for="lang in languages"
+              :value="lang"
+              :key="lang"
+              :id="lang">{{ lang ? lang : "default" }}</option>
+          </select>
+        </div>
+        <h2>{{ extractTextFromJson(text.header.election, language) + extractText(title, language)}}</h2>
+      </div>
+      <div id="right">
+        <img class="kastellogo" src="./view/elements/kastel.png"/>
+      </div>
     </div>
-    <div id="right">
-      <img class="kastellogo" src="./view/elements/kastel.png"/>
+    <div class="main">
+      <StartPage
+      v-if="state == State.LOGIN"
+      :language="language" :voterId="voterId!" @login="(password) => login(password)"/>
+      <VerifiedView
+      v-else-if="state==State.VERIFIED"
+      :loginResponse="loginResponse!"
+      :result="result!"
+      :language="language"
+      :receipt-text="receiptText!"/>
+      <ErrorView
+      v-else-if="state==State.ERROR"
+      :errorType="error.errorType"
+      :message="error.message"
+      :language="language"
+      @reset="reset"/>
+      <div v-else class="loading">
+        <img src="./view/elements/Spinner-1s-200px.svg"/>
+      </div>
     </div>
-  </div>
-  <div class="main">
-    <StartPage
-    v-if="state == State.LOGIN"
-    :language="language" :voterId="voterId!" @login="(password) => login(password)"/>
-    <VerifiedView
-    v-else-if="state==State.VERIFIED"
-    :loginResponse="loginResponse!"
-    :result="result!"
-    :language="language"
-    :receipt-text="receiptText!"/>
-    <ErrorView
-    v-else-if="state==State.ERROR"
-    :errorType="error.errorType"
-    :message="error.message"
-    :language="language"
-    @reset="reset"/>
-    <div v-else class="loading">
-      <img src="./view/elements/Spinner-1s-200px.svg"/>
+    <div id="footer">
+      <a href="https://github.com/kastel-security/polyas-core3-second-device-verification">Polyas-Verifier</a> by KASTEL Security Research Labs at Karlsruhe Institute of Technology (KIT).
     </div>
-  </div>
   </div>
 </template>
 

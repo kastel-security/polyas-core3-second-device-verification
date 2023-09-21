@@ -24,7 +24,7 @@ class Verificationtool {
   }
 
   /**
-     * Loads the general election data from the polyas server
+     * Loads the general election data from the election server
      * @returns A ResponseBean containing an object of type ElectionData or information about an error
      */
   public async loadElectionData (): Promise<ResponseBean<ElectionData>> {

@@ -30,7 +30,7 @@ npm run t
 
 ## Configuration of an Election Instance
 For testing the application against a real election instance, open ``.env.development`` and set ``VITE_BACKEND`` to the URL of your instance or a proxy to your instance.
-Set ``VITE_FINGERPRINT`` to the election fingerprint of the election running on your Polyas instance.
+Set ``VITE_FINGERPRINT`` to the election fingerprint of the election running on your election instance.
 If the URL provided by the instance for the individual (second device) verification links to a localhost port other than 4300, open ``package.json`` and change the line
 ```bash
 "dev": "vite --port 4300",
@@ -53,7 +53,7 @@ Edit the file docker-compose.yml and change values of keys under args:
 * ``FINGERPRINT``: The fingerprint of the election the verificationtool is deployed for
 * ``SERVER_NAME``: The base URL the tool is running on and that has a valid SSL certificate
 * ``URL``: The URL the verificationtool will be available at
-* ``INSTANCE``: The link to the polyas instance the election is running on
+* ``INSTANCE``: The link to the election instance the election is running on
 * ``ADMIN``: Email of the server admin (Currently unused, so this does not need to be configured)
 * ``CERT``: relative path to server .crt certificate file, has to be under current location 
 * ``KEY``: relative path to server .key secret key file, has to be under current location 

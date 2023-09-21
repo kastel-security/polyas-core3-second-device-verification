@@ -1,51 +1,51 @@
 {
     "header": {
         "title": {
-            "default": "Polyas second device verification tool",
+            "default": "Polyas Verifier",
             "value": {
-                "DE": "Polyas Second Device Verifizierungstool"
+                "DE": "Polyas-Verifier"
             }
         },
         "election": {
-            "default": "Election: ",
+            "default": "Election Title: ",
             "value": {
-                "DE": "Wahltitel: "
+                "DE": "Titel der Wahl: "
             }
         },
         "language": {
-            "default": "Select language: ",
+            "default": "Language selection: ",
             "value": {
                 "DE": "Sprachauswahl: "
-            } 
+            }
         }
     },
     "login": {
         "loginReq": {
-            "default": "Enter one time code",
+            "default": "Enter one-time password",
             "value": {
-                "DE": "Einmalpassword eingeben"
+                "DE": "Einmalpasswort eingeben"
             }
         },
         "loginButton": {
             "default": "login",
-            "value": {}
+            "value": {"DE": "anmelden"}
         },
         "voterId": {
             "default": "Voter ID: ",
-            "value": {"DE": "Wähler:innen-ID"}
+            "value": {"DE": "Wähler:innen-ID: "}
         }
     },
     "verified": {
         "verified": {
-            "default": "Your ballot was successfully verified",
+            "default": "Your ballot has been successfully verified.",
             "value": {
-                "DE": "Ihr Stimmzettel wurde erfolgreich verifiziert"
+                "DE": "Ihr Stimmzettel wurde erfolgreich verifiziert."
             }
         },
         "explanation": {
             "default": "Please note that the following is an image of your ballot in the ballot box. You can no longer change your submitted ballot. You can edit the image to hide your vote, but doing so will not impact your submitted ballot.",
             "value": {
-                "DE": "Bitte beachten Sie: Im folgenden sehen sie eine Abbildung ihres Stimmzettels in der Wahlurne. Sie können ihren Stimmzettel nicht mehr ändern. Allerdings können Sie das folgende Bild ändern, um Ihre Stimmabgabe zu verbergen. Dies wird aber Ihren abgegebenen Stimmzettel in der Wahlurne nicht beeinflussen."
+                "DE": "Bitte beachten Sie: Im Folgenden sehen Sie ein Abbild Ihres Stimmzettels in der Wahlurne. Sie können Ihren Stimmzettel nicht mehr verändern. Allerdings können Sie das folgende Abbild verändern, um Ihre Stimmabgabe zu verbergen. Dies wird jedoch Ihren abgegebenen Stimmzettel in der Wahlurne nicht beeinflussen."
             }
         },
         "verifiedFor": {
@@ -73,13 +73,13 @@
             }
         },
         "downloadText": {
-            "default": "You can download a receipt that contains a confirmation of the Polays voting server that your ballot is included in the ballot box. You can use the receipt with a universal verification tool to confirm that your ballot is included in the tally.",
+            "default": "You can download a receipt that contains a confirmation of the election server that your ballot is included in the ballot box. After the election, you can use this receipt with a universal verification tool to confirm that your ballot is correctly included in the tally.",
             "value": {
-                "DE": "Sie können eine Bestätigung des Polyas Wahlservers herunterladen, dass ihr Stimmzettel abgegeben wurde. Bei Verwendung eines universellen Verifizierungstools nach der Wahl können Sie mit der Bestätigung überprüfen, dass ihr Stimmzettel auch in der Auszählung berücksichtigt wurde."
+                "DE": "Sie können eine Bestätigung vom Wahlserver herunterladen, dass Ihr Stimmzettel in der Wahlurne enthalten ist. Nach der Wahl können Sie unter Verwendung eines universellen Verifizierungstools mit dieser Bestätigung überprüfen, dass ihr Stimmzettel auch korrekt in der Auszählung berücksichtigt wurde."
             }
         },
         "download": {
-            "default": "Download receipt",
+            "default": "Download receipt of the vote casting.",
             "value": {
                 "DE": "Bestätigung der Stimmabgabe herunterladen."
             }
@@ -91,18 +91,18 @@
             "default": "invalid",
             "value": {
                 "DE": "ungültig"
-            } 
+            }
         },
         "abstainOption": {
             "default": "Your ballot is explicitly marked as abstention",
             "value": {
                 "DE": "Stimmzettel als Enthaltung markiert"
-            } 
+            }
         },
         "listVote": {
-            "default": "Vote for list",
+            "default": "Vote for candidate list",
             "value": {
-                "DE": "Stimmen für Kandidatenliste"
+                "DE": "Stimme für Kandidierendenliste"
             }
         },
         "defaultColumn": {
@@ -115,15 +115,15 @@
     },
     "error": {
         "params": {
-            "default": "The URL you have opened is not valid. Please make sure that you entered this page by scanning the QR code offered by your voting application without modifying the URL",
+            "default": "The URL you have opened is invalid. Please enter this page by scanning the QR code offered by your voting application, without modifying this code or the URL.",
             "value": {
-                "DE": "Der eingegebene Link ist ungültig. Bitte rufen Sie dieses Seite durch Scannen des QR Codes der Wahlanwendung, ohne diesen zu modifizieren."
+                "DE": "Die eingegebene URL ist ungültig. Bitte rufen Sie diese Seite durch Scannen des QR-Codes der Wahlanwendung auf, ohne diesen Code oder die URL zu modifizieren."
             }
         },
         "rejected": {
-            "default": "Your ballot could not be verified",
+            "default": "Your ballot could not be verified.",
             "value": {
-                "DE": "Ihr Stimmzettel konnte nicht verifiziert werden"
+                "DE": "Ihr Stimmzettel konnte nicht verifiziert werden."
             }
         },
         "connection": {
@@ -133,57 +133,57 @@
             }
         },
         "extern": {
-            "default": "The exchange was rejected by the polyas election server. Did you enter the password incorrectly or did the time limit for the verification run out?",
+            "default": "The cryptographic exchange was rejected by the election server. Have you maybe entered the one-time password incorrectly or did the time limit for the verification run out?",
             "value": {
-                "DE": "Der cryptographische Austausch wurde vom Polyas Wahlserver zurückgewiesen. Überprüfen Sie, dass Sie das Einmalpassword richtig eingegeben haben und ob das Zeitlimit abgelaufen ist."
+                "DE": "Der kryptographische Austausch wurde vom Wahlserver zurückgewiesen. Haben Sie vielleicht das Einmalpasswort falsch eingegeben oder wurde das Zeitlimit der Verifizierung erreicht?"
             }
         },
         "sdpp": {
-            "default": "The second device parameters returned by the polyas election server do not match the pre-configured fingerprint. This could be caused by a third party attack. Please contact the election administration.",
+            "default": "The second device parameters returned by the election server do not match the pre-configured fingerprint. This could be caused by a third party attack. Please contact the election administration.",
             "value": {
-                "DE": "Die Second Device Parameter des Wahlservers passen nicht zu dem voreingestellen Fingerprint. Dies könnte auf einen Angriff einer dritten Partei hindeuten. Bitte setzten Sie sich mit der Wahlleitung in Verbindung."
+                "DE": "Die vom Wahlserver erhaltenen Zweitgerät-Parameter passen nicht zum voreingestellen Fingerabdruck. Dies könnte durch einen Angriff einer dritten Partei verursacht sein. Bitte setzten Sie sich mit der Wahlleitung in Verbindung."
             }
         },
         "ack": {
-            "default": "The ballot acknowledgement sent by the polyas election server is invalid. This could be caused by a third party attack.",
+            "default": "The ballot acknowledgement sent by the election server is invalid. This could be caused by a third party attack.",
             "value": {
-                "DE": "Die Bestätigung des Stimmzettels durch den Polyas Wahlserver ist ungültig. Dies könnte auf einen Angriff einer dritten Partei hindeuten."
+                "DE": "Die Bestätigung des Stimmzettels durch den Wahlserver ist ungültig. Dies könnte durch einen Angriff einer dritten Partei verursacht sein."
             }
         },
         "decrypt": {
-            "default": "A parameter passed in the link was invalid. This could be caused by a third party attack.",
+            "default": "A parameter passed with the URL was invalid. This could be caused by a third party attack.",
             "value": {
-                "DE": "Ein Parameter der URL ist ungültig. Dies könnte auf einen Angriff einer dritten Partei hindeuten."
+                "DE": "Ein mit der URL übermittelter Parameter ist ungültig. Dies könnte durch einen Angriff einer dritten Partei verursacht sein."
             }
         },
         "format": {
-            "default": "The format of a message passed by the polyas election server is invalid.",
+            "default": "The format of a message passed by the election server is invalid.",
             "value": {
-                "DE": "Eine Nachricht vom Polyas Wahlserver hat ein ungültiges Format"
+                "DE": "Eine Nachricht vom Wahlserver hat ein ungültiges Format."
             }
         },
         "zkp_inv": {
-            "default": "The zero-knowledge proof provided by the polyas election server is invalid. This could be caused by a third party attack.",
+            "default": "The zero-knowledge proof provided by the election server is invalid. This could be caused by a third party attack.",
             "value": {
-                "DE": "Der Zero-Knowledge Beweis des Polyas Wahlservers ist ungültig. Dies könnte auf einen Angriff einer dritten Partei hindeuten."
+                "DE": "Der Zero-Knowledge Beweis des Wahlservers ist ungültig. Dies könnte auf durch einen Angriff einer dritten Partei verursacht sein."
             }
         },
         "other": {
-            "default": "An error occured. This is likely the result of a programming mistake of the verification tool, not a mistake by the polyas election server or an attack by a third party.",
+            "default": "An error occured. This is likely the result of a programming mistake in the verifier, and not a mistake of the election server or an attack by a third party.",
             "value": {
-                "DE": "Ein Fehler ist aufgetreten, der wahrscheinlich durch einen Programmierfehler des Verifikationstools und nicht durch einen Fehler des Polyas Wahlservers oder einen Angriff einer dritten Partei ausgelöst wurde."
+                "DE": "Ein Fehler ist aufgetreten. Dieser ist wahrscheinlich durch einen Programmierfehler im Verifizierer verursacht worden und wurde nicht durch einen Fehler des Wahlservers oder einen Angriff einer dritten Partei ausgelöst."
             }
         },
         "decode": {
             "default": "The decoded ballot does not fit the format required by the ballot sheet.",
             "value": {
-                "DE": "Der dekodierte Stimmzettel passt nicht zum Format der Stimmzettel"
+                "DE": "Der dekodierte Stimmzettel passt nicht zum im Stimmzettelbogen vorgegebenen Format"
             }
         },
         "reset": {
             "default": "Retry login",
             "value": {
-                "DE": "Login wiederholen"
+                "DE": "Anmelden wiederholen"
             }
         }
     }
