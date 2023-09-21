@@ -163,6 +163,15 @@ async function reset (): Promise<void> {
   display: flex;
   font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
+#footer{
+  text-align: center;
+  padding: 3px;
+  border-top-style: solid;
+  border-top-color: #FFF;
+  bottom: 0;
+  font-style: italic;
+  font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
 #left {
   width: 20%;
 }
@@ -176,27 +185,27 @@ async function reset (): Promise<void> {
   text-align: right;
   font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
-.kitlogo{
+.kitlogo {
   margin-left: 2rem;
   margin-top: 1rem;
   width: 10rem;
   min-width: 3.3cm;
 }
-.kastellogo{
+.kastellogo {
   margin-right: 2rem;
   margin-top: 1rem;
   width: 10rem;
 }
 
-.select{
+.select {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   justify-content: flex-end;
-  .selectButton{
+  .selectButton {
     margin-right: 1.5rem;
   }
-  .selectLabel{
+  .selectLabel {
     margin-right: 1.5rem;
   }
 }
