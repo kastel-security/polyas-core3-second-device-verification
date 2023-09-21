@@ -165,13 +165,14 @@ async function reset (): Promise<void> {
 }
 #footer {
   width: 100%;
-  text-align: center;
-  padding: 3px;
-  height: 60px;
+  text-align: justify;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-inline-start: 7%;
   background-color: #F2F2F2;
   bottom: 0;
-  font-style: italic;
   font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-weight: 100;
   position: absolute;
 }
 #left {
