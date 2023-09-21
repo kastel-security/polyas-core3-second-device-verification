@@ -150,7 +150,8 @@ async function reset (): Promise<void> {
       </div>
     </div>
     <div id="footer">
-      <a href="https://github.com/kastel-security/polyas-core3-second-device-verification">Polyas-Verifier</a> by KASTEL Security Research Labs &#64; Karlsruhe Institute of Technology (KIT).
+      <hr>
+      <a href="https://github.com/kastel-security/polyas-core3-second-device-verification">Polyas-Verifier</a> {{ extractTextFromJson(text.footer.acknowledgement, language) }}
     </div>
   </div>
 </template>

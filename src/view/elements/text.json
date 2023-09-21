@@ -19,6 +19,14 @@
             }
         }
     },
+    "footer": {
+        "acknowledgement": {
+            "default": "by KASTEL Security Research Labs at Karlsruhe Institute of Technology (KIT).",
+            "value": {
+                "DE": "von den KASTEL-Sicherheitsforschungslaboren am Karlsruher Institut für Technologie (KIT)."
+            }
+        }
+    },
     "login": {
         "loginReq": {
             "default": "Enter one-time password",
@@ -115,7 +123,7 @@
     },
     "error": {
         "params": {
-            "default": "The URL you have opened is invalid. Please enter this page by scanning the QR code offered by your voting application, without modifying this code or the URL.",
+            "default": "The URL you have entered is invalid. Please enter this page by scanning the QR code offered by your voting application, without modifying this code or the URL.",
             "value": {
                 "DE": "Die eingegebene URL ist ungültig. Bitte rufen Sie diese Seite durch Scannen des QR-Codes der Wahlanwendung auf, ohne diesen Code oder die URL zu modifizieren."
             }
