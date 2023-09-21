@@ -150,7 +150,6 @@ async function reset (): Promise<void> {
       </div>
     </div>
     <div id="footer">
-      <hr>
       <a href="https://github.com/kastel-security/polyas-core3-second-device-verification">Polyas-Verifier</a> {{ extractTextFromJson(text.footer.acknowledgement, language) }}
     </div>
   </div>
@@ -169,7 +168,7 @@ async function reset (): Promise<void> {
   text-align: center;
   padding: 3px;
   height: 60px;
-  background-color: #404040;
+  background-color: #F2F2F2;
   bottom: 0;
   font-style: italic;
   font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
