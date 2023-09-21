@@ -46,7 +46,8 @@ npm run dev
 
 ## Building a Docker Instance
 ### Requirement
-* [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+* [Docker Desktop](https://www.docker.com/products/docker-desktop/) (Windows or macOS)
+* [Docker Compose](https://github.com/docker/compose) (Linux)
 
 ### Configuration
 Edit the file docker-compose.yml and change values of keys under args:
@@ -61,10 +62,11 @@ Edit the file docker-compose.yml and change values of keys under args:
 ### Build and Setup of the Instance
 Run
 ```
-docker compose build
-docker compose up -d
+docker-compose build
+docker-compose up -d
 ```
-to build and start the container
+to build and start the container.
+From *Docker Desktop*, omit the hyphen (``docker compose`` instead of ``docker-compose``).
 
 ## Licence
 See [LICENSE](LICENSE)
