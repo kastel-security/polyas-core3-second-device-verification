@@ -16,10 +16,7 @@ export default ({ mode }) => {
     },
     server: {
       host: true,
-      port: 5000,
-       watch: {
-         usePolling: true
-       }
+      port: 5000
     }
   });
 }
