@@ -28,7 +28,7 @@ onMounted(async () => {
   env = EnvironmentVariables.init((import.meta as any).env.VITE_MODE)
   env.backendUrl = (import.meta as any).env.VITE_BACKEND
   env.fingerprint = (import.meta as any).env.VITE_FINGERPRINT
-  console.log('!!!', env.fingerprint)
+  console.log('Fingerprint: ', env.fingerprint)
   const urlParams = new URLSearchParams(window.location.search)
   languages = ['DE', 'EN', undefined]
   language.value = 'DE'
@@ -58,7 +58,6 @@ async function loadData (): Promise<void> {
 }
 
 async function login (password: string): Promise<void> {
-  console.log(password)
   if (verificationtool.value === undefined || voterId.value === undefined || nonce.value === undefined || c.value === undefined) {
     error.value = new ResponseBeanError(ErrorType.OTHER)
     state.value = State.ERROR

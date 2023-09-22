@@ -14,7 +14,6 @@ import { kdfCounterMode, NumbersInRangeFromSeed, decodePoint, decodeMultiPlainte
 async function checkSecondDeviceParameters (parametersJson: string): Promise<boolean> {
   const hashBytes = await crypto.subtle.digest('SHA-512', toUint8Array(parametersJson))
   const hash = bufToHex(new Uint8Array(hashBytes))
-  console.log(hash)
   return hash === constants.EnvironmentVariables.instance.fingerprint
 }
 

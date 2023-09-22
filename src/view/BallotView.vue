@@ -20,7 +20,6 @@ onMounted(() => {
   let start = 1
   for (const list of props.ballot.lists) {
     const listBytes = 1 + list.candidates.length
-    console.log(list.id, listBytes)
     if (start + listBytes > props.result.length) {
       throw new Error('result format does not match ballot formats')
     }

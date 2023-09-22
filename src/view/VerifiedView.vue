@@ -49,7 +49,6 @@ function getImgUrl (img: I18n<ImageRef>): string {
 }
 
 function downloadPDF (): void {
-  console.log('clicked')
   const doc = new jsPDF('p', 'px', 'a4') // eslint-disable-line 
   const pageWidth = doc.internal.pageSize.getWidth()
   const left = 60

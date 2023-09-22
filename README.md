@@ -33,7 +33,7 @@ For testing the application against a real election instance, open ``.env.develo
 Set ``VITE_FINGERPRINT`` to the election fingerprint of the election running on your election instance.
 If the URL provided by the instance for the individual (second device) verification links to a localhost port other than 4300, open ``package.json`` and change the line
 ```bash
-"dev": "vite --port 4300",
+"dev": "vite --port 5000",
 ```
 to
 ```bash
@@ -51,7 +51,8 @@ npm run dev
 
 ### Configuration
 Edit the file docker-compose.yml and change the value of a key under environment:
-* ``FINGERPRINT``: The fingerprint of the election for which the verifier is deployed
+* ``VITE_FINGERPRINT``: The fingerprint of the election for which the verifier is deployed
+* ``VITE_BACKEND``: The URL of your instance or a proxy to your instance
 
 ### Build and Setup of the Instance
 Run

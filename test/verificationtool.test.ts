@@ -14,12 +14,8 @@ import crypto from "crypto"
 EnvironmentVariables.init("test").fingerprint = "b7e8e76c369d6a9ca268e40cde8347ac443040d6c4a1df3035744ace05b94e00849abf083ae5baa8fee462a723823054858387ec35462a49f93c2ea40b2fc876"
 EnvironmentVariables.instance.comm = new Comm()
 const mockedAxios = jest.spyOn(axios, 'request')
-//const mockedProof = jest.spyOn(proof, 'generateRandomProof')
 const mockedDecrypt = jest.spyOn(decrypt, 'decrytQRCode')
 const randomCoinSeed = "1e89b5f95deae82f6f823b52709117405f057783eda018d72cbd83141d394fbd"
-const e = BigInt("108039209026641834721998202775536164454916176078442584841940316235417705823230")
-const r = BigInt("44267717001895006656767798790813376597351395807170189462353830054915294464906")
-//const secProof = proof.generateSecretProof(e, r)
 
 Object.defineProperty(globalThis, 'crypto', {
     value: {
@@ -72,7 +68,6 @@ async function validAxios(request: any) {
 
 beforeEach(() => {
     mockedAxios.mockImplementation(validAxios)
-    //mockedProof.mockReturnValue(secProof)
     mockedDecrypt.mockResolvedValue(hexToBuf(randomCoinSeed))
 })
 

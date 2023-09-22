@@ -5,7 +5,6 @@ export function extractTextFromJson (text: any, language: Language | undefined):
 }
 
 export function extractText (text: I18n<string> | undefined, language: Language | undefined): string {
-  console.log(language, text?.value.keys())
   if (text !== undefined && language !== undefined && text.value.has(language)) {
     return text.value.get(language) as string
   } else if (text !== undefined) {
