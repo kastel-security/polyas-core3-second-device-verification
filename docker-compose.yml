@@ -22,7 +22,7 @@ services:
      - kastel
    ports:
      - mode: host
-       target: "5000"
+       target: 5000
        published: "5000"
        protocol: tcp
    restart: always
