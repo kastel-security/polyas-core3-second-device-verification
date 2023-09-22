@@ -1,5 +1,5 @@
 FROM node:alpine
-ENV REPO="https//github.com/kastel-security/polyas-core3-second-device-verification"
+ENV REPO="https://github.com/kastel-security/polyas-core3-second-device-verification"
 ARG NAME
 ARG DIR
 WORKDIR ${DIR}
