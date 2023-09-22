@@ -1,21 +1,33 @@
 version: "2.14.2"
+name: polyas-verifier
 services:
  vite_docker:
-   image: node:alpine
-   environment:
-      VITE_MODE: deploy
-      VITE_BACKEND: http://localhost:5000
-      VITE_FINGERPRINT: 10
-   container_name: polyas-verifier
-   restart: always
-   entrypoint: [/usr/local/bin/npm, run, dev]
-   ports:
-     - 5000:5000
-   working_dir: /srv/app/polyas-verifier
    build:
     context: .
     dockerfile: Dockerfile
     args:
-      NAME: polyas-verifier
       DIR: /srv/app
+      NAME: polyas-verifier
+   container_name: polyas-verifier
+   entrypoint:
+     - /usr/local/bin/npm
+     - run
+     - dev
+   environment:
+     VITE_BACKEND: http://localhost:5000
+     VITE_FINGERPRINT: 10
+     VITE_MODE: deploy
+   image: node:alpine
+   networks:
+     - kastel
+   ports:
+     - mode: host
+       target: "5000"
+       published: "5000"
+       protocol: tcp
+   restart: always
    tty: true
+   working_dir: /srv/app/polyas-verifier
+networks:
+  kastel:
+    name: polyas-verifier
