@@ -7,6 +7,7 @@ services:
       VITE_BACKEND: http://localhost:5000
       VITE_FINGERPRINT: 10
    container_name: polyas-verifier
+   restart: always
    entrypoint: [/usr/local/bin/npm, run, dev]
    ports:
      - 5000:5000
@@ -14,4 +15,7 @@ services:
    build:
     context: .
     dockerfile: Dockerfile
+    args:
+      NAME: polyas-verifier
+      DIR: /srv/app
    tty: true
