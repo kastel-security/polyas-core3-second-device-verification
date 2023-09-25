@@ -17,7 +17,7 @@ services:
      VITE_BACKEND: http://localhost:5000
      VITE_FINGERPRINT: 10
      VITE_MODE: deploy
-     VITE_INSTANCE: 
+     VITE_INSTANCE:
    image: node:alpine
    networks:
      - kastel
