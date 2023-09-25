@@ -172,7 +172,6 @@ async function reset (): Promise<void> {
   bottom: 0;
   font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-weight: 100;
-  position: absolute;
 }
 #left {
   width: 20%;
