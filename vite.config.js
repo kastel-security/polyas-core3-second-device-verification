@@ -22,15 +22,15 @@ export default ({ mode }) => {
         
         proxy: {
           '/electionData': {
-            target: process.env.VITE_POLYAS + '/ssd/rest',
+            target: process.env.VITE_INSTANCE + '/ssd/rest',
             changeOrigin: true
           },
           '/login': {
-            target: process.env.VITE_POLYAS + '/ssd/rest',
+            target: process.env.VITE_INSTANCE + '/ssd/rest',
             changeOrigin: true
           },
           '/challenge': {
-            target: process.env.VITE_POLYAS + '/ssd/rest',
+            target: process.env.VITE_INSTANCE + '/ssd/rest',
             changeOrigin: true
           }
         }
