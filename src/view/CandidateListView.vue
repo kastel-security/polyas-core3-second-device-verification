@@ -86,4 +86,13 @@ onMounted(() => {
     height: fit-content;
     color: #fff;
 }
+.id {
+    text-align: left;
+    margin: 0;
+    background: #444;
+    padding: 2pt 6pt;
+    border-bottom: 1px solid #444;
+    height: fit-content;
+    color: #fff;
+}
 </style>

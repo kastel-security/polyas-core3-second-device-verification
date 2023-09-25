@@ -30,9 +30,15 @@ onMounted(() => {
 })
 </script>
 
-<template>
-    <div class="title">
-        <h2>{{ extractText(props.ballot.title, props.language) }}</h2>
+<template> 
+    <div id="title">
+        <div id="left">
+            <h4>{{ props.ballot.id }}</h4>
+        </div>
+        <div id="center">
+            <h2>{{ extractText(props.ballot.title, props.language) }}</h2>
+        </div>
+        <div id="right"></div>
     </div>
     <div class="ext" v-if="props.ballot.externalIdentification">
         <h3>{{ props.ballot.externalIdentification}}</h3>
@@ -62,13 +68,27 @@ onMounted(() => {
 </template>
 
 <style scoped>
-.title {
+#title {
     text-align: center;
     margin:0;
     background: #ddd;
     padding: 2pt 6pt;
     border-bottom: 1px solid #ddd;
+    display: flex;
+    #left {
+        width: 10%;
+        text-align: left;
+    }
+    #center {
+        width: 80%;
+        text-align: center;
+    }
+    #right {
+        width:10%
+    }
+
 }
+
 .ext {
     margin-left: 10pt;
 }

@@ -75,7 +75,7 @@
             }
         },
         "label": {
-            "default": "Ballot sheets: ",
+            "default": "Ballot sheet(s): ",
             "value": {
                 "DE": "Stimmzettel: "
             }
