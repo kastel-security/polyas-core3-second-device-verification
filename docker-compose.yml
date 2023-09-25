@@ -12,11 +12,12 @@ services:
    entrypoint:
      - /usr/local/bin/npm
      - run
-     - docker
+     - dev
    environment:
      VITE_BACKEND: http://localhost:5000
      VITE_FINGERPRINT: 10
      VITE_MODE: deploy
+     VITE_INSTANCE: 
    image: node:alpine
    networks:
      - kastel

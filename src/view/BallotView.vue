@@ -30,7 +30,7 @@ onMounted(() => {
 })
 </script>
 
-<template> 
+<template>
     <div id="title">
         <div id="left">
             <h4>{{ props.ballot.id }}</h4>

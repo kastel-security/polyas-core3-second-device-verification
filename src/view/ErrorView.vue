@@ -20,7 +20,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="error">
+    <div class="error" v-if="props.errorType!=ErrorType.CONNECTION&&props.errorType!=ErrorType.PARAMS">
         <h2 class="fail">{{ extractTextFromJson(text.error.rejected, props.language) }}</h2>
     </div>
     <div class="cause">

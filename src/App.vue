@@ -122,7 +122,7 @@ async function reset (): Promise<void> {
               :id="lang">{{ lang ? lang : "default" }}</option>
           </select>
         </div>
-        <h2>{{ extractTextFromJson(text.header.election, language) + extractText(title, language)}}</h2>
+        <h2 v-if="title!=undefined">{{ extractTextFromJson(text.header.election, language) + extractText(title, language)}}</h2>
       </div>
       <div id="right">
         <img class="kastellogo" src="./view/elements/kastel.png"/>
