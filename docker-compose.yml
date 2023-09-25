@@ -12,7 +12,7 @@ services:
    entrypoint:
      - /usr/local/bin/npm
      - run
-     - dev
+     - docker
    environment:
      VITE_BACKEND: http://localhost:5000
      VITE_FINGERPRINT: 10
