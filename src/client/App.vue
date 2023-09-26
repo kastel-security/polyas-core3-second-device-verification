@@ -45,7 +45,8 @@ onMounted(async () => {
 
 async function loadData (): Promise<void> {
   verificationtool.value = new Verificationtool()
-  const electionData = await verificationtool.value.loadElectionData()
+  //const electionData = await verificationtool.value.loadElectionData()
+  /*
   if (electionData.status === ResponseBean.okStatus) {
     language.value = undefined
     languages = [...(electionData as ResponseBeanOk<ElectionData>).value.languages, undefined]
@@ -55,6 +56,8 @@ async function loadData (): Promise<void> {
     error.value = electionData as ResponseBeanError
     state.value = State.ERROR
   }
+  */
+  
 }
 
 async function login (password: string): Promise<void> {
@@ -236,3 +239,4 @@ async function reset (): Promise<void> {
 }
 
 </style>
+./client/main/error./client/main/communication./client/main/constants./client/main/verifictiontool

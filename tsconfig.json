@@ -1,19 +1,21 @@
 {
-  "include": ["env.d.ts", "src/**/*", "src/**/*.vue", "src/**/*.json"],
-  "exclude": ["src/**/__tests__/*"],
   "compilerOptions": {
+    "target": "ESNext",
+    "useDefineForClassFields": true,
+    "module": "ESNext",
     "moduleResolution": "Node",
-    "module": "ES2022",
+    "strict": true,
+    "jsx": "preserve",
     "resolveJsonModule": true,
-    "types": ["jest", "node"],
-    "target": "ES2022",
-    "lib": ["ES2022", "DOM"],
-    "strictNullChecks": true,
-    //Only for development
-    "allowUnusedLabels": true,
-    "allowJs": true,
+    "isolatedModules": true,
     "esModuleInterop": true,
-    "composite": true,
-    "outDir": "dist"
-  }
+    "lib": ["ESNext", "DOM"],
+    "skipLibCheck": true,
+    "noEmit": true
+  },
+  "ts-node": {
+    "esm": true,
+    "experimentalSpecifierResolution": "node"
+  },
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"]
 }

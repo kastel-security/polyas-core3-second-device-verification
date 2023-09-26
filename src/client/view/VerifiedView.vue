@@ -10,6 +10,7 @@ import { type SecondDeviceLoginResponse } from '../classes/communication'
 import { onMounted, ref } from 'vue'
 import { jsPDF } from 'jspdf'
 import { EnvironmentVariables } from '../main/constants'
+import { generateReceipt } from '../../public/receipt'
 
 const props = defineProps<{
   loginResponse: SecondDeviceLoginResponse
@@ -49,13 +50,9 @@ function getImgUrl (img: I18n<ImageRef>): string {
 }
 
 function downloadPDF (): void {
-  const doc = new jsPDF('p', 'px', 'a4') // eslint-disable-line 
-  const pageWidth = doc.internal.pageSize.getWidth()
-  const left = 60
-  doc.setFontSize(16)
-  doc.text(props.receiptText, 60, 120, { maxWidth: pageWidth - 2 * left })
-
-  doc.save(`vote-receipt-${EnvironmentVariables.instance.fingerprint.substring(0, 10)}.pdf`)
+  const doc = generateReceipt(props.receiptText)
+  doc.save(`vote-receipt-${props.receiptText[2]}.pdf`)
+  EnvironmentVariables.instance.comm.logReceipt(props.receiptText)
 }
 </script>
 
@@ -138,3 +135,4 @@ function downloadPDF (): void {
     line-height: 1.5;
 }
 </style>
+../client/main/constants

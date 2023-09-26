@@ -63,3 +63,4 @@ onMounted(() => {
     text-align: center;
 }
 </style>
+../client/main/error
