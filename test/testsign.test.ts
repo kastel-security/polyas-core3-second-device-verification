@@ -1,9 +1,9 @@
-import data from "../src/mock/testinstanz.json"
-import { SecondDeviceLoginResponse} from "../src/classes/communication"
-import { checkSignature } from "../src/algorithms/signature"
+import data from "../src/client/mock/testinstanz.json"
+import { SecondDeviceLoginResponse} from "../src/client/classes/communication"
+import { checkSignature } from "../src/client/algorithms/signature"
 
 import crypto from "crypto"
-import { decrytQRCode } from "../src/algorithms/decryption";
+import { decrytQRCode } from "../src/client/algorithms/decryption";
 
 Object.defineProperty(globalThis, 'crypto', {
   value: {

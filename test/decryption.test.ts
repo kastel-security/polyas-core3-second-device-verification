@@ -1,11 +1,11 @@
-import data from "../src/mock/data.json"
-import {SecondDeviceFinalMessage, SecondDeviceLoginResponse} from "../src/classes/communication"
-import { aesDecrypt, checkSecondDeviceParameters, checkZKP, decryptBallot, decrytQRCode, generateComKey2 } from "../src/algorithms/decryption"
-import { getBallotAsNormalizedBytestring } from "../src/algorithms/signature"
-import { bufToHex, hexToBuf } from "../src/main/utils"
+import data from "../src/client/mock/data.json"
+import {SecondDeviceFinalMessage, SecondDeviceLoginResponse} from "../src/client/classes/communication"
+import { aesDecrypt, checkSecondDeviceParameters, checkZKP, decryptBallot, decrytQRCode, generateComKey2 } from "../src/client/algorithms/decryption"
+import { getBallotAsNormalizedBytestring } from "../src/client/algorithms/signature"
+import { bufToHex, hexToBuf } from "../src/client/main/utils"
 import crypto from "crypto"
-import { EnvironmentVariables } from "../src/main/constants"
-import { ProofGeneratorMock } from "../src/algorithms/proof"
+import { EnvironmentVariables } from "../src/client/main/constants"
+import { ProofGeneratorMock } from "../src/client/algorithms/proof"
 const loginResponse = SecondDeviceLoginResponse.fromJson(data.loginResponse)
 const randomCoinSeed = "1e89b5f95deae82f6f823b52709117405f057783eda018d72cbd83141d394fbd"
 

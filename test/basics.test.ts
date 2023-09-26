@@ -1,5 +1,5 @@
-import {NumbersInRangeFromSeed, kdfCounterMode} from "../src/algorithms/basics"
-import { bufToBn, hexToBuf, toUint8Array } from "../src/main/utils"
+import {NumbersInRangeFromSeed, kdfCounterMode} from "../src/client/algorithms/basics"
+import { bufToBn, hexToBuf, toUint8Array } from "../src/client/main/utils"
 import crypto from "crypto"
 
 Object.defineProperty(globalThis, 'crypto', {

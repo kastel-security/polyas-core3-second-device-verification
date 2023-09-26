@@ -1,7 +1,7 @@
-import { checkSignature, computeFingerprint, getBallotAsNormalizedBytestring } from "../src/algorithms/signature"
-import { SecondDeviceLoginResponse } from "../src/classes/communication"
-import { bufToHex } from "../src/main/utils"
-import data from "../src/mock/data.json"
+import { checkSignature, computeFingerprint, getBallotAsNormalizedBytestring } from "../src/client/algorithms/signature"
+import { SecondDeviceLoginResponse } from "../src/client/classes/communication"
+import { bufToHex } from "../src/client/main/utils"
+import data from "../src/client/mock/data.json"
 
 import crypto from "crypto"
 
