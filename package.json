@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "module": "node",
   "scripts": {
     "test": "jest",
     "dev": "nodemon src/server/main.ts -w src/server",
