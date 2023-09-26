@@ -12,7 +12,7 @@
           "default": "My Election Title",
           "value": {}
         },
-        "languages": ["EN", "DE"] 
+        "languages": ["EN", "DE"]
     },
     "loginRequest": {
         "voterId": "voter8",

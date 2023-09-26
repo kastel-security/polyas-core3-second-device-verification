@@ -10,7 +10,7 @@ import { ErrorType } from './main/error'
 import { ResponseBean, ResponseBeanError, type ResponseBeanOk } from './main/communication'
 import ErrorView from './view/ErrorView.vue'
 import { EnvironmentVariables } from './main/constants'
-import { Verificationtool } from './main/verifictiontool'
+import { Verificationtool } from './main/verificationtool'
 let env: EnvironmentVariables = new EnvironmentVariables()
 const language = ref<Language | undefined>()
 let languages: Array<Language | undefined>
@@ -110,19 +110,16 @@ async function reset (): Promise<void> {
       <div id="center">
         <h1>{{ extractTextFromJson(text.header.title, language) }}</h1>
         <div class="select">
-          <label class="selectLabel">{{ extractTextFromJson(text.header.language, language) }}</label>
-          <select
-            class="selectButton"
+          <div id="symbol">&#x1F310;</div><select class="selectButton"
             v-model="language">
             {{ language ? language : "default" }}
-            <option
-              v-for="lang in languages"
+            <option v-for="lang in languages"
               :value="lang"
               :key="lang"
-              :id="lang">{{ lang ? lang : "default" }}</option>
+              :id="lang">{{ lang ? lang : "Default" }}</option>
           </select>
         </div>
-        <h2 v-if="title!=undefined">{{ extractTextFromJson(text.header.election, language) + extractText(title, language)}}</h2>
+        <h2 v-if="title!=undefined">{{ extractTextFromJson(text.header.election, language) }}<em>{{ extractText(title, language)}}</em></h2>
       </div>
       <div id="right">
         <img class="kastellogo" src="./view/elements/kastel.png"/>
@@ -155,13 +152,13 @@ async function reset (): Promise<void> {
 </template>
 
 <style scoped>
-
 #header {
   height: 100%;
   width: 100%;
   display: flex;
   font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
+
 #footer {
   width: 100%;
   text-align: justify;
@@ -173,25 +170,34 @@ async function reset (): Promise<void> {
   font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-weight: 100;
 }
+
 #left {
   width: 20%;
 }
+
 #center {
   width: 60%;
   text-align: center;
   font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
+
 #right {
   width: 20%;
   text-align: right;
   font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
+
+#symbol {
+  margin: 0.1em;
+}
+
 .kitlogo {
   margin-left: 2rem;
   margin-top: 1rem;
   width: 10rem;
   min-width: 3.3cm;
 }
+
 .kastellogo {
   margin-right: 2rem;
   margin-top: 1rem;
@@ -200,11 +206,12 @@ async function reset (): Promise<void> {
 
 .select {
   display: flex;
-  flex-direction: column;
   align-items: flex-end;
   justify-content: flex-end;
   .selectButton {
+    margin-left: .5em;
     margin-right: 1.5rem;
+    background-color: #fff;
   }
   .selectLabel {
     margin-right: 1.5rem;
@@ -223,7 +230,7 @@ async function reset (): Promise<void> {
 
 }
 
-.main  {
+.main {
   max-width: 800pt;
   padding: 0 12pt;
   margin: auto auto 8rem auto;
@@ -234,5 +241,4 @@ async function reset (): Promise<void> {
 .loading {
   text-align: center;
 }
-
 </style>

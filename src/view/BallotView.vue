@@ -69,48 +69,51 @@ onMounted(() => {
 
 <style scoped>
 #title {
+  text-align: center;
+  margin:0;
+  background: #ddd;
+  padding: 2pt 6pt;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  #left {
+    width: 10%;
+    text-align: left;
+  }
+  #center {
+    width: 80%;
     text-align: center;
-    margin:0;
-    background: #ddd;
-    padding: 2pt 6pt;
-    border-bottom: 1px solid #ddd;
-    display: flex;
-    #left {
-        width: 10%;
-        text-align: left;
-    }
-    #center {
-        width: 80%;
-        text-align: center;
-    }
-    #right {
-        width:10%
-    }
-
+  }
+  #right {
+    width:10%
+  }
 }
 
 .ext {
-    margin-left: 10pt;
-}
-.contentAbove {
-    margin-left:10pt
-}
-.questions {
-    margin-left:10pt;
-    margin-top: 20pt;
-    margin-bottom: 10pt;
-    box-shadow: 0 2px 4px 0 rgba(0,0,0,.1);
-    border: solid 1px;
-    border-radius: 3pt;
-}
-.invalid {
-    margin-left: 10pt;
-}
-.abstain {
-    margin-left: 10pt;
-}
-.contentBelow {
-    margin-left: 10pt;
+  margin-left: 10pt;
 }
 
+.contentAbove {
+  margin-left:10pt
+}
+
+.questions {
+  margin-left:10pt;
+  margin-top: 20pt;
+  margin-bottom: 10pt;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,.1);
+  border: solid 1px;
+  border-radius: 3pt;
+}
+
+.invalid {
+  margin-left: 10pt;
+}
+
+.abstain {
+  margin-left: 10pt;
+}
+
+.contentBelow {
+  margin-left: 10pt;
+}
 </style>
