@@ -65,7 +65,6 @@ function downloadPDF (): void {
     </div>
     <div class="verifiedText">
         <h1 class="verified"><span class="check">&#x2705;</span> {{ extractTextFromJson(text.verified.verified, props.language) }}</h1>
-        <div class="explanation"><text>{{ extractTextFromJson(text.verified.explanation, props.language) }}</text></div>
     </div>
     <br>
     <div class="id">
@@ -92,6 +91,11 @@ function downloadPDF (): void {
         <br>
         <div class="contentAbove" v-if="props.loginResponse.contentAbove">
             <ContentView :content="props.loginResponse.contentAbove" :language="props.language"/>
+        </div>
+    </div>
+    <div class="verifiedText">
+        <div class="explanation">
+            <text>{{ extractTextFromJson(text.verified.explanation, props.language) }}</text>
         </div>
     </div>
     <div class="ballot" v-if="rendered">
@@ -129,10 +133,10 @@ function downloadPDF (): void {
 }
 
 .left {
-  flex: 15%;
+  flex: 18%;
 }
 .right {
-  flex: 85%;
+  flex: 82%;
 }
 
 .titleKey {

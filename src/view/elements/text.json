@@ -63,8 +63,8 @@
             "value": { "DE": "Wähler:innen-Referenz: " }
         },
         "label": {
-            "default": "Ballot sheet(s): ",
-            "value": { "DE": "Stimmzettel: " }
+            "default": "Ballot sheet number(s): ",
+            "value": { "DE": "Stimmzettelnummer(n): " }
         },
         "downloadText": {
             "default": "Here, you can again download the receipt of your ballot submission for an external screening process, e.g., by means of a universal verification tool for checking whether your ballot is correctly included in the tally.",
