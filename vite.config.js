@@ -6,11 +6,12 @@ import vue from '@vitejs/plugin-vue'
 
 export default ({ mode }) => {
   process.env = {...process.env, ...loadEnv(mode, process.cwd())};
-  if (process.env.VITE_MODE == 'dev') {
+  if (process.env.MODE == 'dev') {
     return defineConfig({
       plugins: [
         vue(),
       ],
+      envPrefix: 'ELECTION_',
       resolve: {
         alias: {
           '@': fileURLToPath(new URL('./src', import.meta.url))
@@ -19,18 +20,17 @@ export default ({ mode }) => {
       server: {
         host: true,
         port: 5000,
-        
         proxy: {
           '/electionData': {
-            target: process.env.VITE_INSTANCE + '/ssd/rest',
+            target: process.env.ELECTION_URL + '/ssd/rest',
             changeOrigin: true
           },
           '/login': {
-            target: process.env.VITE_INSTANCE + '/ssd/rest',
+            target: process.env.ELECTION_URL + '/ssd/rest',
             changeOrigin: true
           },
           '/challenge': {
-            target: process.env.VITE_INSTANCE + '/ssd/rest',
+            target: process.env.ELECTION_URL + '/ssd/rest',
             changeOrigin: true
           }
         }
