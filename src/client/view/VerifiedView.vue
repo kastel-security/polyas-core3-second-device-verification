@@ -8,7 +8,6 @@ import text from './elements/text.json'
 import ContentView from './ContentView.vue'
 import { type SecondDeviceLoginResponse } from '../classes/communication'
 import { onMounted, ref } from 'vue'
-import { jsPDF } from 'jspdf'
 import { EnvironmentVariables } from '../main/constants'
 import { generateReceipt } from '../../public/receipt'
 
@@ -49,10 +48,10 @@ function getImgUrl (img: I18n<ImageRef>): string {
   return extractGeneric<ImageRef>(img, props.language).url
 }
 
-function downloadPDF (): void {
+async function downloadPDF (): Promise<void> {
   const doc = generateReceipt(props.receiptText)
   doc.save(`vote-receipt-${props.receiptText[2]}.pdf`)
-  EnvironmentVariables.instance.comm.logReceipt(props.receiptText)
+  await EnvironmentVariables.instance.comm.logReceipt(props.receiptText)
 }
 </script>
 

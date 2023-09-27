@@ -31,7 +31,7 @@ interface Communication {
   electionData: () => Promise<ResponseBean<ElectionData>>
   login: (voterId: string, nonce: string, password: string, challenge: string) => Promise<ResponseBean<SecondDeviceLoginResponse>>
   challenge: (token: string, proof: SecretProof) => Promise<ResponseBean<SecondDeviceFinalMessage>>
-  logReceipt: (info: Array<string>) => Promise<void>
+  logReceipt: (info: string[]) => Promise<void>
 }
 
 class Comm implements Communication {
@@ -39,7 +39,7 @@ class Comm implements Communication {
   private static readonly responseOk: ResponseStatus = 'OK'
   public constructor () {
     this.baseHeader = {
-      "Content-Type": "text/plain"
+      'Content-Type': 'text/plain'
     }
   }
 
@@ -55,7 +55,6 @@ class Comm implements Communication {
       headers: this.baseHeader
     })
       .then(async (response) => {
-        console.log(response.data as any)
         try {
           const electionData = ElectionData.fromJson(response.data)
           console.log(electionData)
@@ -129,10 +128,10 @@ class Comm implements Communication {
       })
   }
 
-  public async logReceipt(info: Array<string>): Promise<void> {
+  public async logReceipt (info: string[]): Promise<void> {
     const header = {
-      "Content-Type": "application/json"
-    } 
+      'Content-Type': 'application/json'
+    }
     await axios.request({
       baseURL: EnvironmentVariables.instance.backendUrl,
       url: '/log',
@@ -142,7 +141,6 @@ class Comm implements Communication {
         info: info
       }
     })
-    return Promise.resolve()
   }
 }
 
@@ -162,8 +160,7 @@ class CommMock implements Communication {
     return await Promise.resolve(new ResponseBeanOk<SecondDeviceFinalMessage>(finalMessage))
   }
 
-  public async logReceipt(info: Array<string>): Promise<void> {
-    return Promise.resolve()
+  public async logReceipt (info: string[]): Promise<void> {
   }
 }
 

@@ -155,10 +155,6 @@ async function generateReceiptText (loginResponse: SecondDeviceLoginResponse): P
   const shortenedFingerprint: string = fingerprint.substring(0, 10)
   const signature: string = loginResponse.initialMessageDecoded.signatureHex
   return new Array<string>(electionId, voterId, shortenedFingerprint, fingerprint, signature)
-  const string = new Array<string>(`Project ID: ${electionId}`, `Voter Id: ${voterId}`, `Ballot Fingerprint: ${shortenedFingerprint}`,
-    `-----BEGIN FINGERPRINT-----${fingerprint}`, '-----END FINGERPRINT-----', '-----BEGIN SIGNATURE-----', `${signature}`,
-    '-----END SIGNATURE-----')
-  return string
 }
 
 export { checkSecondDeviceParameters, generateComKey2, checkZKP, decryptBallot, generateReceiptText, aesDecrypt, decrytQRCode }
