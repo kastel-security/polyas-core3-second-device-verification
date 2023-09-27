@@ -3,7 +3,7 @@ ENV REPO="https://github.com/kastel-security/polyas-core3-second-device-verifica
 ARG NAME
 ARG DIR
 WORKDIR ${DIR}
-RUN apk update
+RUN apk update --no-cache
 RUN apk add --no-cache git
 RUN git clone ${REPO} ${NAME}; exit 0
 RUN git -C ${NAME} pull

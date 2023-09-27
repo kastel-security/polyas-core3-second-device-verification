@@ -14,15 +14,15 @@ export default ({ mode }) => {
       
       proxy: {
         '/electionData': {
-          target: "https://elections-k8s-dev.polyas.com/" + process.env.VITE_HASH + '/ssd/rest',
+          target: "https://elections-k8s-dev.polyas.com/" + process.env.VITE_ELECTION_HASH + '/ssd/rest',
           changeOrigin: true
         },
         '/login': {
-          target: "https://elections-k8s-dev.polyas.com/" + process.env.VITE_HASH + '/ssd/rest',
+          target: "https://elections-k8s-dev.polyas.com/" + process.env.VITE_ELECTION_HASH + '/ssd/rest',
           changeOrigin: true
         },
         '/challenge': {
-          target: "https://elections-k8s-dev.polyas.com/" + process.env.VITE_HASH + '/ssd/rest',
+          target: "https://elections-k8s-dev.polyas.com/" + process.env.VITE_ELECTION_HASH + '/ssd/rest',
           changeOrigin: true
         }
       }

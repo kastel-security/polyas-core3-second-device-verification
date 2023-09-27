@@ -13,7 +13,7 @@ const endings = {
 }
 
 function getBytes (): number {
-  const byteString = process.env.CAPACITY as string
+  const byteString = process.env.RECEIPT_CAPACITY as string
   const groups = byteString.match(/([0-9]+)([A-Z]*)/)
   if (groups === null || groups.length < 3) {
     return 0
@@ -25,7 +25,7 @@ function getBytes (): number {
 async function logIfNotFull (info: string[]): Promise<void> {
   config()
   const basePath = 'logs/'
-  const path = basePath + process.env.VITE_HASH
+  const path = basePath + process.env.VITE_ELECTION_HASH
   const files: string[] = await fs.readdir(path)
     .then((content) => { return content })
     .catch(async () => {

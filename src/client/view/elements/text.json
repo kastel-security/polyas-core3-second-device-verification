@@ -1,123 +1,101 @@
 {
     "header": {
         "title": {
-            "default": "Polyas Verifier",
-            "value": {
-                "DE": "Polyas-Verifier"
-            }
+            "default": "Polyas-Verifier",
+            "value": { "DE": "Polyas-Verifier" }
         },
         "election": {
             "default": "Election Title: ",
-            "value": {
-                "DE": "Titel der Wahl: "
-            }
-        },
-        "language": {
-            "default": "Language selection: ",
-            "value": {
-                "DE": "Sprachauswahl: "
-            }
+            "value": { "DE": "Titel der Wahl: " }
         }
     },
     "footer": {
         "acknowledgement": {
             "default": "by KASTEL Security Research Labs at Karlsruhe Institute of Technology (KIT).",
-            "value": {
-                "DE": "von den KASTEL-Sicherheitsforschungslaboren am Karlsruher Institut für Technologie (KIT)."
-            }
+            "value": { "DE": "von den KASTEL-Sicherheitsforschungslaboren am Karlsruher Institut für Technologie (KIT)." }
         }
     },
     "login": {
-        "loginReq": {
-            "default": "Enter one-time password",
+        "text": {
+            "default": "Please enter the time-based one-time password that is currently displayed to you in step 5 of the voting process below your pre-filled voter ID.",
             "value": {
-                "DE": "Einmalpasswort eingeben"
+                "DE": "Bitte geben Sie unter Ihrer vorausgefüllten Wähler:innen-ID das zeitbasierte Einmalpasswort ein, welches Ihnen aktuell in Schritt 5 der Stimmabgabe angezeigt wird."
             }
         },
+        "loginReq": {
+            "default": "Current one-time password:",
+            "value": { "DE": "Aktuelles Einmalpasswort:" }
+        },
+        "explanation": {
+            "default": "Click on \"Login and verify ballot\" in order to verify the correctness of your ballot submission. In the next step, you will be shown an image of your ballot(s) in the ballot box.",
+            "value": { "DE": "Klicken Sie auf \"Anmelden und Stimmzettel verifizieren\", um die Korrektheit Ihrer Stimmabgabe zu überprüfen. Im nächsten Schritt wird Ihnen ein Abbild Ihres Stimmzettels bzw. Ihrer Stimmzettel in der Wahlurne angezeigt." }
+        },
         "loginButton": {
-            "default": "login",
-            "value": {"DE": "anmelden"}
+            "default": "Login and verify ballot",
+            "value": { "DE": "Anmelden und Stimmzettel verifizieren" }
         },
         "voterId": {
             "default": "Voter ID: ",
-            "value": {"DE": "Wähler:innen-ID: "}
+            "value": { "DE": "Wähler:innen-ID: " }
         }
     },
     "verified": {
         "verified": {
-            "default": "Your ballot has been successfully verified.",
-            "value": {
-                "DE": "Ihr Stimmzettel wurde erfolgreich verifiziert."
-            }
+            "default": "Your ballot has been successfully checked.",
+            "value": { "DE": "Ihr Stimmzettel wurde erfolgreich überprüft." }
         },
         "explanation": {
-            "default": "Please note that the following is an image of your ballot in the ballot box. You can no longer change your submitted ballot. You can edit the image to hide your vote, but doing so will not impact your submitted ballot.",
+            "default": "Please note that the following is an image of your ballot(s) in the ballot box. You can now no longer change your submitted ballot. However, you can modify the following image in order to hide your vote from possible observers. But this modification will neither affect your submitted ballot nor its generated receipt.",
             "value": {
-                "DE": "Bitte beachten Sie: Im Folgenden sehen Sie ein Abbild Ihres Stimmzettels in der Wahlurne. Sie können Ihren Stimmzettel nicht mehr verändern. Allerdings können Sie das folgende Abbild verändern, um Ihre Stimmabgabe zu verbergen. Dies wird jedoch Ihren abgegebenen Stimmzettel in der Wahlurne nicht beeinflussen."
+                "DE": "Bitte beachten Sie, dass es sich nachfolgend um ein Abbild Ihres Stimmzettels bzw. Ihrer Stimmzettel in der Wahlurne handelt. Eine Änderung Ihrer Stimmabgabe ist nun nicht mehr möglich. Allerdings können Sie das folgende Abbild modifizieren, um Ihre Stimmabgabe vor möglichen Beobachtenden zu verbergen. Diese Modifikation wird jedoch weder Ihre abgegebenen Stimmzettel in der Wahlurne noch die generierte Bestätigung Ihrer Stimmabgabe beeinflussen."
             }
         },
         "verifiedFor": {
             "default": "Verified for: ",
-            "value": {
-                "DE": "Verifiziert für: "
-            }
+            "value": { "DE": "Verifiziert für: " }
         },
         "electionId": {
-            "default": "Election: ",
-            "value": {
-                "DE": "Wahl: "
-            }
+            "default": "Election Hash: ",
+            "value": { "DE": "Wahl-Hash: " }
         },
         "voterId": {
-            "default": "Voter: ",
-            "value": {
-                "DE": "Wähler: "
-            }
+            "default": "Voter Credential: ",
+            "value": { "DE": "Wähler:innen-Referenz: " }
         },
         "label": {
-            "default": "Ballot sheet(s): ",
-            "value": {
-                "DE": "Stimmzettel: "
-            }
+            "default": "Ballot sheet number(s): ",
+            "value": { "DE": "Stimmzettelnummer(n): " }
         },
         "downloadText": {
-            "default": "You can download a receipt that contains a confirmation of the election server that your ballot is included in the ballot box. After the election, you can use this receipt with a universal verification tool to confirm that your ballot is correctly included in the tally.",
+            "default": "Here, you can again download the receipt of your ballot submission for an external screening process, e.g., by means of a universal verification tool for checking whether your ballot is correctly included in the tally.",
             "value": {
-                "DE": "Sie können eine Bestätigung vom Wahlserver herunterladen, dass Ihr Stimmzettel in der Wahlurne enthalten ist. Nach der Wahl können Sie unter Verwendung eines universellen Verifizierungstools mit dieser Bestätigung überprüfen, dass ihr Stimmzettel auch korrekt in der Auszählung berücksichtigt wurde."
+                "DE": "Sie können hier die Bestätigung Ihrer Stimmabgabe für ein externes Prüfverfahren, beispielsweise mittels eines universellen Verifizierungswerkzeugs zur Prüfung ob Ihre Stimmabgabe korrekt in der Auszählung berücksichtigt ist, erneut herunterladen."
             }
         },
         "download": {
-            "default": "Download receipt of the vote casting.",
-            "value": {
-                "DE": "Bestätigung der Stimmabgabe herunterladen."
-            }
+            "default": "Download receipt of the ballot submission",
+            "value": { "DE": "Bestätigung der Stimmabgabe herunterladen" }
         }
 
     },
     "ballot": {
         "invalidOption": {
-            "default": "invalid",
-            "value": {
-                "DE": "ungültig"
-            }
+            "default": "Your ballot has been valued as invalid.",
+            "value": { "DE": "Ihr Stimmzettel wurde als ungültig gewertet." }
         },
         "abstainOption": {
-            "default": "Your ballot is explicitly marked as abstention",
-            "value": {
-                "DE": "Stimmzettel als Enthaltung markiert"
-            }
+            "default": "Your ballot has been valued as abstention.",
+            "value": { "DE": "Ihr Stimmzettel wurde als als Enthaltung gewertet." }
         },
         "listVote": {
             "default": "Vote for candidate list",
-            "value": {
-                "DE": "Stimme für Kandidierendenliste"
-            }
+            "value": { "DE": "Stimme für Kandidierendenliste" }
         },
         "defaultColumn": {
             "contentType": "TEXT",
             "value": {
                 "default": "unknown",
-                "value": {"DE": "unbekannt"}
+                "value": { "DE" : "unbekannt" }
             }
         }
     },
@@ -130,20 +108,16 @@
         },
         "rejected": {
             "default": "Your ballot could not be verified.",
-            "value": {
-                "DE": "Ihr Stimmzettel konnte nicht verifiziert werden."
-            }
+            "value": { "DE": "Ihr Stimmzettel konnte nicht verifiziert werden." }
         },
         "connection": {
             "default": "A connection issue occured.",
-            "value": {
-                "DE": "Ein Verbindungsfehler ist aufgetreten."
-            }
+            "value": { "DE": "Ein Verbindungsfehler ist aufgetreten." }
         },
         "extern": {
-            "default": "The cryptographic exchange was rejected by the election server. Have you maybe entered the one-time password incorrectly or did the time limit for the verification run out?",
+            "default": "Your login or the cryptographic exchange has been rejected by the election server. Did you maybe enter the one-time password incorrectly or did the time limit for the verification run out?",
             "value": {
-                "DE": "Der kryptographische Austausch wurde vom Wahlserver zurückgewiesen. Haben Sie vielleicht das Einmalpasswort falsch eingegeben oder wurde das Zeitlimit der Verifizierung erreicht?"
+                "DE": "Ihre Anmeldung oder der kryptographische Austausch wurde vom Wahlserver zurückgewiesen. Haben Sie vielleicht das Einmalpasswort falsch eingegeben oder wurde das Zeitlimit der Verifizierung erreicht?"
             }
         },
         "sdpp": {
@@ -153,7 +127,7 @@
             }
         },
         "ack": {
-            "default": "The ballot acknowledgement sent by the election server is invalid. This could be caused by a third party attack.",
+            "default": "The receipt of the ballot submission sent by the election server is invalid. This could be caused by a third party attack.",
             "value": {
                 "DE": "Die Bestätigung des Stimmzettels durch den Wahlserver ist ungültig. Dies könnte durch einen Angriff einer dritten Partei verursacht sein."
             }
@@ -166,9 +140,7 @@
         },
         "format": {
             "default": "The format of a message passed by the election server is invalid.",
-            "value": {
-                "DE": "Eine Nachricht vom Wahlserver hat ein ungültiges Format."
-            }
+            "value": { "DE": "Eine Nachricht vom Wahlserver hat ein ungültiges Format." }
         },
         "zkp_inv": {
             "default": "The zero-knowledge proof provided by the election server is invalid. This could be caused by a third party attack.",
@@ -184,15 +156,11 @@
         },
         "decode": {
             "default": "The decoded ballot does not fit the format required by the ballot sheet.",
-            "value": {
-                "DE": "Der dekodierte Stimmzettel passt nicht zum im Stimmzettelbogen vorgegebenen Format"
-            }
+            "value": { "DE": "Der dekodierte Stimmzettel passt nicht zum vom Stimmzettelbogen vorgegebenen Format." }
         },
         "reset": {
-            "default": "Retry login",
-            "value": {
-                "DE": "Anmelden wiederholen"
-            }
+            "default": "Retry login and ballot verification",
+            "value": { "DE": "Erneut Anmeldung und Stimmzettelverifizierung versuchen" }
         }
     }
 }

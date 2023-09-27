@@ -60,16 +60,24 @@ async function downloadPDF (): Promise<void> {
         <img :src="getImgUrl(props.loginResponse.logo!)" ref="test"/>
     </div>
     <div class="verifiedText">
-        <h1 class="verified">{{ extractTextFromJson(text.verified.verified, props.language) }}</h1>
-        <text>{{ extractTextFromJson(text.verified.explanation, props.language) }}</text>
+        <h1 class="verified"><span class="check">&#x2705;</span> {{ extractTextFromJson(text.verified.verified, props.language) }}</h1>
     </div>
     <br>
     <div class="id">
-        <text>{{ extractTextFromJson(text.verified.electionId, props.language) + props.loginResponse.electionId }}</text>
-        <br>
-        <text>{{ extractTextFromJson(text.verified.voterId, props.language) + props.loginResponse.ballotVoterId }}</text>
-        <br>
-        <text>{{ extractTextFromJson(text.verified.label, props.language) + props.loginResponse.publicLabel }}</text>
+        <div class="left">
+            <text class="titleKey">{{ extractTextFromJson(text.verified.electionId, props.language) }}</text>
+            <br>
+            <text class="titleKey">{{ extractTextFromJson(text.verified.voterId, props.language) }}</text>
+            <br>
+            <text class="titleKey">{{ extractTextFromJson(text.verified.label, props.language) }}</text>
+        </div>
+        <div class="right">
+            <text class="data">{{ props.loginResponse.electionId }}</text>
+            <br>
+            <text class="data">{{ props.loginResponse.ballotVoterId }}</text>
+            <br>
+            <text class="data">{{ props.loginResponse.publicLabel }}</text>
+        </div>
     </div>
     <div class="above">
         <div class="messages">
@@ -79,6 +87,11 @@ async function downloadPDF (): Promise<void> {
         <br>
         <div class="contentAbove" v-if="props.loginResponse.contentAbove">
             <ContentView :content="props.loginResponse.contentAbove" :language="props.language"/>
+        </div>
+    </div>
+    <div class="verifiedText">
+        <div class="explanation">
+            <text>{{ extractTextFromJson(text.verified.explanation, props.language) }}</text>
         </div>
     </div>
     <div class="ballot" v-if="rendered">
@@ -92,30 +105,67 @@ async function downloadPDF (): Promise<void> {
     <div class="download">
         <text class="text">{{ extractTextFromJson(text.verified.downloadText, props.language) }}</text>
         <br>
-        <button v-on:click="downloadPDF">{{ extractTextFromJson(text.verified.download, props.language) }}</button>
+        <div class="buttonOuter"><button class="pressDownload" v-on:click="downloadPDF">{{ extractTextFromJson(text.verified.download, props.language) }}</button></div>
     </div>
 </template>
 
 <style scoped>
-
 .verifiedText {
-    text-align: center;
+  text-align: center;
 }
+
 .verified {
-    color: #0a0;
+  color: #0a0;
 }
+
+.check {
+  font-size: 48px;
+}
+
 .id {
-    text-align:center
+  display: flex;
+  width: 100%;
+  padding-left: 20%
 }
+
+.left {
+  flex: 18%;
+}
+.right {
+  flex: 82%;
+}
+
+.titleKey {
+  font-weight: bold;
+}
+
+.data {
+  margin-top: -4%;
+  margin-bottom: -2%;
+  width: 50%;
+}
+
 .above {
-    text-align:center
+  text-align:center
 }
+
+.explanation {
+  text-align: justify;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
 .ballot {
   margin: 36pt 0;
   box-shadow: 0 2px 4px 0 rgba(0,0,0,.1);
   border: solid 1px;
   border-radius: 3pt;
 }
+
 .logo {
   display: flex;
   flex-direction: column;
@@ -126,12 +176,26 @@ async function downloadPDF (): Promise<void> {
   position: absolute;
   right: 0;
 }
+
 .download {
-    text-align: center;
-    max-width: 600pt;
-    padding: 0 12pt;
-    margin: auto auto 8rem auto;
-    line-height: 1.5;
+  text-align: justify;
+  max-width: 600pt;
+  padding: 0 12pt;
+  margin: auto auto 8rem auto;
+  line-height: 1.5;
+}
+
+.buttonOuter {
+  text-align: center;
+}
+
+.pressDownload {
+  text-align: center;
+  width: 51.5%;
+  font-weight: bold;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  margin-top: 4%;
 }
 </style>
 ../client/main/constants

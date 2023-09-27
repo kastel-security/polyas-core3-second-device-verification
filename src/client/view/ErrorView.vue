@@ -21,7 +21,7 @@ onMounted(() => {
 
 <template>
     <div class="error" v-if="props.errorType!=ErrorType.CONNECTION&&props.errorType!=ErrorType.PARAMS">
-        <h2 class="fail">{{ extractTextFromJson(text.error.rejected, props.language) }}</h2>
+        <h2 class="fail"><span class="cross">&#x274C;</span> {{ extractTextFromJson(text.error.rejected, props.language) }}</h2>
     </div>
     <div class="cause">
         <h3 v-if="props.errorType==ErrorType.PARAMS">{{ extractTextFromJson(text.error.params, props.language) }}</h3>
@@ -35,7 +35,7 @@ onMounted(() => {
         <h3 v-else>{{ extractTextFromJson(text.error.other, props.language) }}</h3>
     </div>
     <div class = "action">
-        <button
+        <button class="reset"
         v-if="props.errorType==ErrorType.EXTERN||props.errorType==ErrorType.FORMAT||props.errorType==ErrorType.CONNECTION||props.errorType==ErrorType.OTHER"
         @click="$emit('reset')">
             {{ extractTextFromJson(text.error.reset, props.language) }}
@@ -44,23 +44,37 @@ onMounted(() => {
 </template>
 
 <style scoped>
-.error{
-    max-width: 500pt;
-    min-height: 80pt;
-    padding: 0 12pt;
-    margin: auto auto 8rem auto;
-    line-height: 1.5;
-    text-align: center;
-    background-color: #ff6666;
-    .fail{
-        padding-top: 5%;
-    }
+.error {
+  max-width: 500pt;
+  min-height: 80pt;
+  padding: 0 12pt;
+  margin: auto auto 8rem auto;
+  line-height: 1.5;
+  text-align: center;
+  background-color: #ff6666;
+  .fail {
+    padding-top: 5%;
+  }
+  .cross {
+    font-size: 48px;
+    margin: .25em;
+  }
 }
-.cause{
-    text-align: center;
+
+.cause {
+  text-align: center;
 }
+
 .action {
-    text-align: center;
+  text-align: center;
+}
+
+.reset {
+  width: 51.5%;
+  font-weight: bold;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  margin-top: 4%;
 }
 </style>
 ../client/main/error
