@@ -25,9 +25,9 @@ const loginResponse = ref<SecondDeviceLoginResponse>()
 const result = ref<Uint8Array>()
 const receiptText = ref<string[]>()
 onMounted(async () => {
-  env = EnvironmentVariables.init((import.meta as any).env.ELECTION_MODE)
-  env.backendUrl = (import.meta as any).env.ELECTION_BACKEND
-  env.fingerprint = (import.meta as any).env.ELECTION_FINGERPRINT
+  env = EnvironmentVariables.init((import.meta as any).env.VITE_MODE)
+  env.backendUrl = (import.meta as any).env.VITE_BACKEND_URL
+  env.fingerprint = (import.meta as any).env.VITE_FINGERPRINT
   console.log('Fingerprint: ', env.fingerprint)
   const urlParams = new URLSearchParams(window.location.search)
   languages = ['DE', 'EN', undefined]

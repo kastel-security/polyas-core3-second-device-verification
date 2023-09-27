@@ -1,53 +1,50 @@
 import { fileURLToPath, URL } from 'node:url'
 
 import { defineConfig, loadEnv } from 'vite'
+import EnvironmentPlugin from 'vite-plugin-environment'
 import vue from '@vitejs/plugin-vue'
 
-export default ({ mode }) => {
-  process.env = {...process.env, ...loadEnv(mode, process.cwd(), '')};
-  if (process.env.ELECTION_MODE == 'dev') {
-    return defineConfig({
-      plugins: [
-        vue(),
-      ],
-      resolve: {
-        alias: {
-          '@': fileURLToPath(new URL('./src', import.meta.url))
-        }
-      },
+const defaultConfig = {
+  plugins: [
+    EnvironmentPlugin('all', { prefix: 'ELECTION_' }),
+    vue()
+  ],
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url))
+    }
+  },
+  server: {
+    host: true,
+    port: 5000
+  }
+}
+
+export default defineConfig(({ mode }) => {
+  process.env = loadEnv(mode, process.cwd(), '')
+  if (JSON.stringify(process.env.VITE_MODE) == 'dev') {
+    return {
+      ...defaultConfig,
       server: {
         host: true,
         port: 5000,
         proxy: {
           '/electionData': {
-            target: process.env.ELECTION_URL + '/ssd/rest',
+            target: JSON.stringify(process.env.VITE_ELECTION_URL) + '/ssd/rest',
             changeOrigin: true
           },
           '/login': {
-            target: process.env.ELECTION_URL + '/ssd/rest',
+            target: JSON.stringify(process.env.VITE_ELECTION_URL) + '/ssd/rest',
             changeOrigin: true
           },
           '/challenge': {
-            target: process.env.ELECTION_URL + '/ssd/rest',
+            target: JSON.stringify(process.env.VITE_ELECTION_URL) + '/ssd/rest',
             changeOrigin: true
           }
         }
       }
-    })
+    }
   } else {
-    return defineConfig({
-      plugins: [
-        vue(),
-      ],
-      resolve: {
-        alias: {
-          '@': fileURLToPath(new URL('./src', import.meta.url))
-        }
-      },
-      server: {
-        host: true,
-        port: 5000
-      }
-    });
+    return defaultConfig
   }
-}
+})
