@@ -1,34 +1,35 @@
 version: "2.14.2"
 name: polyas-verifier
 services:
- vite_docker:
-   build:
-    context: .
-    dockerfile: Dockerfile
-    args:
-      DIR: /srv/app
-      NAME: polyas-verifier
-   container_name: polyas-verifier
-   entrypoint:
-     - /usr/local/bin/npm
-     - run
-     - dev
-   environment:
-     ELECTION_URL: https://election.polyas.com
-     SECOND_DEVICE_FINGERPRINT: 42
-     BACKEND_URL: http://localhost:5000
-     MODE: deploy
-   image: node:alpine
-   networks:
-     - kastel
-   ports:
-     - mode: host
-       target: 5000
-       published: "5000"
-       protocol: tcp
-   restart: always
-   tty: true
-   working_dir: /srv/app/polyas-verifier
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        DIR: /srv/app
+        NAME: polyas-verifier
+      network: host
+    container_name: polyas-verifier
+    entrypoint:
+    - /usr/local/bin/npm
+    - run
+    - dev
+    environment:
+      ELECTION_URL: https://election.polyas.com
+      SECOND_DEVICE_FINGERPRINT: 42
+      BACKEND_URL: http://localhost:5000
+      MODE: deploy
+    image: node:alpine
+    network_mode: bridge
+    ports:
+    - mode: host
+      target: 5000
+      published: "5000"
+      protocol: tcp
+    restart: always
+    tty: true
+    working_dir: /srv/app/polyas-verifier
 networks:
-  kastel:
-    name: polyas-verifier
+  default:
+    driver: bridge
+    external: true
