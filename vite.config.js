@@ -1,18 +1,30 @@
-import { defineConfig } from "vite";
+import { defineConfig, loadEnv } from "vite";
 import vue from "@vitejs/plugin-vue";
 
-// https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [vue()],
-  server: {
-    host: true,
-    port: 3000,
-    
-    proxy: {
-      '/electionData': {
-        target: "https://elections-k8s-dev.polyas.com/10f9e7ec-a92d-43c5-8262-22d73ffc57ce/ssd/rest",
-        changeOrigin: true
+export default ({ mode }) => {
+  process.env = {...process.env, ...loadEnv(mode, process.cwd())};
+  return defineConfig({
+    plugins: [
+      vue(),
+    ],
+    server: {
+      host: true,
+      port: 5000,
+      
+      proxy: {
+        '/electionData': {
+          target: "https://elections-k8s-dev.polyas.com/" + process.env.VITE_HASH + '/ssd/rest',
+          changeOrigin: true
+        },
+        '/login': {
+          target: "https://elections-k8s-dev.polyas.com/" + process.env.VITE_HASH + '/ssd/rest',
+          changeOrigin: true
+        },
+        '/challenge': {
+          target: "https://elections-k8s-dev.polyas.com/" + process.env.VITE_HASH + '/ssd/rest',
+          changeOrigin: true
+        }
       }
     }
-  }
-});
+  })
+}
