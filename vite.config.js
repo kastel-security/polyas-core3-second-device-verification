@@ -27,6 +27,7 @@ export default defineConfig(({ mode }) => {
     server: {
       host: true,
       port: 5000,
+      listen: 5000,
       proxy: {
         '/electionData': {
           target: JSON.stringify(process.env.VITE_ELECTION_URL) + '/' + JSON.stringify(process.env.VITE_ELECTION_HASH) + '/ssd/rest',
