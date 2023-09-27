@@ -9,6 +9,7 @@
     "dev": "nodemon src/server/main.ts -w src/server",
     "start": "ts-node src/server/main.ts NODE_ENV=PRODUCTION",
     "mock": "vite --mode mock --port 5000",
+    "frontend": "vite --port 5000",
     "preview": "vite preview",
     "build": "vite build",
     "lint": "eslint --ext .ts,.vue ./src/"

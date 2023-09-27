@@ -17,5 +17,5 @@ app.get("/log", (_, res) => {
 })
 
 ViteExpress.listen(app, 5000, () =>
-  console.log("Server is listening on port 3000...")
+  console.log("Server is listening on port 5000...")
 );

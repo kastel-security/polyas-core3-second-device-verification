@@ -10,6 +10,7 @@ export default ({ mode }) => {
     server: {
       host: true,
       port: 5000,
+      listen: 5000,
       
       proxy: {
         '/electionData': {
