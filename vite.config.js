@@ -6,7 +6,7 @@ import vue from '@vitejs/plugin-vue'
 
 export default ({ mode }) => {
   process.env = {...process.env, ...loadEnv(mode, process.cwd())};
-  if (process.env.MODE == 'dev') {
+  if (process.env.ELECTION_MODE == 'dev') {
     return defineConfig({
       plugins: [
         vue(),

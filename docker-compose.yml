@@ -16,9 +16,9 @@ services:
     - dev
     environment:
       ELECTION_URL: https://election.polyas.com
-      SECOND_DEVICE_FINGERPRINT: 42
-      BACKEND_URL: http://localhost:5000
-      MODE: deploy
+      ELECTION_FINGERPRINT: 42
+      ELECTION_BACKEND: http://localhost:5000
+      ELECTION_MODE: deploy
     image: node:alpine
     network_mode: bridge
     ports:
