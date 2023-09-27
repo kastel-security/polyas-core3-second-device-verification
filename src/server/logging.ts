@@ -1,5 +1,6 @@
-import { Stats, promises as fs } from "fs";
+import { Stats, promises as fs, existsSync } from "fs";
 import jsPDF from "jspdf";
+import {config } from "dotenv"
 import { generateReceipt } from "../public/receipt";
 
 type ValidEnding = "B"|"KB"|"MB"|"GB"|"TB"|"PB"
@@ -23,12 +24,13 @@ function getBytes() {
 }
 
 async function logIfNotFull(info: string[]): Promise<void> {
-  await new Promise(f => setTimeout(f, 5000));
-  const path = process.env.VITE_HASH as string
+  config()
+  const basePath = "logs/"
+  const path = basePath + process.env.VITE_HASH as string
   let files: string[] = await fs.readdir(path)
   .then((content) => {return content})
-  .catch(() =>{
-    fs.mkdir(path)
+  .catch(async () =>{
+    await fs.mkdir(path)
     return []})
   const asyncCalls: Promise<Stats>[] = new Array<Promise<Stats>>()
   files.forEach(function(file) {
@@ -39,13 +41,13 @@ async function logIfNotFull(info: string[]): Promise<void> {
   allStats.forEach(function(stat) {
     totalSize = totalSize + stat.size
   })
-  const newFile = path + "/" + info[3] + ".pdf" 
+  const newFile = info[3] + ".pdf" 
   
   if (totalSize < getBytes() && !files.includes(newFile)) {
     const doc = generateReceipt(info)
-    doc.save(newFile);
-  } else if (totalSize < getBytes()) {
-    console.log("A hash collision in ballot fingerprint occured, or a voter verified the same ballot twice")
+    doc.save(path + "/" + newFile);
+  } else if (files.includes(newFile)) {
+    console.log("A hash collision of ballot fingerprints occured, or a voter verified the same ballot twice")
   }
 
 }

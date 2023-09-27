@@ -39,7 +39,7 @@ class Comm implements Communication {
   private static readonly responseOk: ResponseStatus = 'OK'
   public constructor () {
     this.baseHeader = {
-      'Content-Type': 'application/json'
+      "Content-Type": "text/plain"
     }
   }
 
@@ -130,11 +130,14 @@ class Comm implements Communication {
   }
 
   public async logReceipt(info: Array<string>): Promise<void> {
+    const header = {
+      "Content-Type": "application/json"
+    } 
     await axios.request({
       baseURL: EnvironmentVariables.instance.backendUrl,
       url: '/log',
       method: 'post',
-      headers: this.baseHeader,
+      headers: header,
       data: {
         info: info
       }
