@@ -47,7 +47,7 @@
         "explanation": {
             "default": "Please note that the following is an image of your ballot(s) in the ballot box. You can now no longer change your submitted ballot. However, you can modify the following image in order to hide your vote from possible observers. But this modification will neither affect your submitted ballot nor its generated receipt.",
             "value": {
-                "DE": "Bitte beachten Sie, dass es sich nachfolgend um ein Abbild Ihres Stimmzettels bzw. Ihrer Stimmzettel in der Wahlurne handelt. Eine Änderung Ihrer Stimmabgabe ist nun nicht mehr möglich. Allerdings können Sie das folgende Abbild modifizieren, um Ihre Stimmabgabe vor möglichen Beobachtenden zu verbergen. Diese Modifikation wird jedoch weder Ihre abgegebenen Stimmzettel in der Wahlurne noch die generierte Bestätigung Ihrer Stimmabgabe beeinflussen."
+                "DE": "Bitte beachten Sie, dass es sich nachfolgend um ein Abbild Ihres Stimmzettels bzw. Ihrer Stimmzettel in der Wahlurne handelt. Eine Änderung Ihrer Stimmabgabe ist nun nicht mehr möglich. Allerdings können Sie das folgende Abbild verändern, um Ihre Stimmabgabe vor möglichen Beobachtenden zu verbergen. Diese Veränderung wird jedoch weder Ihre abgegebenen Stimmzettel in der Wahlurne noch die generierte Bestätigung Ihrer Stimmabgabe beeinflussen."
             }
         },
         "verifiedFor": {
@@ -101,9 +101,9 @@
     },
     "error": {
         "params": {
-            "default": "The URL you have entered is invalid. Please enter this page by scanning the QR code offered by your voting application, without modifying this code or the URL.",
+            "default": "Please access this page by scanning the QR code provided by your online voting system without modifying the code or the URL it encodes.",
             "value": {
-                "DE": "Die eingegebene URL ist ungültig. Bitte rufen Sie diese Seite durch Scannen des QR-Codes der Wahlanwendung auf, ohne diesen Code oder die URL zu modifizieren."
+                "DE": "Bitte rufen Sie diese Seite durch Scannen des von Ihrem Online-Wahlsystem bereitgestellten QR-Codes auf, ohne den Code oder die darin kodierte URL zu verändern."
             }
         },
         "rejected": {
