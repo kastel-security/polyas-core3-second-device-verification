@@ -212,7 +212,7 @@ async function reset (): Promise<void> {
   .selectButton {
     margin-left: .5em;
     margin-right: 1.5rem;
-    background-color: #fff;
+    background-color: inherit;
   }
   .selectLabel {
     margin-right: 1.5rem;
