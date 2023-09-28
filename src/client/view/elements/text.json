@@ -11,8 +11,8 @@
     },
     "footer": {
         "acknowledgement": {
-            "default": "by KASTEL Security Research Labs at Karlsruhe Institute of Technology (KIT).",
-            "value": { "DE": "von den KASTEL-Sicherheitsforschungslaboren am Karlsruher Institut für Technologie (KIT)." }
+            "default": "by KASTEL Security Research Labs at Karlsruhe Institute of Technology (KIT)",
+            "value": { "DE": "von den KASTEL-Sicherheitsforschungslaboren am Karlsruher Institut für Technologie (KIT)" }
         }
     },
     "login": {
