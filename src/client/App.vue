@@ -194,16 +194,15 @@ async function reset (): Promise<void> {
 }
 
 .kitlogo {
-  margin-left: 2rem;
+  margin-left: 10%;
   margin-top: 1rem;
-  width: 10rem;
-  min-width: 3.3cm;
+  width: 60%
 }
 
 .kastellogo {
-  margin-right: 2rem;
+  margin-right: 00%;
   margin-top: 1rem;
-  width: 10rem;
+  width: 80%;
 }
 
 .select {
