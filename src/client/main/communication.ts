@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { type SecretProof } from '../classes/ballot'
 import { ElectionData, SecondDeviceFinalMessage, SecondDeviceLoginResponse } from '../classes/communication'
-import { EnvironmentVariables } from './constants'
 import { ErrorType } from './error'
 import data from '../mock/data.json'
 
