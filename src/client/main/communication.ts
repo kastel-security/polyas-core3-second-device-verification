@@ -49,7 +49,6 @@ class Comm implements Communication {
 
   public async electionData (): Promise<ResponseBean<ElectionData>> {
     return await axios.request({
-      baseURL: EnvironmentVariables.instance.backendUrl,
       url: '/electionData',
       method: 'get',
       headers: this.baseHeader
@@ -72,7 +71,6 @@ class Comm implements Communication {
       challenge = '0' + challenge
     }
     return await axios.request({
-      baseURL: EnvironmentVariables.instance.backendUrl,
       url: '/login',
       method: 'post',
       data: {
@@ -103,7 +101,6 @@ class Comm implements Communication {
     const header = this.baseHeader
     header.AuthToken = token
     return await axios.request({
-      baseURL: EnvironmentVariables.instance.backendUrl,
       url: '/challenge',
       method: 'post',
       headers: header,
@@ -133,7 +130,6 @@ class Comm implements Communication {
       'Content-Type': 'application/json'
     }
     await axios.request({
-      baseURL: EnvironmentVariables.instance.backendUrl,
       url: '/log',
       method: 'post',
       headers: header,

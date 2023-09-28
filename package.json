@@ -6,7 +6,7 @@
   "module": "node",
   "scripts": {
     "test": "jest",
-    "dev": "nodemon src/server/main.ts -w src/server --mode dev",
+    "dev": "nodemon src/server/main.ts -w src/server",
     "start": "ts-node src/server/main.ts NODE_ENV=PRODUCTION",
     "mock": "vite --mode mock --port 5000",
     "frontend": "vite --port 5000",
