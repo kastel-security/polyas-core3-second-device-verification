@@ -26,7 +26,7 @@ const result = ref<Uint8Array>()
 const receiptText = ref<string[]>()
 onMounted(async () => {
   env = EnvironmentVariables.init((import.meta as any).env.VITE_MODE)
-  env.backendUrl = (import.meta as any).env.VITE_ELECTION_BACKEND_URL
+  env.backendUrl = (import.meta as any).env.VITE_ELECTION_BACKEND
   env.fingerprint = (import.meta as any).env.VITE_ELECTION_FINGERPRINT
   console.log('Fingerprint: ', env.fingerprint)
   const urlParams = new URLSearchParams(window.location.search)

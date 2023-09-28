@@ -21,7 +21,7 @@ const defaultConfig = {
 }
 
 export default defineConfig(({ mode }) => {
-  process.env = {...process.env, ...loadEnv(mode, process.cwd(), '')};
+  process.env = Object.assign(process.env, loadEnv(mode, process.cwd(), ''));
   return {
     ...defaultConfig,
     server: {
@@ -30,15 +30,15 @@ export default defineConfig(({ mode }) => {
       listen: 5000,
       proxy: {
         '/electionData': {
-          target: JSON.stringify(process.env.VITE_ELECTION_URL) + '/' + JSON.stringify(process.env.VITE_ELECTION_HASH) + '/ssd/rest',
+          target: process.env.VITE_ELECTION_URL + '/' + process.env.VITE_ELECTION_HASH + '/ssd/rest',
           changeOrigin: true
         },
         '/login': {
-          target: JSON.stringify(process.env.VITE_ELECTION_URL) + '/' + JSON.stringify(process.env.VITE_ELECTION_HASH) + '/ssd/rest',
+          target: process.env.VITE_ELECTION_URL + '/' + process.env.VITE_ELECTION_HASH + '/ssd/rest',
           changeOrigin: true
         },
         '/challenge': {
-          target: JSON.stringify(process.env.VITE_ELECTION_URL) + '/' + JSON.stringify(process.env.VITE_ELECTION_HASH) + '/ssd/rest',
+          target: process.env.VITE_ELECTION_URL + '/' + process.env.VITE_ELECTION_HASH + '/ssd/rest',
           changeOrigin: true
         }
       }
