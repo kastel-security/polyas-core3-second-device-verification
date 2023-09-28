@@ -95,7 +95,7 @@ class NodeText extends GenericNode {
   public static fromJson (nodeJson: any): NodeText {
     const text = nodeJson.text as string
     const marks = new Set<NodeMark>()
-    //TODO check if this actually works
+    // TODO check if this actually works
     for (const node of Object.keys(nodeJson.marks)) {
       marks.add(NodeMark.fromJson(node))
     }
