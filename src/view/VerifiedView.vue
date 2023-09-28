@@ -35,7 +35,7 @@ onMounted(() => {
     for (const list of ballotSheet.lists) {
       bytesOfBallotSheet += list.candidates.length + 1
     }
-    if (start + bytesOfBallotSheet < props.result.length) {
+    if (start + bytesOfBallotSheet > props.result.length) {
       throw new Error('Result format does not match ')
     }
     ballotResult.value.set(ballotSheet.id, props.result.subarray(start, start + bytesOfBallotSheet))
@@ -99,7 +99,7 @@ function downloadPDF (): void {
         </div>
     </div>
     <div class="ballot" v-if="rendered">
-        <BallotView
+        <BallotView class="singleBallot"
         v-for="ballot in ballotSheets"
         v-bind:key="ballot.id"
         :ballot="ballot"
@@ -165,6 +165,13 @@ function downloadPDF (): void {
 
 .ballot {
   margin: 36pt 0;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,.1);
+  border: solid 1px;
+  border-radius: 3pt;
+}
+
+.singleBallot {
+  margin-top: 5rem;
   box-shadow: 0 2px 4px 0 rgba(0,0,0,.1);
   border: solid 1px;
   border-radius: 3pt;
