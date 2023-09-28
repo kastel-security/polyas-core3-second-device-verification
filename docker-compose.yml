@@ -19,11 +19,14 @@ services:
       VITE_ELECTION_HASH: a1d0c6e8-3f02-7327-d846-1063f4Ac58a6
       VITE_ELECTION_FINGERPRINT: 42
       VITE_ELECTION_BACKEND: http://localhost:5000
+    extra_hosts:
+      127.0.0.1: host-gateway
     image: node:alpine
     network_mode: bridge
     ports:
     - mode: host
       target: 5000
+      host_ip: 127.0.0.1
       published: "5000"
       protocol: tcp
     restart: always

@@ -21,8 +21,8 @@ const defaultConfig = {
 }
 
 export default defineConfig(({ mode }) => {
-  process.env = {...process.env, ...loadEnv(mode, process.cwd(), '')};
-  if (JSON.stringify(process.env.VITE_MODE) == 'dev') {
+  process.env = Object.assign(process.env, loadEnv(mode, process.cwd(), ''));
+  if (process.env.VITE_MODE != 'mock') {
     return {
       ...defaultConfig,
       server: {
@@ -30,15 +30,15 @@ export default defineConfig(({ mode }) => {
         port: 5000,
         proxy: {
           '/electionData': {
-            target: JSON.stringify(process.env.VITE_ELECTION_URL) + '/' + JSON.stringify(process.env.VITE_ELECTION_HASH) +  '/ssd/rest',
+            target: process.env.VITE_ELECTION_URL + '/' + process.env.VITE_ELECTION_HASH +  '/ssd/rest',
             changeOrigin: true
           },
           '/login': {
-            target: JSON.stringify(process.env.VITE_ELECTION_URL) + '/' + JSON.stringify(process.env.VITE_ELECTION_HASH) + '/ssd/rest',
+            target: process.env.VITE_ELECTION_URL + '/' + process.env.VITE_ELECTION_HASH + '/ssd/rest',
             changeOrigin: true
           },
           '/challenge': {
-            target: JSON.stringify(process.env.VITE_ELECTION_URL) + '/' + JSON.stringify(process.env.VITE_ELECTION_HASH) + '/ssd/rest',
+            target: process.env.VITE_ELECTION_URL + '/' + process.env.VITE_ELECTION_HASH + '/ssd/rest',
             changeOrigin: true
           }
         }
