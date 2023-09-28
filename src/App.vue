@@ -105,7 +105,7 @@ async function reset (): Promise<void> {
   <div id="all">
     <div id="header">
       <div id="left">
-        <img class="kitlogo" src="./view/elements/Logo_KIT.svg"/>
+        <img class="kitlogo" src="./view/elements/kit.svg"/>
       </div>
       <div id="center">
         <h1>{{ extractTextFromJson(text.header.title, language) }}</h1>
@@ -142,7 +142,7 @@ async function reset (): Promise<void> {
       :language="language"
       @reset="reset"/>
       <div v-else class="loading">
-        <img src="./view/elements/Spinner-1s-200px.svg"/>
+        <img src="./view/elements/spinner-1s-200px.svg"/>
       </div>
     </div>
     <div id="footer">
