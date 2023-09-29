@@ -7,6 +7,10 @@
         "election": {
             "default": "Election Title: ",
             "value": { "DE": "Titel der Wahl: " }
+        },
+        "electionReference": {
+            "default": "To the online election:",
+            "value": { "DE": "Zur Online-Wahl:"}
         }
     },
     "footer": {
