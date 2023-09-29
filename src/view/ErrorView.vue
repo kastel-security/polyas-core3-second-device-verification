@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { ErrorType } from '../main/error'
+import { EnvironmentVariables } from '../main/constants'
 import { extractTextFromJson } from './basic'
 import text from './elements/text.json'
 import { type Language } from '../classes/basics'
@@ -10,7 +11,6 @@ const props = defineProps<{
   language: Language | undefined
   message?: string
 }>()
-
 onMounted(() => {
   console.log(props.errorType)
   if (props.message !== undefined) {
@@ -24,7 +24,13 @@ onMounted(() => {
         <h2 class="fail"><span class="cross">&#x274C;</span> {{ extractTextFromJson(text.error.rejected, props.language) }}</h2>
     </div>
     <div class="cause">
-        <h3 v-if="props.errorType==ErrorType.PARAMS">{{ extractTextFromJson(text.error.params, props.language) }}</h3>
+        <h3 v-if="props.errorType==ErrorType.PARAMS">
+            {{ extractTextFromJson(text.error.params, props.language) }}<br>
+            <p>
+                {{ extractTextFromJson(text.header.electionReference, props.language) }}
+                <em><a :href="EnvironmentVariables.instance.electionUrl">{{ EnvironmentVariables.instance.electionUrl }}</a></em>
+            </p>
+        </h3>
         <h3 v-else-if="props.errorType==ErrorType.CONNECTION">{{ extractTextFromJson(text.error.connection, props.language) }}</h3>
         <h3 v-else-if="props.errorType==ErrorType.EXTERN">{{ extractTextFromJson(text.error.extern, props.language) }}</h3>
         <h3 v-else-if="props.errorType==ErrorType.BALLOT_ACK||props.errorType==ErrorType.BALLOT_ACK_FAIL">{{ extractTextFromJson(text.error.ack, props.language) }}</h3>

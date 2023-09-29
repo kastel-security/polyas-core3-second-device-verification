@@ -11,6 +11,7 @@ const plaintextBlockSize = 31
 type Modes = 'mock' | 'dev' | 'deploy' | 'test'
 class EnvironmentVariables {
   public mode: Modes
+  public electionUrl: string
   public backendUrl: string
   public fingerprint: string
   public proofGen: ProofGenerator
