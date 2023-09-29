@@ -1,16 +1,11 @@
 <script setup lang="ts">
 import { type GenericNode, type NodeBlock, type NodeInline, type NodeText } from '../classes/nodes'
 import { type Language } from '../classes/basics'
-import { onMounted } from 'vue';
 
 const props = defineProps<{
   node: GenericNode
   language: Language | undefined
 }>()
-
-onMounted(() => {
-
-})
 </script>
 
 <template>

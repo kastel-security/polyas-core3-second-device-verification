@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import { Ballot, type Core3StandardBallot } from '../classes/ballot'
+import { type Core3StandardBallot } from '../classes/ballot'
 import { type Language } from '../classes/basics'
 import { extractText, extractTextFromJson } from './basic'
 import CandidateListView from './CandidateListView.vue'
@@ -46,13 +46,16 @@ onMounted(() => {
     <div class="contentAbove" v-if="ballot.contentAbove">
         <ContentView :content="ballot.contentAbove" :language="props.language"/>
     </div>
-    <div class="questions" v-if="rendered" v-for="candidateList in ballot.lists">
+    <div class="allQuestions" v-if="rendered">
+      <div class="questions"
+      v-bind:key="candidateList.id"
+      v-for="candidateList in ballot.lists">
         <CandidateListView
-        v-bind:key="candidateList.id"
         :candidateList="candidateList"
         :result="listResults.get(candidateList.id)!"
         :language="props.language"/>
     </div>
+  </div>
     <div class="invalid" v-if="ballot.showInvalidOption">
         <input type="checkbox" name="check" :checked="props.result[0]==1"/>
         <label for="check">{{ extractTextFromJson(text.ballot.invalidOption, props.language) }}</label>

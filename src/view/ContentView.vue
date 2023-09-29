@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
 import { type Content, type CustomDocument, type Language } from '../classes/basics'
 import NodeView from './NodeView.vue'
 import { extractText, extractGeneric } from './basic'

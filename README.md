@@ -22,7 +22,7 @@ npm run mock
 ```
 Then, open the following link:
 ```bash
-localhost:5000?c=vtWXj-YxxTV2ektefJ5pk7AWc9saoPbu6wJZUZ9R1t8ekU89x7SCYLcg8ODi3fHST4BTmAK97XN3XqWc&vid=voter8&nonce=4bf8cecf3fb4c4b4372005e13a53dce705123fab5b9e9288461e6d8fbf9644ea
+http://localhost:5000/?c=kFpsHZFLr8j-2yDySJzMhLTyEFx6Nu4oqxFSE4oIaeV3IZRlF0987AlWeCQC4AHpznYchLE_gI3nwXmS&vid=voter24&nonce=cd02cad970d6b5659e097d09545c605518d4061cf3751c5a19ffc298193d62f2
 ```
 
 ## Testing

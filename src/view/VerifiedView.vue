@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { type Core3StandardBallot } from '../classes/ballot'
 import { type ImageRef, type Language, type I18n } from '../classes/basics'
-import { extractGeneric, extractText, extractTextFromJson } from './basic'
+import { extractGeneric, extractTextFromJson } from './basic'
 import BallotView from './BallotView.vue'
 
 import text from './elements/text.json'
@@ -92,12 +92,16 @@ async function downloadPDF (): Promise<void> {
             <text>{{ extractTextFromJson(text.verified.explanation, props.language) }}</text>
         </div>
     </div>
-    <div class="ballot" v-if="rendered" v-for="ballot in ballotSheets">
+    <div class="allBallots"
+    v-if="rendered">
+      <div class="ballot"
+      v-for="ballot in ballotSheets"
+      v-bind:key="ballot.id">
         <BallotView
-        v-bind:key="ballot.id"
         :ballot="ballot"
         :result="ballotResult.get(ballot.id)!"
         :language="props.language"/>
+      </div>
     </div>
     <div class="download">
         <text class="text">{{ extractTextFromJson(text.verified.downloadText, props.language) }}</text>
