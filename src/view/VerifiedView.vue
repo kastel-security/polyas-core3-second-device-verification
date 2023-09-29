@@ -87,6 +87,7 @@ async function downloadPDF (): Promise<void> {
             <ContentView :content="props.loginResponse.contentAbove" :language="props.language"/>
         </div>
     </div>
+    <br>
     <div class="verifiedText">
         <div class="explanation">
             <text>{{ extractTextFromJson(text.verified.explanation, props.language) }}</text>
