@@ -45,7 +45,7 @@ onMounted(() => {
 })
 
 function getImgUrl (img: I18n<ImageRef>): string {
-  return extractGeneric<ImageRef>(img, props.language).url
+  return EnvironmentVariables.instance.electionURL + '/' + extractGeneric<ImageRef>(img, props.language).url
 }
 
 async function downloadPDF (): Promise<void> {
@@ -60,7 +60,7 @@ async function downloadPDF (): Promise<void> {
 
 <template>
     <div class="logo" v-if="props.loginResponse.logo">
-        <img :src="getImgUrl(props.loginResponse.logo!)" ref="test"/>
+        <img class="content" :src="getImgUrl(props.loginResponse.logo!)" ref="test"/>
     </div>
     <div class="verifiedText">
         <h1 class="verified"><span class="check">&#x2705;</span> {{ extractTextFromJson(text.verified.verified, props.language) }}</h1>
@@ -174,8 +174,11 @@ async function downloadPDF (): Promise<void> {
   justify-content: flex-end;
   margin-top: 0.5rem !important;
   margin-right: 1.5rem !important;
-  position: absolute;
+  align-items: right;
   right: 0;
+  .content{
+    width: 20%;
+  }
 }
 
 .download {
