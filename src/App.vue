@@ -163,7 +163,7 @@ async function reset (): Promise<void> {
 }
 
 #footer {
-  width: 100%;
+  width: 92%;
   text-align: justify;
   padding-top: 15px;
   padding-bottom: 15px;
