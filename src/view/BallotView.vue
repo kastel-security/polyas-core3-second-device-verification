@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import { type Core3StandardBallot } from '../classes/ballot'
+import { Ballot, type Core3StandardBallot } from '../classes/ballot'
 import { type Language } from '../classes/basics'
 import { extractText, extractTextFromJson } from './basic'
 import CandidateListView from './CandidateListView.vue'
@@ -46,9 +46,8 @@ onMounted(() => {
     <div class="contentAbove" v-if="ballot.contentAbove">
         <ContentView :content="ballot.contentAbove" :language="props.language"/>
     </div>
-    <div class="questions" v-if="rendered">
+    <div class="questions" v-if="rendered" v-for="candidateList in ballot.lists">
         <CandidateListView
-        v-for="candidateList in ballot.lists"
         v-bind:key="candidateList.id"
         :candidateList="candidateList"
         :result="listResults.get(candidateList.id)!"

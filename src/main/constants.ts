@@ -1,5 +1,5 @@
 import { type ProofGenerator, ProofGeneratorImpl, ProofGeneratorMock } from '../algorithms/proof'
-import data from '../mock/data.json'
+import data from '../mock/extended.json'
 import { Comm, CommMock, type Communication } from './communication'
 const k = '0373744f99d31509eb5f8caaabc0cc3fab70e571a5db4d762020723b9cd6ada260'
 const g = '0279be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798'
@@ -19,7 +19,7 @@ class EnvironmentVariables {
     this.instance = new EnvironmentVariables()
     this.instance.mode = mode
     if (mode === 'mock' || mode === 'test') {
-      this.instance.proofGen = new ProofGeneratorMock(BigInt(data.proof.e), BigInt(data.proof.r))
+      this.instance.proofGen = new ProofGeneratorMock(BigInt(data.challengeRequest.challenge), BigInt(data.challengeRequest.challengeRandomCoin))
       this.instance.comm = new CommMock()
     } else if (mode === 'dev') {
       this.instance.proofGen = new ProofGeneratorImpl()

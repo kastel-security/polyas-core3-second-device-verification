@@ -1,11 +1,16 @@
 <script setup lang="ts">
 import { type GenericNode, type NodeBlock, type NodeInline, type NodeText } from '../classes/nodes'
 import { type Language } from '../classes/basics'
+import { onMounted } from 'vue';
 
 const props = defineProps<{
   node: GenericNode
   language: Language | undefined
 }>()
+
+onMounted(() => {
+
+})
 </script>
 
 <template>
@@ -19,7 +24,7 @@ const props = defineProps<{
                 <br>
             </div>
         </div>
-        <h1 v-if="(props.node as NodeBlock).type=='heading-one'">
+        <h1 v-else-if="(props.node as NodeBlock).type=='heading-one'">
             <NodeView
             v-for="subnode in (props.node as NodeBlock).nodes"
             v-bind:key="(props.node as NodeBlock).nodes.indexOf(subnode)"

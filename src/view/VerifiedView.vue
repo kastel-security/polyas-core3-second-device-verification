@@ -84,11 +84,6 @@ function downloadPDF (): void {
         </div>
     </div>
     <div class="above">
-        <div class="messages">
-            <text v-for="key in props.loginResponse.messages.keys()"
-            v-bind:key="key">key: {{ extractText(props.loginResponse.messages.get(key), props.language) }}</text>
-        </div>
-        <br>
         <div class="contentAbove" v-if="props.loginResponse.contentAbove">
             <ContentView :content="props.loginResponse.contentAbove" :language="props.language"/>
         </div>
@@ -98,9 +93,8 @@ function downloadPDF (): void {
             <text>{{ extractTextFromJson(text.verified.explanation, props.language) }}</text>
         </div>
     </div>
-    <div class="ballot" v-if="rendered">
-        <BallotView class="singleBallot"
-        v-for="ballot in ballotSheets"
+    <div class="ballot" v-if="rendered" v-for="ballot in ballotSheets">
+        <BallotView
         v-bind:key="ballot.id"
         :ballot="ballot"
         :result="ballotResult.get(ballot.id)!"
@@ -165,13 +159,6 @@ function downloadPDF (): void {
 
 .ballot {
   margin: 36pt 0;
-  box-shadow: 0 2px 4px 0 rgba(0,0,0,.1);
-  border: solid 1px;
-  border-radius: 3pt;
-}
-
-.singleBallot {
-  margin-top: 5rem;
   box-shadow: 0 2px 4px 0 rgba(0,0,0,.1);
   border: solid 1px;
   border-radius: 3pt;

@@ -27,7 +27,6 @@ class NodeBlock extends GenericNode {
   public static fromJson (nodeJson: any): GenericNode {
     const data: Map<string, string> = new Map<string, string>()
     const nodes: GenericNode[] = new Array<GenericNode>()
-    console.log(3, nodeJson)
     for (const key of Object.keys(nodeJson.data)) {
       data.set(key, nodeJson.data[key])
     }
