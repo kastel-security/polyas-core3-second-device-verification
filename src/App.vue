@@ -148,7 +148,7 @@ async function reset (): Promise<void> {
       </div>
     </div>
     <div id="footer">
-      <a href="https://github.com/kastel-security/polyas-core3-second-device-verification">Polyas-Verifier</a> {{ extractTextFromJson(text.footer.acknowledgement, language) }}
+      <a href="https://github.com/kastel-security/polyas-core3-second-device-verification" id="toollink">Polyas-Verifier</a> {{ extractTextFromJson(text.footer.acknowledgement, language) }}
       &copy; 2023&puncsp;<a href="mailto:udqps@student.kit.edu">Christoph Niederbudde</a>, <a href="https://formal.kastel.kit.edu/~kirsten/">Michael Kirsten</a>.
     </div>
   </div>
@@ -174,6 +174,13 @@ async function reset (): Promise<void> {
   font-weight: 100;
 }
 
+#toollink {
+  font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 18px;
+  font-weight: 600;
+  font-variant: small-caps;
+}
+
 #left {
   width: 20%;
 }
@@ -195,16 +202,18 @@ async function reset (): Promise<void> {
 }
 
 .kitlogo {
-  margin-left: 35%;
-  margin-top: 1rem;
-  width: 35%;
+  margin-left: 32.98%;
+  margin-top: 1.22rem;
+  width: 35.85%;
+  min-height: 25%;
   min-width: 35%;
 }
 
 .kastellogo {
   margin-right: 30%;
-  margin-top: 1rem;
+  margin-top: .5rem;
   width: 45%;
+  min-height: 25%;
   min-width: 45%;
 }
 
@@ -214,12 +223,12 @@ async function reset (): Promise<void> {
   justify-content: flex-end;
   .selectButton {
     margin-left: .5em;
-    margin-right: 1.5rem;
+    margin-right: 7%;
     background-color: inherit;
   }
-  .selectLabel {
-    margin-right: 1.5rem;
-  }
+  margin-left: auto;
+  margin-right: -15%;
+  margin-top: -4.45%;
 }
 
 .selectbck {
