@@ -48,13 +48,12 @@ function getImgUrl (img: I18n<ImageRef>): string {
   return extractGeneric<ImageRef>(img, props.language).url
 }
 
-function downloadPDF (): void {
+async function downloadPDF (): Promise<void> {
   const doc = new jsPDF('p', 'px', 'a4') // eslint-disable-line 
   const pageWidth = doc.internal.pageSize.getWidth()
   const left = 60
   doc.setFontSize(16)
   doc.text(props.receiptText, 60, 120, { maxWidth: pageWidth - 2 * left })
-
   doc.save(`vote-receipt-${EnvironmentVariables.instance.fingerprint.substring(0, 10)}.pdf`)
 }
 </script>

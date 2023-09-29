@@ -16,7 +16,11 @@ const props = defineProps<{
         <h4>{{ extractTextFromJson(text.login.voterId, props.language) }}</h4>
         <div class="voterid">{{ props.voterId }}</div>
         <h4>{{ extractTextFromJson(text.login.loginReq, props.language) }}</h4>
-        <div class="password"><input id="enter" class="input" type="password" v-model="passwordValue"/></div>
+        <div class="password">
+          <form @submit.prevent="$emit('login', passwordValue)">
+          <input id="enter" class="input" type="password" v-model="passwordValue"/>
+          </form>
+        </div>
         <div class="explanation">{{ extractTextFromJson(text.login.explanation, props.language) }}</div>
         <button class="login" v-on:click="$emit('login', passwordValue)">
         {{ extractTextFromJson(text.login.loginButton, props.language) }}
