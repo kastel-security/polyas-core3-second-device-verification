@@ -26,8 +26,10 @@ const result = ref<Uint8Array>()
 const receiptText = ref<string[]>()
 onMounted(async () => {
   env = EnvironmentVariables.init((import.meta as any).env.VITE_MODE)
+  env.electionUrl = (import.meta as any).env.VITE_ELECTION_URL + '/' + (import.meta as any).env.VITE_ELECTION_HASH
   env.backendUrl = (import.meta as any).env.VITE_ELECTION_BACKEND
   env.fingerprint = (import.meta as any).env.VITE_ELECTION_FINGERPRINT
+  env.electionURL = (import.meta as any).env.VITE_ELECTION_URL + '/' + (import.meta as any).env.VITE_ELECTION_HASH
   console.log('Fingerprint: ', env.fingerprint)
   const urlParams = new URLSearchParams(window.location.search)
   languages = ['DE', 'EN', undefined]
@@ -147,7 +149,7 @@ async function reset (): Promise<void> {
       </div>
     </div>
     <div id="footer">
-      <a href="https://github.com/kastel-security/polyas-core3-second-device-verification">Polyas-Verifier</a> {{ extractTextFromJson(text.footer.acknowledgement, language) }}
+      <a href="https://github.com/kastel-security/polyas-core3-second-device-verification" id="toollink">Polyas-Verifier</a> {{ extractTextFromJson(text.footer.acknowledgement, language) }}
       &copy; 2023&puncsp;<a href="mailto:udqps@student.kit.edu">Christoph Niederbudde</a>, <a href="https://formal.kastel.kit.edu/~kirsten/">Michael Kirsten</a>.
     </div>
   </div>
@@ -162,7 +164,7 @@ async function reset (): Promise<void> {
 }
 
 #footer {
-  width: 100%;
+  width: 92%;
   text-align: justify;
   padding-top: 15px;
   padding-bottom: 15px;
@@ -171,6 +173,13 @@ async function reset (): Promise<void> {
   bottom: 0;
   font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-weight: 100;
+}
+
+#toollink {
+  font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 18px;
+  font-weight: 600;
+  font-variant: small-caps;
 }
 
 #left {
@@ -194,15 +203,19 @@ async function reset (): Promise<void> {
 }
 
 .kitlogo {
-  margin-left: 10%;
-  margin-top: 1rem;
-  width: 60%
+  margin-left: 32.98%;
+  margin-top: 1.22rem;
+  width: 35.85%;
+  min-height: 0%;
+  min-width: 35%;
 }
 
 .kastellogo {
-  margin-right: 00%;
-  margin-top: 1rem;
-  width: 80%;
+  margin-right: 30%;
+  margin-top: .5rem;
+  width: 45%;
+  min-height: 0%;
+  min-width: 45%;
 }
 
 .select {
@@ -211,12 +224,12 @@ async function reset (): Promise<void> {
   justify-content: flex-end;
   .selectButton {
     margin-left: .5em;
-    margin-right: 1.5rem;
-    background-color: #fff;
+    margin-right: 7%;
+    background-color: inherit;
   }
-  .selectLabel {
-    margin-right: 1.5rem;
-  }
+  margin-left: auto;
+  margin-right: -8%;
+  margin-top: -4.45%;
 }
 
 .selectbck {

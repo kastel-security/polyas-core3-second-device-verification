@@ -15,7 +15,7 @@ const props = defineProps<{
 
 const columns = ref(new Array<Content>())
 onMounted(() => {
-  if (props.candidate.columns.length > props.headerLength) {
+  if (props.candidate.columns.length < props.headerLength) {
     throw new Error('Invalid format')
   }
   for (let i = 0; i < props.candidate.columns.length; i++) {

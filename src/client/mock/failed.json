@@ -1,0 +1,383 @@
+{
+    
+    "link": "http://localhost:5000/?c=dlpsISRn1kpo3fTNOj2dSU9thwIR4D6hR-f1KL-uf2pm8YS_tnV-ddVlkjg92B6Etk8lCceoqpaObSyc&vid=voter23&nonce=ebb48bc442341347d0a0fc844e30fd787d9ac03768a4e30db0e6d32d170e0524",
+
+    "loginResponse": {
+        "value": {
+            "token":"dm90ZXIyMg==.YjZ3SWptWnBXblZWWFBDbA==",
+            "ballotVoterId":"voter22",
+            "electionId":"ddc9a1c9-7e06-4b79-8d88-97942813ac5d",
+            "languages":["DE"],
+            "title": {
+                "default":"Präsidiumswahl 2023 und Vorstandswahl 2023",
+                "value":{}
+            },
+            "logo":{
+                "default": {
+                    "hash":"",
+                    "url":"img/CUSTOM_LOGO/default.png",
+                    "alt":""
+                },
+            "value": {
+                "DE": {
+                    "hash":"",
+                    "url": "img/CUSTOM_LOGO/DE.png",
+                    "alt":""}
+                }
+            },
+            "publicLabel": "1:14",
+            "messages": {
+                "ANCHOR.CANCEL": {
+                    "default":"Stimmabgabe abbrechen",
+                    "value":{}
+                },
+                "ANCHOR.CHECK-VOTE": {
+                    "default": "Stimmabgabe prüfen",
+                    "value":{}
+                },
+                "ANCHOR.CONTINUE": {
+                    "default":"Weiter zur Stimmabgabe",
+                    "value":{}
+                },
+                "ANCHOR.CORRECT": {
+                    "default":"Auswahl korrigieren",
+                    "value":{}
+                },
+                "ANCHOR.DATAPRIVACYPOLICY.TEXT": {
+                    "default":"Datenschutz","value":{}
+                },
+                "ANCHOR.DATAPRIVACYPOLICY.URL": {
+                    "default":"https://www.polyas.de/datenschutz",
+                    "value":{}
+                },
+                "ANCHOR.IMPRINT.TEXT": {
+                    "default":"Impressum",
+                    "value":{}
+                },
+                "ANCHOR.IMPRINT.URL": {
+                    "default":"https://www.polyas.de/impressum",
+                    "value":{}
+                },
+                "ANCHOR.VOTE":{
+                    "default":"Verbindliche Stimmabgabe",
+                    "value":{}
+                },
+                "AUTH.ID.LABEL": {
+                    "default":"Zugangs-PIN","value":{}
+                },
+                "AUTH.ID.PLACEHOLDER":{
+                    "default":"Zugangs-PIN","value":{}
+                },
+                "AUTH.LOGIN":{
+                    "default":"Am Wahlsystem anmelden","value":{}
+                },
+                "AUTH.PASS.HIDE":{
+                    "default":"Passwort verbergen",
+                    "value":{}
+                },
+                "AUTH.PASS.LABEL": {
+                    "default":"Wahl-PIN",
+                    "value":{}
+                },
+                "AUTH.PASS.PLACEHOLDER":{
+                    "default":"Wahl-PIN",
+                    "value":{}
+                },
+                "AUTH.PASS.SHOW": {
+                    "default":"Passwort anzeigen","value":{}
+                },
+                "AUTH.TEXT":{
+                    "default":"Bitte geben Sie Ihre Zugangsdaten zum Online-Wahlsystem ein, um sich anzumelden. Ihre Zugangsdaten können Sie Ihrer Wahleinladung entnehmen.",
+                    "value":{}
+                },
+                "AUTH.TEXT_SECURELINK":{
+                    "default":"",
+                    "value":{}
+                },
+                "BROWSER_ADVICE":{
+                    "default":"Um Ihre Stimmabgabe sicher und reibungslos durchzuführen, nutzen Sie jedoch bitte die aktuellste Version Ihres Internetbrowsers.",
+                    "value":{}
+                },
+                "CONFIRM.INFO_ALERT":{
+                    "default":"Ihre Auswahl wird Ihnen hier zur Bestätigung angezeigt. Sie können Ihre Auswahl korrigieren oder die Stimmabgabe bestätigen. Solange Sie noch nicht auf den Button \"Verbindliche Stimmabgabe\" geklickt haben, können Sie die Stimmabgabe jederzeit abbrechen. Ihre Vorauswahl wird in diesem Fall nicht zwischengespeichert. Wenn Sie Ihre Stimme jetzt verbindlich abgeben, wird diese wie folgt gezählt:",
+                    "value":{}
+                },
+                "CONFIRM.INVALID.ALLOW_INVALID":{
+                    "default":"Wenn Sie Ihre Auswahl nicht korrigieren, wird dieser Stimmzettel als ungültig gezählt.",
+                    "value":{}
+                },
+                "CONFIRM.INVALID.DISALLOW_INVALID":{
+                    "default":"Eine Stimmabgabe ist aufgrund der Wahlregeln nicht möglich. Bitte korrigieren Sie Ihre Auswahl.",
+                    "value":{}
+                },
+                "CONFIRM.INVALID.DISALLOW_INVALID_NOTE":{
+                    "default":"Eine Stimmabgabe ist aufgrund der Wahlregeln nicht möglich.<br> Bitte korrigieren Sie Ihre Auswahl.","value":{}
+                },
+                "CONFIRM.INVALID.INTENTIONALLY_ABSTAINED":{
+                    "default": "Ihre Stimme wird als Enthaltung gewertet","value":{}
+                },
+                "CONFIRM.INVALID.INTENTIONALLY_INVALID":{
+                    "default":"Ihr Stimmzettel wird als ungültig gezählt.","value":{}
+                },
+                "CONFIRM.INVALID.MAXLISTSWITHCHOICES":{
+                    "default":"Sie haben Stimmen an zu viele Wahlvorschläge auf diesem Stimmzettel vergeben.",
+                    "value":{}
+                },
+                "CONFIRM.INVALID.NO.VOTES_ON_BALLOT":{
+                    "default":"Sie haben keine Stimme vergeben. Ihr Stimmzettel wird als ungültig gezählt.",
+                    "value":{}
+                },
+                "CONFIRM.INVALID.TOO_LESS.VOTES_CANDIDATE":{
+                    "default":"Sie haben zu wenige Stimmen an einen Kandidaten dieser Liste vergeben.",
+                    "value":{}
+                },
+                "CONFIRM.INVALID.TOO_LESS.VOTES_FOR_CANDIDATE":{
+                    "default":"Sie haben zu wenige Stimmen an die einzelnen Wahlvorschläge vergeben.",
+                    "value":{}
+                },
+                "CONFIRM.INVALID.TOO_LESS.VOTES_FOR_CANDIDATES":{
+                    "default":"Sie haben zu wenige Stimmen an die Kandidaten dieses Stimmzettels vergeben.",
+                    "value":{}
+                },
+                "CONFIRM.INVALID.TOO_LESS.VOTES_FOR_LISTS":{
+                    "default":"Sie haben zu wenige Stimmen an die Listen dieses Stimmzettels vergeben.",
+                    "value":{}
+                },
+                "CONFIRM.INVALID.TOO_LESS.VOTES_LIST":{
+                    "default":"Sie haben zu wenige Stimmen für diese Liste vergeben.",
+                    "value":{}
+                },
+                "CONFIRM.INVALID.TOO_LESS.VOTES_ON_BALLOT":{
+                    "default":"Sie haben zu wenige Stimmen auf diesem Stimmzettel vergeben.",
+                    "value":{}
+                },
+                "CONFIRM.INVALID.TOO_LESS.VOTES_TOTAL":{
+                    "default":"Sie haben zu wenige Stimmen an die Listen dieses Stimmzettels vergeben.",
+                    "value":{}
+                },
+                "CONFIRM.INVALID.TOO_MANY.VOTES_FOR_CANDIDATES":{
+                    "default":"Sie haben zu viele Stimmen an die Kandidaten dieses Stimmzettels vergeben.",
+                    "value":{}
+                },
+                "CONFIRM.INVALID.TOO_MANY.VOTES_FOR_LISTS":{
+                    "default":"Sie haben zu viele Stimmen an die Listen dieses Stimmzettels vergeben.",
+                    "value":{}
+                },
+                "CONFIRM.INVALID.TOO_MANY.VOTES_LIST":{
+                    "default":"Sie haben zu viele Stimmen für diese Liste vergeben.",
+                    "value":{}
+                },
+                "CONFIRM.INVALID.TOO_MANY.VOTES_ON_BALLOT":{
+                    "default":"Sie haben zu viele Stimmen auf diesem Stimmzettel vergeben.",
+                    "value":{}
+                },
+                "CONFIRM.INVALID.TOO_MANY.VOTES_TOTAL":{
+                    "default":"Sie haben zu viele Stimmen auf dieser Liste vergeben.",
+                    "value":{}
+                },
+                "ELECTION.VOTING.INTRODUCTION":{
+                    "default":"<p>Sie sind im Wählerverzeichnis eingetragen und haben im nächsten Schritt die Möglichkeit, Ihre Auswahl zu treffen. Nachdem Sie den Stimmzettel ausgefüllt haben, wird Ihnen dieser in einem weiteren Schritt zur Bestätigung angezeigt. Sie haben in diesem die Gelegenheit, Ihre Auswahl zu bestätigen oder zu korrigieren. Sofern Sie noch nicht auf den Button \"Verbindliche Stimmabgabe\" geklickt haben, können Sie die Stimmabgabe jederzeit abbrechen. In diesem Fall wird Ihre Auswahl nicht zwischengespeichert. Anschließend haben Sie während des Wahlzeitraums jederzeit die Möglichkeit, sich erneut anzumelden und Ihre Wahl zu treffen.</p><p>Bitte beachten Sie, dass Ihre personenbezogenen Daten während der Stimmabgabe nur anonymisiert verarbeitet werden, um das Wahlgeheimnis zu wahren.</p><p><b>Sie werden jetzt zur virtuellen Wahlkabine weitergeleitet. Bitte achten Sie darauf, dass Sie Ihre Wahl unbeobachtet treffen können.</b></p>",
+                    "value":{}
+                },
+                "ELECTION.VOTING.SUBMISSION":{
+                    "default":"Ihre Stimme wird übermittelt",
+                    "value":{}
+                },
+                "ELECTION.VOTING.VOTE_INVALID":{
+                    "default":"Ungültig wählen",
+                    "value":{}
+                },
+                "ELECTION.VOTING.VOTES_AVAILABLE_BALLOT":{
+                    "default":"Anzahl zu vergebender Stimmen: {{count}}",
+                    "value":{}
+                },
+                "ELECTION.VOTING.VOTES_AVAILABLE_LIST":{
+                    "default":"Anzahl zu vergebender Stimmen: {{count}}",
+                    "value":{}
+                },
+                "ELECTION.VOTING.WELCOME":{
+                    "default":"Willkommen im POLYAS Online-Wahlsystem. Ihre Anmeldung war erfolgreich.",
+                    "value":{}
+                },
+                "ELECTION.VOTING.YOUR_VOTE":{
+                    "default":"Ihre Stimme",
+                    "value":{}
+                },
+                "ELECTION.WRITE_IN_INFO":{
+                    "default":"",
+                    "value":{}
+                },
+                "ELECTION.WRITE_IN_PLACEHOLDER":{
+                    "default":"Option Write-In-Kandidat",
+                    "value":{}
+                },
+                "ERROR.AUTH.ALREADY_VOTED":{
+                    "default":"Sie können sich nicht erneut am POLYAS Online-Wahlsystem anmelden, da Sie Ihre Stimme bereits abgegeben haben. Sollten Sie Ihre Stimme noch nicht abgegeben haben, kontaktieren Sie bitte Ihren Wahlveranstalter.",
+                    "value":{}
+                },
+                "ERROR.AUTH.WRONG_CREDENTIALS":{
+                    "default":"Die von Ihnen genutzte Kombination aus Zugangs-PIN (Mitgliedsnummer) und Wahl-PIN (Passwort) ist nicht bekannt. Bitte überprüfen Sie, ob Sie Ihre Zugangsdaten korrekt eingegeben haben. Achten Sie bei der Eingabe auf Groß- und Kleinschreibung und geben Sie die Zugangsdaten genau so an, wie diese in Ihrer Wahleinladung stehen. <br><br>\nBitte verzichten Sie während der Durchführung der Stimmabgabe auf die Nutzung der \"Vor-\", \"Zurück-\" sowie \"Aktualisieren-\"Buttons Ihres Browsers und nutzen Sie nur die Schaltflächen der Wahlanwendung. Sollten weiterhin Probleme beim Login auftreten, kontaktieren Sie Ihren Wahlveranstalter.",
+                    "value":{}
+                },
+                "ERROR.COM.NO_BACKEND":{
+                    "default":"Ihre Online-Wahl",
+                    "value":{}
+                },
+                "ERROR.DEFAULT":{
+                    "default":"<h2>Ein Fehler ist aufgetreten.</h2><p>Bitte versuchen Sie es in einigen Minuten erneut. Sollten Sie weiterhin Probleme haben, kontaktieren Sie bitte Ihren Wahlveranstalter.</p>",
+                    "value":{}
+                },
+                "ERROR.INTERNAL.UNEXPECTED_CLIENT_ERROR":{
+                    "default":"Der von Ihnen verwendete Browser wird durch das POLYAS Online-Wahlsystem nicht unterstützt. Um Ihre Stimmabgabe sicher und geheim durchzuführen, laden Sie die neueste Version Ihres Internetbrowsers herunter oder nutzen Sie einen anderen Browser. Sollten Sie weiterhin Probleme haben, kontaktieren Sie bitte Ihren Wahlveranstalter","value":{}
+                },
+                "ERROR.PAGE_VOTER_NOT_LOGGEDIN":{
+                    "default":"<h2>Sie wurden zu Ihrer eigenen Sicherheit vom Wahlsystem abgemeldet.</h2><p>Dies kann folgende Ursachen haben: </p><ul><li>Sie waren zu lange inaktiv, in diesem Fall melden Sie sich bitte erneut am Wahlsystem an.</li><li>Sie verwenden einen veralteten Browser, bitte aktualisieren Sie diesen und melden Sie sich danach erneut an.</li><p>Sollten weiterhin Probleme auftreten, kontaktieren Sie bitte Ihren Wahlveranstalter.</p></ul>",
+                    "value":{}
+                },
+                "ERROR.PAGE.CLIENTERROR":{
+                    "default":"<h2>Ein Fehler ist aufgetreten.</h2><p>Bitte nutzen Sie einen anderen Browser.</p>",
+                    "value":{}
+                },
+                "ERROR.PAGE.CLOSED":{
+                    "default":"Diese Online-Wahl ist bereits beendet. <br> Aus diesem Grund ist eine Stimmabgabe leider nicht mehr möglich. Sollten Sie weitere Fragen haben, kontaktieren Sie bitte Ihren Wahlveranstalter.",
+                    "value":{}
+                },
+                "ERROR.PAGE.EXPIRED":{
+                    "default":"<h2>Sie wurden zu Ihrer eigenen Sicherheit vom Wahlsystem abgemeldet.</h2><p>Dies kann folgende Ursachen haben: </p><ul><li>Sie waren zu lange inaktiv, in diesem Fall melden Sie sich bitte erneut am Wahlsystem an.</li><li>Sie verwenden einen veralteten Browser, bitte aktualisieren Sie diesen und melden Sie sich danach erneut an.</li></ul><p>Sollten weiterhin Probleme auftreten, kontaktieren Sie bitte Ihren Wahlveranstalter.</p>",
+                    "value":{}
+                },
+                "ERROR.PAGE.INTERNAL":{
+                    "default":"<h2>Ein Fehler ist aufgetreten.</h2><p>Bitte überprüfen Sie, ob Sie die korrekte URL angegeben haben und sich innerhalb des Wahlzeitraums befinden.</p><p> Überprüfen Sie bitte auch, ob auf Ihrem Endgerät eine aktuelle Version Ihres Interbrowsers installiert ist.</p><p> Sollten weiterhin Probleme auftreten, kontaktieren Sie bitte Ihren Wahlveranstalter.</p>",
+                    "value":{}
+                },
+                "ERROR.PAGE.INVALID_TOKEN":{
+                    "default":"<h2>Es ist ein Fehler aufgetreten, die Stimmabgabe konnte nicht abgeschlossen werden.</h2><p> Bitte versuchen Sie es erneut. Sollten Sie weiterhin Probleme haben, kontaktieren Sie bitte Ihren Wahlveranstalter.</p>","value":{}
+                },
+                "ERROR.PAGE.NOT_AUTHENTICATED":{
+                    "default":"<h2>Bei der Übermittlung Ihrer Daten kam es zu einem Fehler.</h2><p> Bitte wiederholen Sie den Wahlvorgang.</p><p> Sollten weiterhin Probleme auftreten, kontaktieren Sie bitte Ihren Wahlveranstalter.</p>","value":{}
+                },
+                "ERROR.PAGE.SECURELINK_MISSING_PARAMETER":{
+                    "default":"Fehlende Parameter:",
+                    "value":{}
+                },
+                "ERROR.PAGE.SECURELINK_PIN":{
+                    "default":"Wähler-ID (pin)",
+                    "value":{}
+                },
+                "ERROR.PAGE.SECURELINK_SIG":{
+                    "default":"Signatur (sig)",
+                    "value":{}
+                },
+                "ERROR.PAGE.SECURELINK_TTL":{
+                    "default":"Gültigkeitsdauer (ttl)","value":{}
+                },
+                "ERROR.PAGE.TOKEN_PARSING_ERROR":{
+                    "default":"<h2>Es ist ein Fehler aufgetreten, die Stimmabgabe konnte nicht abgeschlossen werden.</h2><p> Bitte versuchen Sie es erneut. Sollten Sie weiterhin Probleme haben, kontaktieren Sie bitte Ihren Wahlveranstalter.</p>","value":{}
+                },
+                "ERROR.PAGE.VOTEERROR":{
+                    "default":"<h2>Es ist ein Fehler aufgetreten, die Stimmabgabe konnte nicht abgeschlossen werden.</h2><p> Bitte versuchen Sie es erneut. Sollten Sie weiterhin Probleme haben, kontaktieren Sie bitte Ihren Wahlveranstalter.</p>","value":{}
+                },
+                "ERROR.RELOGIN":{
+                    "default":"Erneut anmelden",
+                    "value":{}
+                },
+                "ERROR.SECURELINK_COULD_NOT_GENERATE_SIGNATURE":{
+                    "default":"Bitte kontaktieren Sie Ihren Wahlveranstalter.",
+                    "value":{}
+                },
+                "ERROR.SECURELINK_DUPLICATE_PINS":{
+                    "default":"Ihre Wähler-ID ist mehrfach im Wählerverzeichnis hinterlegt, wir können Sie daher nicht eindeutig identifizieren. Bitte kontaktieren Sie Ihren Wahlleiter.",
+                    "value":{}
+                },
+                "ERROR.SECURELINK_INVALID_SIGNATURE":{
+                    "default":"Bitte kontaktieren Sie Ihren Wahlveranstalter.",
+                    "value":{}
+                },
+                "ERROR.SECURELINK_NOT_ACTIVE":{
+                    "default":"Der Securelink ist bei dieser Wahl nicht aktiviert bitte kontaktieren Sie Ihren Wahlveranstalter.",
+                    "value":{}
+                },
+                "ERROR.SECURELINK_STALE_TTL":{
+                    "default":"Ihr Securelink ist abgelaufen. Bitte melden Sie sich erneut im geschützten Mitgliederbereich Ihrer Organisation an und klicken Sie erneut auf den Link zu Online-Wahllokal.",
+                    "value":{}
+                },
+                "ERROR.SECURELINK_WRONG_TTL_FORMAT":{
+                    "default":"Bitte kontaktieren Sie Ihren Wahlleiter.","value":{}},"ERROR.SELFTEST.HEADER":{"default":"Ein Fehler ist aufgetreten.",
+                    "value":{}
+                },
+                "ERROR.SELFTEST.TEXT":{
+                    "default":"Bitte nutzen Sie einen anderen Browser.","value":{}
+                },
+                "ERROR.STATE.CLOSED":{
+                    "default":"Das Online-Wahllokal hat zur Zeit nicht geöffnet. Den Wahlzeitraum können Sie Ihrer Wahleinladung entnehmen. Sollten Sie weiterhin Probleme bei der Anmeldung am Wahlsystem haben, kontaktieren Sie bitte Ihren Wahlveranstalter.",
+                    "value":{}
+                },
+                "LANG.DE":{
+                    "default":"Deutsch",
+                    "value":{}
+                },
+                "LANG.EN":{
+                    "default":"Englisch",
+                    "value":{}
+                },
+                "LANG.FR":{
+                    "default":"Französisch",
+                    "value":{}
+                },
+                "LANG.IT":{
+                    "default":"Italienisch",
+                    "value":{}
+                },
+                "LANG.NL":{
+                    "default":"Niederländisch","value":{}
+                },
+                "META.TITLE.STEP_0": {
+                    "default":"Ein Fehler ist aufgetreten",
+                    "value":{}
+                },
+                "META.TITLE.STEP_1":{
+                    "default":"Anmelden","value":{}
+                },
+                "META.TITLE.STEP_2":{"default":"Willkommen","value":{}},
+                "META.TITLE.STEP_3":{"default":"Stimmabgabe","value":{}},
+                "META.TITLE.STEP_4":{"default":"Stimmabgabe prüfen","value":{}},
+                "META.TITLE.STEP_5":{"default":"Vielen Dank","value":{}},
+                "REDIRECT.UNDEFINED_TEXT":{"default":"Bitte kontaktieren Sie Ihren Wahlberanstalter.","value":{}},
+                "REDIRECT.UNDEFINED_TITLE":{"default":"Sie sind nicht im Wahlsystem angemeldet.","value":{}},
+                "SECURELINK.TTL_EXPIRE_DATE":{"default":"Ihr Securelink ist noch gültig bis:","value":{}},
+                "SESSION.RELOGIN.ERROR.PASSWORD.EMPTY":{"default":"Das Feld \"Passwort\" darf nicht leer sein.","value":{}},
+                "SESSION.RELOGIN.ERROR.PASSWORD.WRONG":{"default":"Das von Ihnen angegebene Passwort ist nicht korrekt.","value":{}},"SESSION.RELOGIN.MODAL.LABEL":{"default":"Bitte geben Sie ihr Passwort erneut ein.","value":{}},
+                "SESSION.RELOGIN.MODAL.SUBMIT":{"default":"Abschicken","value":{}},
+                "SESSION.RELOGIN.MODAL.TITLE":{"default":"Sicherheitsabfrage","value":{}},
+                "THANKYOU.BALLOT_AUDIT":{"default":"<b>Individuelle Verifikation:</b><br>\nSie können nun überprüfen, ob Ihr(e) Stimmzettel korrekt in die digitale Wahlurne eingegangen sind. Dazu stehen Ihnen unabhängige Verifikationstools zur Verfügung. Wählen sie dazu weiter unten einen Anbieter aus, dem sie vertrauen. Scannen Sie anschließend den untenstehenden QR-Code mit einem geeigneten Zweitgerät (z.B. Smartphone). Auf Ihrem Zweitgerät öffnet sich anschließend eine Web-App, in der Sie das unten angezeigte zeitbasierte Einmalpasswort eingeben müssen, um sich anzumelden. Anschließend wird Ihnen ein Abbild Ihres Stimmzettels bzw. Ihrer Stimmzettel angezeigt.<br><br>\nWeitere Informationen finden Sie  <a href=\"hier: https://gi.de/wahlen/faq\" target=\"_blank\" rel=\"noopener nofollow noreferrer\">hier: https://gi.de/wahlen/faq</a><br><br>\nFolgende Verifikations-Anbieter stehen ihnen zur Verfügung:<br><br>\n<b>Anbieter: famoser.ch</b><br>\t\t\nEntwickler: Florian Moser, INRIA<br>\nHosting: famoser.ch<br>\n<br>\n<b>Anbieter: KIT</b><br>\nEntwickler: Felix Dörre, Michael Kirsten<br>\nHosting: KIT\n<br><br> \t\t\n<b>Anbieter: Universität Stuttgart</b><br>\nEntwickler: Nicolas Huber, Oliver Koppenhöfer<br>\nHosting: Gesellschaft für Informatik, Bonn\n<br><br>\n<b>Anbieter: POLYAS GmbH</b><br>\nEntwickler: POLYAS GmbH<br>\nHosting: POLYAS GmbH","value":{}},
+                "THANKYOU.VOTED_HEADLINE":{"default":"Ihre Stimme ist erfolgreich in der digitalen Wahlurne eingangen!","value":{}},"THANKYOU.VOTED_TEXT":{"default":"Sie können dieses Browserfenster jetzt schließen.","value":{}},
+                "VERIFY.AUDIT.WITH":{"default":"","value":{}},
+                "VERIFY.QR.INFO":{"default":"Mit dem Scannen des QR Codes startet die Überprüfung Ihres Stimmzettels durch das Verifikationstool des Anbieters","value":{}},
+                "VERIFY.SELECT.LABEL":{"default":"Bitte wählen Sie einen Anbieter aus, mit dem sie Ihre Stimmzettel überprüfen:","value":{}},"VERIFY.SELECT.PLACEHOLDER":{"default":"Wählen Sie hier den gewünschten Anbieter","value":{}},
+                "VERIFY.WITH":{"default":"<b>Achtung!</b> Schließen Sie dieses Fenster nicht, bevor Sie die individuelle Verifikation durchgeführt haben. Sie können nicht auf diese Seite zurückkehren. Mit dem Schließen der Seite beenden Sie die Möglichkeit zur individuellen Verifikation. <br><br>\nBitte beachten Sie, dass sich Ihr zeitbasiertes Einmalpasswort alle 30 Sekunden ändert. Die Überprüfung ist innerhalb einer halben Stunde nach Ihrer Stimmabgabe möglich.","value":{}},
+                "VOTE.INFO_ALERT":{"default":"Sie haben nun die Möglichkeit, Ihre Auswahl zu treffen. Bitte beachten Sie die Wahlregeln. Diese können Sie dem Stimmzettel entnehmen. <br><br>Detaillierte Informationen zur GI und zu den Kandidatinnen und Kandidaten finden Sie unter https://gi.de/wahlen/. <br> \nDie Wahl läuft bis zum 8. Dezember 2023 12:00 Uhr. Bei Fragen wenden Sie bitte per E-Mail unter onlinewahlen@gi.de an den Wahlleiter Prof. Dr. Gerrit Hornung, LL.M.","value":{}},
+                "VOTE.NO_BALLOTS":{"default":"Es liegen keine Stimmzettel vor, für die Sie abstimmen können. Dies kann verschiedene Ursachen haben. Bitte kontaktieren Sie Ihren Wahlveranstalter, um Näheres zu erfahren. Sie können das Browserfenster nun schließen.","value":{}}
+            },
+            "allowInvalid":true,
+            "initialMessage":"{\"secondDeviceParametersJson\":\"{\\\"publicKey\\\":\\\"0271ffc6dc9c7f6a79cfced6543c8b7feb79e4eac2a542c6e4de90326039bf81c8\\\",\\\"verificationKey\\\":\\\"30820122300d06092a864886f70d01010105000382010f003082010a028201010088a9e0d615a8dba47ae84e8a4df087f69dc1c03c16b54b540d84e52ab2e697ac362e1b55a5a05abaa2da5c17f84051bcf3387ef0947f8117a871c3c569b7085b5e18476da25a6db6aa8d260be53ec7e651a158e5bcd26cc99898e0a8d8014d13cdbe5c749ce821eb1f122b53edcf8954a3e8411859f3eed150375b858b6dd055cba5d801a6df33a5078e75ad6a4ac7f7cfe5560d415b008724ab7db433d6c6c2c09d0f9f20d8004710779fd4821330aab5f0ba618591386cac2574b2282ee96891ddf1a1a85c450241e91c26a312aa477be56e21b926b6e197c5cdd45e5c780988919aef356e2d5e6c3057ab1b95f0099c0302c0fa0a92f0876f3ff1bfd51dbb0203010001\\\",\\\"ballots\\\":[{\\\"type\\\":\\\"STANDARD_BALLOT\\\",\\\"id\\\":\\\"1\\\",\\\"contentAbove\\\":{\\\"value\\\":{\\\"default\\\":{\\\"data\\\":{},\\\"nodes\\\":[{\\\"data\\\":{},\\\"nodes\\\":[{\\\"text\\\":\\\"Sie können bei jeder Person \\\\\\\"ja\\\\\\\" oder \\\\\\\"nein\\\\\\\" ankreuzen. Kreuzen Sie gar nichts oder bei einer Person beides an, ist Ihre Wahl für den Vorstand ungültig, ebenso, wie wenn Sie \\\\\\\"ungültig\\\\\\\" für den gesamten Stimmzettel ankreuzen.\\\",\\\"marks\\\":[],\\\"object\\\":\\\"text\\\"}],\\\"type\\\":\\\"paragraph\\\",\\\"object\\\":\\\"block\\\"}],\\\"object\\\":\\\"document\\\"},\\\"value\\\":{}},\\\"contentType\\\":\\\"RICH_TEXT\\\"},\\\"title\\\":{\\\"default\\\":\\\"1. Stimmzettel: Vorstandswahl 2023\\\",\\\"value\\\":{}},\\\"lists\\\":[{\\\"id\\\":\\\"2\\\",\\\"title\\\":{\\\"default\\\":\\\"Präsidentin\\\",\\\"value\\\":{}},\\\"columnHeaders\\\":[{\\\"default\\\":\\\"Christine Regitz, SAP SE\\\",\\\"value\\\":{}}],\\\"columnProperties\\\":[{\\\"hide\\\":false}],\\\"candidates\\\":[{\\\"id\\\":\\\"3\\\",\\\"columns\\\":[{\\\"value\\\":{\\\"default\\\":\\\"Ja\\\",\\\"value\\\":{}},\\\"contentType\\\":\\\"TEXT\\\"}],\\\"maxVotes\\\":1,\\\"minVotes\\\":0},{\\\"id\\\":\\\"4\\\",\\\"columns\\\":[{\\\"value\\\":{\\\"default\\\":\\\"Nein\\\",\\\"value\\\":{}},\\\"contentType\\\":\\\"TEXT\\\"}],\\\"maxVotes\\\":1,\\\"minVotes\\\":0}],\\\"maxVotesOnList\\\":1,\\\"minVotesOnList\\\":0,\\\"maxVotesForList\\\":0,\\\"minVotesForList\\\":0,\\\"voteCandidateXorList\\\":false},{\\\"id\\\":\\\"5\\\",\\\"title\\\":{\\\"default\\\":\\\"Vizepräsident\\\",\\\"value\\\":{}},\\\"columnHeaders\\\":[{\\\"default\\\":\\\"Prof. Dr. Erhard Rahm, Universität Leipzig\\\",\\\"value\\\":{}}],\\\"columnProperties\\\":[{\\\"hide\\\":false}],\\\"candidates\\\":[{\\\"id\\\":\\\"6\\\",\\\"columns\\\":[{\\\"value\\\":{\\\"default\\\":\\\"Ja\\\",\\\"value\\\":{}},\\\"contentType\\\":\\\"TEXT\\\"}],\\\"maxVotes\\\":1,\\\"minVotes\\\":0},{\\\"id\\\":\\\"7\\\",\\\"columns\\\":[{\\\"value\\\":{\\\"default\\\":\\\"Nein\\\",\\\"value\\\":{}},\\\"contentType\\\":\\\"TEXT\\\"}],\\\"maxVotes\\\":1,\\\"minVotes\\\":0}],\\\"maxVotesOnList\\\":1,\\\"minVotesOnList\\\":0,\\\"maxVotesForList\\\":0,\\\"minVotesForList\\\":0,\\\"voteCandidateXorList\\\":false},{\\\"id\\\":\\\"8\\\",\\\"title\\\":{\\\"default\\\":\\\"Vizepräsidentin\\\",\\\"value\\\":{}},\\\"columnHeaders\\\":[{\\\"default\\\":\\\"Dr. Katharina Weitz, Universität Augsburg\\\",\\\"value\\\":{}}],\\\"columnProperties\\\":[{\\\"hide\\\":false}],\\\"candidates\\\":[{\\\"id\\\":\\\"9\\\",\\\"columns\\\":[{\\\"value\\\":{\\\"default\\\":\\\"Ja\\\",\\\"value\\\":{}},\\\"contentType\\\":\\\"TEXT\\\"}],\\\"maxVotes\\\":1,\\\"minVotes\\\":0},{\\\"id\\\":\\\"10\\\",\\\"columns\\\":[{\\\"value\\\":{\\\"default\\\":\\\"Nein\\\",\\\"value\\\":{}},\\\"contentType\\\":\\\"TEXT\\\"}],\\\"maxVotes\\\":1,\\\"minVotes\\\":0}],\\\"maxVotesOnList\\\":1,\\\"minVotesOnList\\\":0,\\\"maxVotesForList\\\":0,\\\"minVotesForList\\\":0,\\\"voteCandidateXorList\\\":false},{\\\"id\\\":\\\"11\\\",\\\"title\\\":{\\\"default\\\":\\\"Vizepräsident\\\",\\\"value\\\":{}},\\\"columnHeaders\\\":[{\\\"default\\\":\\\"Prof. Dr. Martin R. Wolf, Institut für Digitalisierung Aachen (IDA) an der FH Aachen\\\",\\\"value\\\":{}}],\\\"columnProperties\\\":[{\\\"hide\\\":false}],\\\"candidates\\\":[{\\\"id\\\":\\\"12\\\",\\\"columns\\\":[{\\\"value\\\":{\\\"default\\\":\\\"Ja\\\",\\\"value\\\":{}},\\\"contentType\\\":\\\"TEXT\\\"}],\\\"maxVotes\\\":1,\\\"minVotes\\\":0},{\\\"id\\\":\\\"13\\\",\\\"columns\\\":[{\\\"value\\\":{\\\"default\\\":\\\"Nein\\\",\\\"value\\\":{}},\\\"contentType\\\":\\\"TEXT\\\"}],\\\"maxVotes\\\":1,\\\"minVotes\\\":0}],\\\"maxVotesOnList\\\":1,\\\"minVotesOnList\\\":0,\\\"maxVotesForList\\\":0,\\\"minVotesForList\\\":0,\\\"voteCandidateXorList\\\":false}],\\\"contentBelow\\\":{\\\"value\\\":{\\\"default\\\":{\\\"data\\\":{},\\\"nodes\\\":[{\\\"data\\\":{},\\\"nodes\\\":[{\\\"text\\\":\\\"\\\",\\\"marks\\\":[],\\\"object\\\":\\\"text\\\"}],\\\"type\\\":\\\"paragraph\\\",\\\"object\\\":\\\"block\\\"}],\\\"object\\\":\\\"document\\\"},\\\"value\\\":{}},\\\"contentType\\\":\\\"RICH_TEXT\\\"},\\\"showInvalidOption\\\":true,\\\"showAbstainOption\\\":false,\\\"maxVotes\\\":4,\\\"minVotes\\\":1,\\\"prohibitMoreVotes\\\":false,\\\"prohibitLessVotes\\\":false,\\\"externalIdentification\\\":\\\"Sheet2\\\",\\\"calculateAvailableVotes\\\":false},{\\\"type\\\":\\\"STANDARD_BALLOT\\\",\\\"id\\\":\\\"14\\\",\\\"contentAbove\\\":{\\\"value\\\":{\\\"default\\\":{\\\"data\\\":{},\\\"nodes\\\":[{\\\"data\\\":{},\\\"nodes\\\":[{\\\"text\\\":\\\"Sie haben drei Stimmen zu Verfügung. Geben Sie mehr als drei oder keine Stimme ab, ist Ihre Wahl für das Präsidium ungültig.\\\",\\\"marks\\\":[],\\\"object\\\":\\\"text\\\"}],\\\"type\\\":\\\"paragraph\\\",\\\"object\\\":\\\"block\\\"}],\\\"object\\\":\\\"document\\\"},\\\"value\\\":{}},\\\"contentType\\\":\\\"RICH_TEXT\\\"},\\\"title\\\":{\\\"default\\\":\\\"2. Stimmzettel: Präsidiumswahl 2023\\\",\\\"value\\\":{}},\\\"lists\\\":[{\\\"id\\\":\\\"15\\\",\\\"title\\\":{\\\"default\\\":\\\"Kandidatinnen und Kandidaten für das GI-Präsidium\\\",\\\"value\\\":{}},\\\"columnHeaders\\\":[],\\\"columnProperties\\\":[{\\\"hide\\\":false}],\\\"candidates\\\":[{\\\"id\\\":\\\"16\\\",\\\"columns\\\":[{\\\"value\\\":{\\\"default\\\":\\\"Andreas Chemnitz, cv cryptovision GmbH \\\",\\\"value\\\":{}},\\\"contentType\\\":\\\"TEXT\\\"}],\\\"maxVotes\\\":1,\\\"minVotes\\\":0},{\\\"id\\\":\\\"17\\\",\\\"columns\\\":[{\\\"value\\\":{\\\"default\\\":\\\"Sascha Manns, Office Partner \\\",\\\"value\\\":{}},\\\"contentType\\\":\\\"TEXT\\\"}],\\\"maxVotes\\\":1,\\\"minVotes\\\":0},{\\\"id\\\":\\\"18\\\",\\\"columns\\\":[{\\\"value\\\":{\\\"default\\\":\\\"Carolin Neumann, IBM Deutschland &amp; BYTE Challenge \\\",\\\"value\\\":{}},\\\"contentType\\\":\\\"TEXT\\\"}],\\\"maxVotes\\\":1,\\\"minVotes\\\":0},{\\\"id\\\":\\\"19\\\",\\\"columns\\\":[{\\\"value\\\":{\\\"default\\\":\\\"Prof. Dr. Harald Wehnes, Julius Maximilians Universität \\\",\\\"value\\\":{}},\\\"contentType\\\":\\\"TEXT\\\"}],\\\"maxVotes\\\":1,\\\"minVotes\\\":0},{\\\"id\\\":\\\"20\\\",\\\"columns\\\":[{\\\"value\\\":{\\\"default\\\":\\\"Dr. Jan Sürmeli, FZI Forschungszentrum Informatik\\\",\\\"value\\\":{}},\\\"contentType\\\":\\\"TEXT\\\"}],\\\"maxVotes\\\":1,\\\"minVotes\\\":0},{\\\"id\\\":\\\"21\\\",\\\"columns\\\":[{\\\"value\\\":{\\\"default\\\":\\\"Univ.-Prof. Dr. Maria A. Wimmer, Universität Koblenz \\\",\\\"value\\\":{}},\\\"contentType\\\":\\\"TEXT\\\"}],\\\"maxVotes\\\":1,\\\"minVotes\\\":0}],\\\"maxVotesOnList\\\":3,\\\"minVotesOnList\\\":1,\\\"maxVotesForList\\\":0,\\\"minVotesForList\\\":0,\\\"voteCandidateXorList\\\":false}],\\\"contentBelow\\\":{\\\"value\\\":{\\\"default\\\":\\\"\\\",\\\"value\\\":{}},\\\"contentType\\\":\\\"TEXT\\\"},\\\"showInvalidOption\\\":true,\\\"showAbstainOption\\\":false,\\\"maxVotes\\\":3,\\\"minVotes\\\":1,\\\"prohibitMoreVotes\\\":false,\\\"prohibitLessVotes\\\":false,\\\"externalIdentification\\\":\\\"Sheet1\\\",\\\"calculateAvailableVotes\\\":false}]}\",\"comSeed\":\"47166497f90bf42df36aa7acf874eb4717444111d355b9bfef38cd28cb35ea6f\",\"publicCredential\":\"03f4ce4666e70738411bc298205fb04757239623c65541476b227eadd1f9b8e11b\",\"ballot\":{\"encryptedChoice\":{\"ciphertexts\":[{\"x\":\"03585a7dc05ccfcd7ae06b58d2ab86e6599d3573d9b81e1229b70d86507d1ba6cf\",\"y\":\"029b07961dd85cee8bb8c3bb7ee5d46fa93373154a3a8338f05d6a8f0c08dc635b\"}]},\"proofOfKnowledgeOfEncryptionCoins\":[{\"c\":\"106603329735310459378166540833174291362803789701749600009335246232126582930188\",\"f\":\"88421740053323090900846853828605751557344035259358212494468715661608397169393\"}],\"proofOfKnowledgeOfPrivateCredential\":{\"c\":\"25728352287381246077017842581699577618273417768035290970867848899924714100791\",\"f\":\"52725480248691193141994668190421377334280896606381369155377144551028735896972\"}},\"signatureHex\":\"754034f198bef5bc25a0659d132b660e94e8aff9dcd812dd9bdf3aab5ae5125c9bd17dbebf1a8710c852a8e9ded42f71159d7443ea8b63e18f55956348ab9821bc47f4766c7fae82fed6823ba11de3284b9d5a4e7aeab448ab227412d494f18b27a97ceb9caebc4903e0e22c707458fc7945ad25980709d74f61e9fe8fc93c877d959208427b6d40c51d273465f3ecb235282d6a45f95a954bed51c901ce131f2ebeddf778a39742183fb18831ef178aa5f8272525ba9d013166586ac11e03b59ce1b851706666ca3794166bb1eeef1cacaa7546421400ed166090d26c1986a33e7c5874e8dbefaa33983daf77743922fd1192ed450c61172c2bf65cbed758a2\",\"factorX\":[\"03bd7a8aee313f857f4b973dfd2221e8402a13eacc986cb5518e58334b4fb83acd\"],\"factorY\":[\"03b3d796f9a880d0d2351b1031cdc9a88152bbde7680edda04111e01f716869335\"],\"factorA\":[\"0246d1161fbd725b48d01e3af1b8fc89f1f7a882bc77220baefe99cfade43c1441\"],\"factorB\":[\"026200ff6dbeaffc625429be784a814cc50e198f7918b20dc7e06054e418627372\"]}"},
+        "status":"OK"
+    },
+
+    "electionData": {
+        "title":{
+            "default":"Präsidiumswahl 2023 und Vorstandswahl 2023","value":{}
+        },
+        "languages":["DE"]},
+
+    "finalMessage": {
+        "value":"{\"z\":[\"2039553422609367541905774552087038882962489032592585611712754895317761627539504051080666779479969046502768877558760006093431044305598463432230821913790375\"]}",
+        "status":"OK"
+    },
+    "challenge": {
+        "challenge":"21629277457154577396633021149404308869402755412240471969080142590924678516769","challengeRandomCoin":"48044049911881217874857701400702968999273893591967128471397322021580368762707"
+    },
+
+    "loginRequest": {
+        "voterId":"voter23","nonce":"ebb48bc442341347d0a0fc844e30fd787d9ac03768a4e30db0e6d32d170e0524","password":"044548","challengeCommitment":"03ee5be6b4992bffdbf9f7c4d60eb65f2c161ddcc07c37fb2932bd13967b863a27"
+    }
+}

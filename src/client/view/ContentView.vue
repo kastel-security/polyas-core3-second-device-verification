@@ -11,11 +11,11 @@ const props = defineProps<{
 
 <template>
     <div class="basic"
-    v-if="props.content.contentType=='TEXT'">
+    v-if="props.content.contentType==='TEXT'">
         <text>{{ extractText(props.content.value, props.language) }}</text>
     </div>
     <div class="rich"
-    v-if="props.content.contentType=='RICH_TEXT'">
+    v-if="props.content.contentType==='RICH_TEXT'">
         <NodeView v-for="node in extractGeneric<CustomDocument>(props.content.value, props.language).nodes"
         v-bind:key="extractGeneric<CustomDocument>(props.content.value, props.language).nodes.indexOf(node)"
         :node="node"

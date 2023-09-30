@@ -19,7 +19,7 @@ const props = defineProps<{
                 <br>
             </div>
         </div>
-        <h1 v-if="(props.node as NodeBlock).type=='heading-one'">
+        <h1 v-else-if="(props.node as NodeBlock).type=='heading-one'">
             <NodeView
             v-for="subnode in (props.node as NodeBlock).nodes"
             v-bind:key="(props.node as NodeBlock).nodes.indexOf(subnode)"

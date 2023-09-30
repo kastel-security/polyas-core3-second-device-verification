@@ -46,14 +46,16 @@ onMounted(() => {
     <div class="contentAbove" v-if="ballot.contentAbove">
         <ContentView :content="ballot.contentAbove" :language="props.language"/>
     </div>
-    <div class="questions" v-if="rendered">
+    <div class="allQuestions" v-if="rendered">
+      <div class="questions"
+      v-bind:key="candidateList.id"
+      v-for="candidateList in ballot.lists">
         <CandidateListView
-        v-for="candidateList in ballot.lists"
-        v-bind:key="candidateList.id"
         :candidateList="candidateList"
         :result="listResults.get(candidateList.id)!"
         :language="props.language"/>
     </div>
+  </div>
     <div class="invalid" v-if="ballot.showInvalidOption">
         <input type="checkbox" name="check" :checked="props.result[0]==1"/>
         <label for="check">{{ extractTextFromJson(text.ballot.invalidOption, props.language) }}</label>

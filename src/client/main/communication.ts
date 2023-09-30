@@ -2,7 +2,7 @@ import axios from 'axios'
 import { type SecretProof } from '../classes/ballot'
 import { ElectionData, SecondDeviceFinalMessage, SecondDeviceLoginResponse } from '../classes/communication'
 import { ErrorType } from './error'
-import data from '../mock/data.json'
+import data from '../mock/extended.json'
 
 type ResponseStatus = 'OK' | 'ERROR'
 abstract class ResponseBean<T> { // eslint-disable-line 
@@ -146,12 +146,12 @@ class CommMock implements Communication {
   }
 
   public async login (voterId: string, nonce: string, c: string, challenge: string): Promise<ResponseBean<SecondDeviceLoginResponse>> {
-    const loginResponse = SecondDeviceLoginResponse.fromJson(data.loginResponse)
+    const loginResponse = SecondDeviceLoginResponse.fromJson(data.loginResponse.value)
     return await Promise.resolve(new ResponseBeanOk<SecondDeviceLoginResponse>(loginResponse))
   }
 
   public async challenge (token: string, proof: SecretProof): Promise<ResponseBeanOk<SecondDeviceFinalMessage>> {
-    const finalMessage = SecondDeviceFinalMessage.fromJson(data.finalMessage)
+    const finalMessage = SecondDeviceFinalMessage.fromJson(data.finalMessage.value)
     return await Promise.resolve(new ResponseBeanOk<SecondDeviceFinalMessage>(finalMessage))
   }
 

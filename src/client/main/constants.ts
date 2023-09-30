@@ -1,5 +1,6 @@
 import { type ProofGenerator, ProofGeneratorImpl, ProofGeneratorMock } from '../algorithms/proof'
-import data from '../mock/data.json'
+import dataTest from '../mock/data.json'
+import dataUI from '../mock/extended.json'
 import { Comm, CommMock, type Communication } from './communication'
 const k = '0373744f99d31509eb5f8caaabc0cc3fab70e571a5db4d762020723b9cd6ada260'
 const g = '0279be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798'
@@ -10,16 +11,22 @@ const plaintextBlockSize = 31
 type Modes = 'mock' | 'dev' | 'deploy' | 'test'
 class EnvironmentVariables {
   public mode: Modes
+  public electionUrl: string
   public backendUrl: string
   public fingerprint: string
   public proofGen: ProofGenerator
   public comm: Communication
+  public electionURL: string
   public static instance: EnvironmentVariables
   public static init (mode: Modes): EnvironmentVariables {
     this.instance = new EnvironmentVariables()
     this.instance.mode = mode
-    if (mode === 'mock' || mode === 'test') {
-      this.instance.proofGen = new ProofGeneratorMock(BigInt(data.proof.e), BigInt(data.proof.r))
+    if (mode === 'mock') {
+      this.instance.proofGen = new ProofGeneratorMock(BigInt(dataUI.challengeRequest.challenge), BigInt(dataUI.challengeRequest.challengeRandomCoin))
+      this.instance.comm = new CommMock()
+    }
+    if (mode === 'test') {
+      this.instance.proofGen = new ProofGeneratorMock(BigInt(dataTest.challenge.challenge), BigInt(dataTest.challenge.challengeRandomCoin))
       this.instance.comm = new CommMock()
     } else if (mode === 'dev') {
       this.instance.proofGen = new ProofGeneratorImpl()

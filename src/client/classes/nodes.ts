@@ -27,8 +27,8 @@ class NodeBlock extends GenericNode {
   public static fromJson (nodeJson: any): GenericNode {
     const data: Map<string, string> = new Map<string, string>()
     const nodes: GenericNode[] = new Array<GenericNode>()
-    for (const key of nodeJson.keys) {
-      data.set(key, nodeJson.data.get(key))
+    for (const key of Object.keys(nodeJson.data)) {
+      data.set(key, nodeJson.data[key])
     }
     for (const node of nodeJson.nodes) {
       nodes.push(GenericNode.generateNodeFromJson(node))
@@ -51,8 +51,8 @@ class NodeInline extends GenericNode {
   public static fromJson (nodeJson: any): GenericNode {
     const data: Map<string, string> = new Map<string, string>()
     const nodes: GenericNode[] = new Array<GenericNode>()
-    for (const key of nodeJson.keys) {
-      data.set(key, nodeJson.data.get(key))
+    for (const key of Object.keys(nodeJson.data)) {
+      data.set(key, nodeJson.data[key])
     }
     for (const node of nodeJson.nodes) {
       nodes.push(GenericNode.generateNodeFromJson(node))
@@ -72,8 +72,8 @@ class NodeMark {
 
   public static fromJson (nodeJson: any): NodeMark {
     const data: Map<string, string> = new Map<string, string>()
-    for (const key of nodeJson.keys) {
-      data.set(key, nodeJson.data.get(key))
+    for (const key of Object.keys(nodeJson.data)) {
+      data.set(key, nodeJson.data[key])
     }
     const object = nodeJson.object as string
     const type = nodeJson.type as string
@@ -94,7 +94,8 @@ class NodeText extends GenericNode {
   public static fromJson (nodeJson: any): NodeText {
     const text = nodeJson.text as string
     const marks = new Set<NodeMark>()
-    for (const node of nodeJson.marks.keys) {
+    // TODO check if this actually works
+    for (const node of Object.keys(nodeJson.marks)) {
       marks.add(NodeMark.fromJson(node))
     }
     return new NodeText(marks, text)

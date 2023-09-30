@@ -8,7 +8,6 @@ services:
       args:
         DIR: /srv/app
         NAME: polyas-verifier
-      network: host
     container_name: polyas-verifier
     entrypoint:
     - /usr/local/bin/npm
@@ -22,7 +21,6 @@ services:
     extra_hosts:
       127.0.0.1: host-gateway
     image: node:alpine
-    network_mode: bridge
     ports:
     - mode: host
       target: 5000
@@ -32,7 +30,3 @@ services:
     restart: always
     tty: true
     working_dir: /srv/app/polyas-verifier
-networks:
-  default:
-    driver: bridge
-    external: true

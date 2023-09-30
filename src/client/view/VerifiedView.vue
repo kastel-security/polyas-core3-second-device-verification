@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { type Core3StandardBallot } from '../classes/ballot'
 import { type ImageRef, type Language, type I18n } from '../classes/basics'
-import { extractGeneric, extractText, extractTextFromJson } from './basic'
+import { extractGeneric, extractTextFromJson } from './basic'
 import BallotView from './BallotView.vue'
 
 import text from './elements/text.json'
@@ -35,7 +35,7 @@ onMounted(() => {
     for (const list of ballotSheet.lists) {
       bytesOfBallotSheet += list.candidates.length + 1
     }
-    if (start + bytesOfBallotSheet < props.result.length) {
+    if (start + bytesOfBallotSheet > props.result.length) {
       throw new Error('Result format does not match ')
     }
     ballotResult.value.set(ballotSheet.id, props.result.subarray(start, start + bytesOfBallotSheet))
@@ -45,7 +45,7 @@ onMounted(() => {
 })
 
 function getImgUrl (img: I18n<ImageRef>): string {
-  return extractGeneric<ImageRef>(img, props.language).url
+  return EnvironmentVariables.instance.electionURL + '/' + extractGeneric<ImageRef>(img, props.language).url
 }
 
 async function downloadPDF (): Promise<void> {
@@ -57,7 +57,7 @@ async function downloadPDF (): Promise<void> {
 
 <template>
     <div class="logo" v-if="props.loginResponse.logo">
-        <img :src="getImgUrl(props.loginResponse.logo!)" ref="test"/>
+        <img class="content" :src="getImgUrl(props.loginResponse.logo!)" ref="test"/>
     </div>
     <div class="verifiedText">
         <h1 class="verified"><span class="check">&#x2705;</span> {{ extractTextFromJson(text.verified.verified, props.language) }}</h1>
@@ -80,27 +80,26 @@ async function downloadPDF (): Promise<void> {
         </div>
     </div>
     <div class="above">
-        <div class="messages">
-            <text v-for="key in props.loginResponse.messages.keys()"
-            v-bind:key="key">key: {{ extractText(props.loginResponse.messages.get(key), props.language) }}</text>
-        </div>
-        <br>
         <div class="contentAbove" v-if="props.loginResponse.contentAbove">
             <ContentView :content="props.loginResponse.contentAbove" :language="props.language"/>
         </div>
     </div>
+    <br>
     <div class="verifiedText">
         <div class="explanation">
             <text>{{ extractTextFromJson(text.verified.explanation, props.language) }}</text>
         </div>
     </div>
-    <div class="ballot" v-if="rendered">
+    <div class="allBallots"
+    v-if="rendered">
+      <div class="ballot"
+      v-for="ballot in ballotSheets"
+      v-bind:key="ballot.id">
         <BallotView
-        v-for="ballot in ballotSheets"
-        v-bind:key="ballot.id"
         :ballot="ballot"
         :result="ballotResult.get(ballot.id)!"
         :language="props.language"/>
+      </div>
     </div>
     <div class="download">
         <text class="text">{{ extractTextFromJson(text.verified.downloadText, props.language) }}</text>
@@ -173,8 +172,11 @@ async function downloadPDF (): Promise<void> {
   justify-content: flex-end;
   margin-top: 0.5rem !important;
   margin-right: 1.5rem !important;
-  position: absolute;
+  align-items: right;
   right: 0;
+  .content{
+    width: 20%;
+  }
 }
 
 .download {
