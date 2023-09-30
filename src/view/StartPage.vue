@@ -16,17 +16,36 @@ const props = defineProps<{
         <h4>{{ extractTextFromJson(text.login.voterId, props.language) }}</h4>
         <div class="voterid">{{ props.voterId }}</div>
         <h4>{{ extractTextFromJson(text.login.loginReq, props.language) }}</h4>
-        <div class="password">
-          <form @submit.prevent="$emit('login', passwordValue)">
-          <input id="enter" class="input" type="password" v-model="passwordValue"/>
-          </form>
-        </div>
-        <div class="explanation">{{ extractTextFromJson(text.login.explanation, props.language) }}</div>
-        <button class="login" v-on:click="$emit('login', passwordValue)">
-        {{ extractTextFromJson(text.login.loginButton, props.language) }}
-        </button>
+        <form @submit.prevent="$emit('login', passwordValue)">
+            <div class="password">
+                <input id="enter" class="input" maxlength="6" autocomplete="new-password one-time-code" :type="passwordFieldType" v-model="passwordValue" />
+                <i :class="togglerIcon" id="eye" @click="switchVisibility"></i>
+            </div>
+            <div class="explanation">{{ extractTextFromJson(text.login.explanation, props.language) }}</div>
+            <button class="login" v-on:click="$emit('login', passwordValue)">
+                {{ extractTextFromJson(text.login.loginButton, props.language) }}
+            </button>
+        </form>
     </div>
 </template>
+
+<script lang="ts">
+export default {
+  data () {
+    return {
+      password: '',
+      passwordFieldType: 'password',
+      togglerIcon: 'fa fa-eye'
+    }
+  },
+  methods: {
+    switchVisibility () {
+      this.passwordFieldType = this.passwordFieldType === 'password' ? 'text' : 'password'
+      this.togglerIcon = this.togglerIcon === 'fa fa-eye' ? 'fa fa-eye-slash' : 'fa fa-eye'
+    }
+  }
+}
+</script>
 
 <style scoped>
 .start {
@@ -58,6 +77,14 @@ const props = defineProps<{
 #enter {
   width: 50%;
   text-align: center;
+}
+
+#eye {
+  position: absolute;
+  margin-top: .25%;
+  margin-left: 0.3em;
+  cursor: pointer;
+  color: gray;
 }
 
 .login {

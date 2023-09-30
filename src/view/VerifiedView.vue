@@ -50,9 +50,18 @@ function getImgUrl (img: I18n<ImageRef>): string {
 
 async function downloadPDF (): Promise<void> {
   const doc = new jsPDF('p', 'px', 'a4') // eslint-disable-line 
+  doc.setProperties({
+    title: 'Bestätigung der Stimmabgabe',
+    creator: 'KIT Polyas-Verifier'
+  })
   const pageWidth = doc.internal.pageSize.getWidth()
   const left = 60
+  doc.setDisplayMode('fullpage')
+  doc.viewerPreferences({ FitWindow: true })
+  doc.setLanguage('de-DE')
+  doc.text('Bestätigung der Stimmabgabe', 40, 30)
   doc.setFontSize(16)
+  doc.setFont('courier', 'normal')
   doc.text(props.receiptText, 60, 120, { maxWidth: pageWidth - 2 * left })
   doc.save(`vote-receipt-${EnvironmentVariables.instance.fingerprint.substring(0, 10)}.pdf`)
 }
