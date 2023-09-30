@@ -133,7 +133,7 @@ class Comm implements Communication {
       method: 'post',
       headers: header,
       data: {
-        info: info
+        info
       }
     })
   }
