@@ -205,7 +205,7 @@ async function reset (): Promise<void> {
   margin-left: 32.98%;
   margin-top: 1.22rem;
   width: 35.85%;
-  min-height: 25%;
+  min-height: 0%;
   min-width: 35%;
 }
 
@@ -213,7 +213,7 @@ async function reset (): Promise<void> {
   margin-right: 30%;
   margin-top: .5rem;
   width: 45%;
-  min-height: 25%;
+  min-height: 0%;
   min-width: 45%;
 }
 
@@ -227,7 +227,7 @@ async function reset (): Promise<void> {
     background-color: inherit;
   }
   margin-left: auto;
-  margin-right: -15%;
+  margin-right: -8%;
   margin-top: -4.45%;
 }
 
