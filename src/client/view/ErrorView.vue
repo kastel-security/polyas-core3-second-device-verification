@@ -4,7 +4,7 @@ import { ErrorType } from '../main/error'
 import { EnvironmentVariables } from '../main/constants'
 import { extractText, extractTextFromJson } from './basic'
 import text from './elements/text.json'
-import { I18n, type Language } from '../classes/basics'
+import type { I18n, Language } from '../classes/basics'
 defineEmits(['reset'])
 const url = ref<string>()
 const props = defineProps<{

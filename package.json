@@ -9,6 +9,8 @@
     "dev": "nodemon src/server/main.ts -w src/server",
     "start": "ts-node src/server/main.ts NODE_ENV=PRODUCTION",
     "mock": "vite --mode mock --port 5000",
+    "full-mock-linux": "VITE_MODE=mock nodemon src/server/main.ts -w src/server",
+    "full-mock-windows": "SET VITE_MODE=mock&&nodemon src/server/main.ts -w src/server",
     "frontend": "vite --port 5000",
     "preview": "vite preview",
     "build": "vite build",

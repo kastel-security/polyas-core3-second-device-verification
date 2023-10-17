@@ -21,7 +21,9 @@ class EnvironmentVariables {
   public static init (mode: Modes): EnvironmentVariables {
     this.instance = new EnvironmentVariables()
     this.instance.mode = mode
+    console.log('mode', mode)
     if (mode === 'mock') {
+      console.log('mocked')
       this.instance.proofGen = new ProofGeneratorMock(BigInt(dataUI.challengeRequest.challenge), BigInt(dataUI.challengeRequest.challengeRandomCoin))
       this.instance.comm = new CommMock()
     }

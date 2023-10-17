@@ -47,7 +47,7 @@ async function logIfNotFull (info: string[]): Promise<void> {
     const doc = generateReceipt(info)
     doc.save(path + '/' + newFile)
   } else if (files.includes(newFile)) {
-    console.log('A hash collision of ballot fingerprints occured, or a voter verified the same ballot twice')
+    console.log('A voter verified the same ballot twice')
   }
 }
 

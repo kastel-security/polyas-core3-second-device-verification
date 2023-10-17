@@ -156,6 +156,17 @@ class CommMock implements Communication {
   }
 
   public async logReceipt (info: string[]): Promise<void> {
+    const header = {
+      'Content-Type': 'application/json'
+    }
+    await axios.request({
+      url: '/log',
+      method: 'post',
+      headers: header,
+      data: {
+        info
+      }
+    })
   }
 }
 
