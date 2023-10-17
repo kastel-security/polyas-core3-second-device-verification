@@ -4,3 +4,4 @@ dist
 .git
 .docker-conf
 npm-debug.log
+logs
