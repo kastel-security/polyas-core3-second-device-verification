@@ -4,13 +4,13 @@ import { ErrorType } from '../main/error'
 import { EnvironmentVariables } from '../main/constants'
 import { extractText, extractTextFromJson } from './basic'
 import text from './elements/text.json'
-import type { I18n, Language } from '../classes/basics'
+import { I18n, type Language } from '../classes/basics'
 defineEmits(['reset'])
-const url = ref<string>()
+const title = ref(I18n.fromJson(text.error.title_default, 'string'))
 const props = defineProps<{
   errorType: ErrorType
-  language: Language | undefined
-  title: I18n<string>
+  language: Language | undefined,
+  title?: I18n<string>,
   message?: string
 }>()
 onMounted(() => {
@@ -18,8 +18,9 @@ onMounted(() => {
   if (props.message !== undefined) {
     console.log(props.message)
   }
-  console.log(EnvironmentVariables.instance.electionUrl)
-  url.value = EnvironmentVariables.instance.electionUrl
+  if (props.title !== undefined) {
+    title.value = props.title
+  }
 })
 </script>
 
@@ -32,7 +33,7 @@ onMounted(() => {
             {{ extractTextFromJson(text.error.params, props.language) }}<br>
             <p>
                 {{ extractTextFromJson(text.header.electionReference, props.language) }}
-                <em><a :href="url">{{ extractText(props.title, props.language) }}</a></em>
+                <em><a :href="EnvironmentVariables.instance.electionUrl">{{ EnvironmentVariables.instance.electionUrl }}</a></em>
             </p>
         </h3>
         <h3 v-else-if="props.errorType==ErrorType.CONNECTION">{{ extractTextFromJson(text.error.connection, props.language) }}</h3>
