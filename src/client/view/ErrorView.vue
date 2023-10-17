@@ -18,8 +18,8 @@ onMounted(() => {
   if (props.message !== undefined) {
     console.log(props.message)
   }
-  console.log(EnvironmentVariables.instance.electionURL)
-  url.value = EnvironmentVariables.instance.electionURL
+  console.log(EnvironmentVariables.instance.electionUrl)
+  url.value = EnvironmentVariables.instance.electionUrl
 })
 </script>
 

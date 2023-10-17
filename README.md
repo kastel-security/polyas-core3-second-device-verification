@@ -46,7 +46,8 @@ npm run t
 ```
 
 ## Configuration of an Election Instance
-For testing the application against a real election instance, open ``.env.development`` and set ``VITE_ELECTION_FINGERPRINT`` to the election fingerprint of the election running on your election instance, ``VITE_ELECTION_URL`` to the instance of the base address of the election server and ``VITE_ELECTION_HASH`` to the election hash of the running election.
+For testing the application against a real election instance, open ``.env.development`` and set ``VITE_ELECTION_BACKEND`` to the URL of your instance or a proxy to your instance.
+Set ``VITE_ELECTION_FINGERPRINT`` to the election fingerprint of the election running on your election instance, ``VITE_ELECTION_URL`` to the instance of the base address of the election server and ``VITE_ELECTION_HASH`` to the election hash of the running election.
 If the URL provided by the instance for the individual (second device) verification links to a localhost port other than *5000*, open ``package.json`` and change the following line
 ```bash
 "dev": "vite --port 5000",
