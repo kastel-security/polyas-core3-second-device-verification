@@ -3,7 +3,7 @@ import StartPage from './view/StartPage.vue'
 import { onMounted, ref } from 'vue'
 import { type ElectionData, type SecondDeviceLoginResponse } from './classes/communication'
 import text from './view/elements/text.json'
-import { type I18n, type Language } from './classes/basics'
+import { I18n, type Language } from './classes/basics'
 import { extractText, extractTextFromJson, State } from './view/basic'
 import VerifiedView from './view/VerifiedView.vue'
 import { ErrorType } from './main/error'
@@ -34,6 +34,7 @@ onMounted(async () => {
   const urlParams = new URLSearchParams(window.location.search)
   languages = ['DE', 'EN', undefined]
   language.value = 'DE'
+  await loadData()
   if (!urlParams.has('c') || !urlParams.has('vid') || !urlParams.has('nonce')) {
     error.value = new ResponseBeanError(ErrorType.PARAMS)
     state.value = State.ERROR
@@ -42,7 +43,6 @@ onMounted(async () => {
   voterId.value = urlParams.get('vid') as string
   nonce.value = urlParams.get('nonce') as string
   c.value = urlParams.get('c') as string
-  await loadData()
 })
 
 async function loadData (): Promise<void> {
@@ -54,6 +54,7 @@ async function loadData (): Promise<void> {
     title.value = (electionData as ResponseBeanOk<ElectionData>).value.title
     state.value = State.LOGIN
   } else {
+    title.value = I18n.fromJson(text.error.title_default, 'string')
     error.value = electionData as ResponseBeanError
     state.value = State.ERROR
   }
@@ -141,6 +142,7 @@ async function reset (): Promise<void> {
       v-else-if="state==State.ERROR"
       :errorType="error.errorType"
       :message="error.message"
+      :title="(title as I18n<string>)"
       :language="language"
       @reset="reset"/>
       <div v-else class="loading">

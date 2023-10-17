@@ -1,25 +1,21 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted } from 'vue'
 import { ErrorType } from '../main/error'
 import { EnvironmentVariables } from '../main/constants'
 import { extractText, extractTextFromJson } from './basic'
 import text from './elements/text.json'
-import { I18n, type Language } from '../classes/basics'
+import type { I18n, Language } from '../classes/basics'
 defineEmits(['reset'])
-const title = ref(I18n.fromJson(text.error.title_default, 'string'))
 const props = defineProps<{
   errorType: ErrorType
-  language: Language | undefined,
-  title?: I18n<string>,
+  language: Language | undefined
+  title: I18n<string>
   message?: string
 }>()
 onMounted(() => {
   console.log(props.errorType)
   if (props.message !== undefined) {
     console.log(props.message)
-  }
-  if (props.title !== undefined) {
-    title.value = props.title
   }
 })
 </script>
