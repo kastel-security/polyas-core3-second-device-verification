@@ -168,7 +168,7 @@
         },
         "title_default": {
             "default": "unknown",
-            "value": {"DE": "unbekannt"}
+            "value": { "DE": "unbekannt" }
         }
     }
 }
