@@ -257,4 +257,4 @@ async function reset (): Promise<void> {
   text-align: center;
 }
 </style>
-./client/main/error./client/main/communication./client/main/constants./client/main/verifictiontool
+./main/error./main/communication./main/constants./main/verifictiontool

@@ -1,8 +1,7 @@
-import { fileURLToPath, URL } from 'node:url'
-
-import { defineConfig, loadEnv } from 'vite'
-import EnvironmentPlugin from 'vite-plugin-environment'
-import vue from '@vitejs/plugin-vue'
+import { fileURLToPath, URL } from 'node:url';
+import { defineConfig, loadEnv } from 'vite';
+import EnvironmentPlugin from 'vite-plugin-environment';
+import vue from '@vitejs/plugin-vue';
 
 const defaultConfig = {
   plugins: [

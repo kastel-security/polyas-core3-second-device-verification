@@ -56,6 +56,7 @@ class Comm implements Communication {
       .then(async (response) => {
         try {
           const electionData = ElectionData.fromJson(response.data)
+          console.log(electionData)
           return await Promise.resolve(new ResponseBeanOk<ElectionData>(electionData))
         } catch (error: any) {
           return await this.resolveFail(ErrorType.FORMAT, error.message)

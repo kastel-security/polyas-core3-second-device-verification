@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import { ErrorType } from '../main/error'
 import { EnvironmentVariables } from '../main/constants'
 import { extractText, extractTextFromJson } from './basic'
@@ -17,6 +17,8 @@ onMounted(() => {
   if (props.message !== undefined) {
     console.log(props.message)
   }
+  console.log(EnvironmentVariables.instance.electionUrl)
+  url.value = EnvironmentVariables.instance.electionUrl
 })
 </script>
 
@@ -29,7 +31,7 @@ onMounted(() => {
             {{ extractTextFromJson(text.error.params, props.language) }}<br>
             <p>
                 {{ extractTextFromJson(text.header.electionReference, props.language) }}
-                <em><a :href="EnvironmentVariables.instance.electionUrl">{{ extractText(title, props.language) }}</a></em>
+                <em><a :href="url">{{ extractText(props.title, props.language) }}</a></em>
             </p>
         </h3>
         <h3 v-else-if="props.errorType==ErrorType.CONNECTION">{{ extractTextFromJson(text.error.connection, props.language) }}</h3>
@@ -84,3 +86,4 @@ onMounted(() => {
   margin-top: 4%;
 }
 </style>
+../main/error
