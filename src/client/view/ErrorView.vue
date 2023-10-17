@@ -1,14 +1,16 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import { ErrorType } from '../main/error'
 import { EnvironmentVariables } from '../main/constants'
-import { extractTextFromJson } from './basic'
+import { extractText, extractTextFromJson } from './basic'
 import text from './elements/text.json'
-import { type Language } from '../classes/basics'
+import type { I18n, Language } from '../classes/basics'
 defineEmits(['reset'])
+const url = ref<string>()
 const props = defineProps<{
   errorType: ErrorType
   language: Language | undefined
+  title: I18n<string>
   message?: string
 }>()
 onMounted(() => {
@@ -16,6 +18,8 @@ onMounted(() => {
   if (props.message !== undefined) {
     console.log(props.message)
   }
+  console.log(EnvironmentVariables.instance.electionURL)
+  url.value = EnvironmentVariables.instance.electionURL
 })
 </script>
 
@@ -28,7 +32,7 @@ onMounted(() => {
             {{ extractTextFromJson(text.error.params, props.language) }}<br>
             <p>
                 {{ extractTextFromJson(text.header.electionReference, props.language) }}
-                <em><a :href="EnvironmentVariables.instance.electionUrl">{{ EnvironmentVariables.instance.electionUrl }}</a></em>
+                <em><a :href="url">{{ extractText(props.title, props.language) }}</a></em>
             </p>
         </h3>
         <h3 v-else-if="props.errorType==ErrorType.CONNECTION">{{ extractTextFromJson(text.error.connection, props.language) }}</h3>

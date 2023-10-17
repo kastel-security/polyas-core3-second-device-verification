@@ -20,6 +20,18 @@ For executing the GUI in mock mode, run the following command:
 ```bash
 npm run mock
 ```
+
+For executing the GUI and backend in mock mode, run the following command:
+For executing the GUI in mock mode, run the following command:
+```bash
+npm run full-mock-windows
+```
+if using windows or 
+```bash
+npm run full-mock-linux
+```
+if using linux or mac
+
 Then, open the following link:
 ```bash
 http://localhost:5000/?c=kFpsHZFLr8j-2yDySJzMhLTyEFx6Nu4oqxFSE4oIaeV3IZRlF0987AlWeCQC4AHpznYchLE_gI3nwXmS&vid=voter24&nonce=cd02cad970d6b5659e097d09545c605518d4061cf3751c5a19ffc298193d62f2

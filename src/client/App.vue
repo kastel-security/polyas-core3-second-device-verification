@@ -3,7 +3,7 @@ import StartPage from './view/StartPage.vue'
 import { onMounted, ref } from 'vue'
 import { type ElectionData, type SecondDeviceLoginResponse } from './classes/communication'
 import text from './view/elements/text.json'
-import { type I18n, type Language } from './classes/basics'
+import { I18n, type Language } from './classes/basics'
 import { extractText, extractTextFromJson, State } from './view/basic'
 import VerifiedView from './view/VerifiedView.vue'
 import { ErrorType } from './main/error'
@@ -26,7 +26,7 @@ const result = ref<Uint8Array>()
 const receiptText = ref<string[]>()
 onMounted(async () => {
   env = EnvironmentVariables.init((import.meta as any).env.VITE_MODE)
-  env.electionUrl = (import.meta as any).env.VITE_ELECTION_URL + '/' + (import.meta as any).env.VITE_ELECTION_HASH
+  console.log((import.meta as any).env.VITE_MODE)
   env.backendUrl = (import.meta as any).env.VITE_ELECTION_BACKEND
   env.fingerprint = (import.meta as any).env.VITE_ELECTION_FINGERPRINT
   env.electionURL = (import.meta as any).env.VITE_ELECTION_URL + '/' + (import.meta as any).env.VITE_ELECTION_HASH
@@ -34,6 +34,7 @@ onMounted(async () => {
   const urlParams = new URLSearchParams(window.location.search)
   languages = ['DE', 'EN', undefined]
   language.value = 'DE'
+  await loadData()
   if (!urlParams.has('c') || !urlParams.has('vid') || !urlParams.has('nonce')) {
     error.value = new ResponseBeanError(ErrorType.PARAMS)
     state.value = State.ERROR
@@ -42,19 +43,18 @@ onMounted(async () => {
   voterId.value = urlParams.get('vid') as string
   nonce.value = urlParams.get('nonce') as string
   c.value = urlParams.get('c') as string
-  await loadData()
 })
 
 async function loadData (): Promise<void> {
   verificationtool.value = new Verificationtool()
   const electionData = await verificationtool.value.loadElectionData()
-
   if (electionData.status === ResponseBean.okStatus) {
     language.value = undefined
     languages = [...(electionData as ResponseBeanOk<ElectionData>).value.languages, undefined]
     title.value = (electionData as ResponseBeanOk<ElectionData>).value.title
     state.value = State.LOGIN
   } else {
+    title.value = I18n.fromJson(text.error.title_default, 'string')
     error.value = electionData as ResponseBeanError
     state.value = State.ERROR
   }
@@ -142,6 +142,7 @@ async function reset (): Promise<void> {
       v-else-if="state==State.ERROR"
       :errorType="error.errorType"
       :message="error.message"
+      :title="(title as I18n<string>)"
       :language="language"
       @reset="reset"/>
       <div v-else class="loading">
@@ -149,7 +150,7 @@ async function reset (): Promise<void> {
       </div>
     </div>
     <div id="footer">
-      <a href="https://github.com/kastel-security/polyas-core3-second-device-verification" id="toollink">Polyas-Verifier</a> {{ extractTextFromJson(text.footer.acknowledgement, language) }}
+      <a href="https://github.com/kastel-security/polyas-core3-second-device-verification">Polyas-Verifier</a> {{ extractTextFromJson(text.footer.acknowledgement, language) }}
       &copy; 2023&puncsp;<a href="mailto:udqps@student.kit.edu">Christoph Niederbudde</a>, <a href="https://formal.kastel.kit.edu/~kirsten/">Michael Kirsten</a>.
     </div>
   </div>
@@ -164,7 +165,7 @@ async function reset (): Promise<void> {
 }
 
 #footer {
-  width: 92%;
+  width: 100%;
   text-align: justify;
   padding-top: 15px;
   padding-bottom: 15px;
@@ -173,13 +174,6 @@ async function reset (): Promise<void> {
   bottom: 0;
   font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-weight: 100;
-}
-
-#toollink {
-  font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  font-size: 18px;
-  font-weight: 600;
-  font-variant: small-caps;
 }
 
 #left {
@@ -203,19 +197,15 @@ async function reset (): Promise<void> {
 }
 
 .kitlogo {
-  margin-left: 32.98%;
-  margin-top: 1.22rem;
-  width: 35.85%;
-  min-height: 0%;
-  min-width: 35%;
+  margin-left: 10%;
+  margin-top: 1rem;
+  width: 60%
 }
 
 .kastellogo {
-  margin-right: 30%;
-  margin-top: .5rem;
-  width: 45%;
-  min-height: 0%;
-  min-width: 45%;
+  margin-right: 00%;
+  margin-top: 1rem;
+  width: 80%;
 }
 
 .select {
@@ -224,12 +214,12 @@ async function reset (): Promise<void> {
   justify-content: flex-end;
   .selectButton {
     margin-left: .5em;
-    margin-right: 7%;
-    background-color: inherit;
+    margin-right: 1.5rem;
+    background-color: #fff;
   }
-  margin-left: auto;
-  margin-right: -8%;
-  margin-top: -4.45%;
+  .selectLabel {
+    margin-right: 1.5rem;
+  }
 }
 
 .selectbck {
