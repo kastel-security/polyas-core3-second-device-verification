@@ -2,15 +2,14 @@
 import { onMounted, ref } from 'vue'
 import { ErrorType } from '../main/error'
 import { EnvironmentVariables } from '../main/constants'
-import { extractText, extractTextFromJson } from './basic'
+import { extractTextFromJson } from './basic'
 import text from './elements/text.json'
 import { I18n, type Language } from '../classes/basics'
 defineEmits(['reset'])
 const title = ref(I18n.fromJson(text.error.title_default, 'string'))
 const props = defineProps<{
   errorType: ErrorType
-  language: Language | undefined,
-  title?: I18n<string>,
+  language: Language | undefined
   message?: string
 }>()
 onMounted(() => {
