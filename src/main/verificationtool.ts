@@ -50,9 +50,9 @@ class Verificationtool {
     if (!await checkSecondDeviceParameters(this._secondDeviceLoginResponse.initialMessageDecoded.secondDeviceParameter)) {
       return await this.resolveFail(ErrorType.SDPP)
     }
-    //if (this._secondDeviceLoginResponse.ballotVoterId !== voterId) {
+    // if (this._secondDeviceLoginResponse.ballotVoterId !== voterId) {
     //  return await this.resolveFail(ErrorType.VID)
-    //}
+    // }
     let validAck = false
     try {
       validAck = await checkSignature(this._secondDeviceLoginResponse)
