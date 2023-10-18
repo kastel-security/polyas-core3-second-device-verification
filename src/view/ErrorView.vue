@@ -1,24 +1,21 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted } from 'vue'
 import { ErrorType } from '../main/error'
 import { EnvironmentVariables } from '../main/constants'
-import { extractTextFromJson } from './basic'
+import { extractText, extractTextFromJson } from './basic'
 import text from './elements/text.json'
-import { I18n, type Language } from '../classes/basics'
+import type { I18n, Language } from '../classes/basics'
 defineEmits(['reset'])
-const title = ref(I18n.fromJson(text.error.title_default, 'string'))
 const props = defineProps<{
   errorType: ErrorType
   language: Language | undefined
+  title: I18n<string>
   message?: string
 }>()
 onMounted(() => {
   console.log(props.errorType)
   if (props.message !== undefined) {
     console.log(props.message)
-  }
-  if (props.title !== undefined) {
-    title.value = props.title
   }
 })
 </script>
@@ -32,7 +29,7 @@ onMounted(() => {
             {{ extractTextFromJson(text.error.params, props.language) }}<br>
             <p>
                 {{ extractTextFromJson(text.header.electionReference, props.language) }}
-                <em><a :href="EnvironmentVariables.instance.electionUrl">{{ EnvironmentVariables.instance.electionUrl }}</a></em>
+                <em><a :href="EnvironmentVariables.instance.electionUrl">{{ extractText(props.title, props.language) }}</a></em>
             </p>
         </h3>
         <h3 v-else-if="props.errorType==ErrorType.CONNECTION">{{ extractTextFromJson(text.error.connection, props.language) }}</h3>
@@ -42,6 +39,7 @@ onMounted(() => {
         <h3 v-else-if="props.errorType==ErrorType.FORMAT">{{ extractTextFromJson(text.error.format, props.language) }}</h3>
         <h3 v-else-if="props.errorType==ErrorType.SDPP">{{ extractTextFromJson(text.error.sdpp, props.language) }}</h3>
         <h3 v-else-if="props.errorType==ErrorType.ZKP_INV">{{ extractTextFromJson(text.error.zkp_inv, props.language) }}</h3>
+        <h3 v-else-if="props.errorType==ErrorType.VID">{{ extractTextFromJson(text.error.vid, props.language) }}</h3>
         <h3 v-else>{{ extractTextFromJson(text.error.other, props.language) }}</h3>
     </div>
     <div class = "action">
