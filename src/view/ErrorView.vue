@@ -2,7 +2,7 @@
 import { onMounted } from 'vue'
 import { ErrorType } from '../main/error'
 import { EnvironmentVariables } from '../main/constants'
-import { extractText, extractTextFromJson } from './basic'
+import { extractTextFromJson } from './basic'
 import text from './elements/text.json'
 import type { I18n, Language } from '../classes/basics'
 defineEmits(['reset'])
@@ -29,7 +29,7 @@ onMounted(() => {
             {{ extractTextFromJson(text.error.params, props.language) }}<br>
             <p>
                 {{ extractTextFromJson(text.header.electionReference, props.language) }}
-                <em><a :href="EnvironmentVariables.instance.electionUrl">{{ extractText(props.title, props.language) }}</a></em>
+                <em><a :href="EnvironmentVariables.instance.electionUrl">{{ EnvironmentVariables.instance.electionUrl }}</a></em>
             </p>
         </h3>
         <h3 v-else-if="props.errorType==ErrorType.CONNECTION">{{ extractTextFromJson(text.error.connection, props.language) }}</h3>

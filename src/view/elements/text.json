@@ -127,19 +127,19 @@
         "sdpp": {
             "default": "The second device parameters returned by the election server do not match the pre-configured fingerprint. This could be caused by a third party attack. Please contact the election administration.",
             "value": {
-                "DE": "Die vom Wahlserver erhaltenen Zweitgerät-Parameter passen nicht zum voreingestellen Fingerabdruck. Dies könnte durch einen Angriff einer dritten Partei verursacht sein. Bitte setzten Sie sich mit der Wahlleitung in Verbindung."
+                "DE": "Die vom Wahlserver erhaltenen Zweitgerät-Parameter passen nicht zum voreingestellen Fingerabdruck. Dies könnte durch einen Angriff einer dritten Partei verursacht worden sein. Bitte setzten Sie sich mit der Wahlleitung in Verbindung."
             }
         },
         "ack": {
             "default": "The receipt of the ballot submission sent by the election server is invalid. This could be caused by a third party attack.",
             "value": {
-                "DE": "Die Bestätigung des Stimmzettels durch den Wahlserver ist ungültig. Dies könnte durch einen Angriff einer dritten Partei verursacht sein."
+                "DE": "Die Bestätigung des Stimmzettels durch den Wahlserver ist ungültig. Dies könnte durch einen Angriff einer dritten Partei verursacht worden sein."
             }
         },
         "decrypt": {
-            "default": "A parameter passed with the URL was invalid. This could be caused by a third party attack.",
+            "default": "A parameter passed with the entered URL was invalid. This could be caused by a third party attack.",
             "value": {
-                "DE": "Ein mit der URL übermittelter Parameter ist ungültig. Dies könnte durch einen Angriff einer dritten Partei verursacht sein."
+                "DE": "Ein mit der eingegebenen URL übermittelter Parameter ist ungültig. Dies könnte durch einen Angriff einer dritten Partei verursacht worden sein."
             }
         },
         "format": {
@@ -149,7 +149,7 @@
         "zkp_inv": {
             "default": "The zero-knowledge proof provided by the election server is invalid. This could be caused by a third party attack.",
             "value": {
-                "DE": "Der Zero-Knowledge Beweis des Wahlservers ist ungültig. Dies könnte auf durch einen Angriff einer dritten Partei verursacht sein."
+                "DE": "Der Zero-Knowledge Beweis des Wahlservers ist ungültig. Dies könnte durch einen Angriff einer dritten Partei verursacht worden sein."
             }
         },
         "other": {
@@ -163,9 +163,9 @@
             "value": { "DE": "Der dekodierte Stimmzettel passt nicht zum vom Stimmzettelbogen vorgegebenen Format." }
         },
         "vid": {
-            "default": "The voter ID of the ballot does not match the voter ID in the URL. This could be caused by a third party attack.",
+            "default": "The voter ID from the ballot does not match with the voter ID which is passed with the entered URL. This could be caused by a third party attack.",
             "value": {
-                "DE": "Die Wähler:innen-ID des Stimmzettels stimmt nicht mit der durch die URL übermittelten Wähler:innen-ID überein. Dies könnte auf durch einen Angriff einer dritten Partei verursacht sein."
+                "DE": "Die Wähler:innen-ID des Stimmzettels stimmt nicht mit der durch die eingegebene URL übermittelten Wähler:innen-ID überein. Dies könnte durch einen Angriff einer dritten Partei verursacht worden sein."
             }
         },
         "reset": {
