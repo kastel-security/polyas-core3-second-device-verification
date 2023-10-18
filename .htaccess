@@ -1,0 +1,18 @@
+
+## make sure nobody gets the htaccess, README, COPYING or VERSION files
+<Files ~ "^([\._]ht|README$|VERSION$|COPYING$)">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</Files>
+
+## Don't allow access to git directories
+
+RedirectMatch 404 /\.git
+
+
+

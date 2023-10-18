@@ -45,7 +45,7 @@ onMounted(() => {
 })
 
 function getImgUrl (img: I18n<ImageRef>): string {
-  return EnvironmentVariables.instance.electionURL + '/' + extractGeneric<ImageRef>(img, props.language).url
+  return EnvironmentVariables.instance.electionUrl + '/' + extractGeneric<ImageRef>(img, props.language).url
 }
 
 async function downloadPDF (): Promise<void> {

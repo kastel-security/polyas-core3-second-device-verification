@@ -16,7 +16,6 @@ class EnvironmentVariables {
   public fingerprint: string
   public proofGen: ProofGenerator
   public comm: Communication
-  public electionURL: string
   public static instance: EnvironmentVariables
   public static init (mode: Modes): EnvironmentVariables {
     this.instance = new EnvironmentVariables()

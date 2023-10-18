@@ -84,12 +84,12 @@
     },
     "ballot": {
         "invalidOption": {
-            "default": "Your ballot has been valued as invalid.",
-            "value": { "DE": "Ihr Stimmzettel wurde als ungültig gewertet." }
+            "default": "Value your vote as invalid",
+            "value": { "DE": "Ungültig wählen" }
         },
         "abstainOption": {
-            "default": "Your ballot has been valued as abstention.",
-            "value": { "DE": "Ihr Stimmzettel wurde als als Enthaltung gewertet." }
+            "default": "Value your vote as abstention",
+            "value": { "DE": "Stimme enthalten" }
         },
         "listVote": {
             "default": "Vote for candidate list",
@@ -174,7 +174,7 @@
         },
         "title_default": {
             "default": "unknown",
-            "value": {"DE": "unbekannt"}
+            "value": { "DE": "unbekannt" }
         }
     }
 }

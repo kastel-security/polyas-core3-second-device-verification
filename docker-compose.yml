@@ -17,6 +17,7 @@ services:
       VITE_ELECTION_URL: https://election.polyas.com
       VITE_ELECTION_HASH: a1d0c6e8-3f02-7327-d846-1063f4Ac58a6
       VITE_ELECTION_FINGERPRINT: 42
+      VITE_ELECTION_BACKEND: http://localhost:5000
       RECEIPT_CAPACITY: 20KB
     extra_hosts:
       127.0.0.1: host-gateway
