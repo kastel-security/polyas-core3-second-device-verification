@@ -2,6 +2,7 @@ enum ErrorType {
   CONNECTION,
   EXTERN,
   SDPP,
+  VID,
   BALLOT_ACK,
   BALLOT_ACK_FAIL,
   DECRYPT,

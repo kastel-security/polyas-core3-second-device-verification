@@ -1,4 +1,4 @@
-import { type ElectionData, type SecondDeviceFinalMessage, type SecondDeviceLoginResponse } from '../classes/communication'
+import { SecondDeviceLoginResponse, type ElectionData, type SecondDeviceFinalMessage } from '../classes/communication'
 import { type Core3StandardBallot, type SecretProof } from '../classes/ballot'
 import { ErrorType } from './error'
 import { checkSecondDeviceParameters, checkZKP, decryptBallot, decrytQRCode, generateReceiptText } from '../algorithms/decryption'
@@ -49,6 +49,9 @@ class Verificationtool {
     this._secondDeviceLoginResponse = (loginResponse as ResponseBeanOk<SecondDeviceLoginResponse>).value
     if (!await checkSecondDeviceParameters(this._secondDeviceLoginResponse.initialMessageDecoded.secondDeviceParameter)) {
       return await this.resolveFail(ErrorType.SDPP)
+    }
+    if (this._secondDeviceLoginResponse.ballotVoterId !== voterId) {
+      return await this.resolveFail(ErrorType.VID)
     }
     let validAck = false
     try {

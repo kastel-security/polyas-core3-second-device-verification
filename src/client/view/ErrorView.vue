@@ -42,6 +42,7 @@ onMounted(() => {
         <h3 v-else-if="props.errorType==ErrorType.FORMAT">{{ extractTextFromJson(text.error.format, props.language) }}</h3>
         <h3 v-else-if="props.errorType==ErrorType.SDPP">{{ extractTextFromJson(text.error.sdpp, props.language) }}</h3>
         <h3 v-else-if="props.errorType==ErrorType.ZKP_INV">{{ extractTextFromJson(text.error.zkp_inv, props.language) }}</h3>
+        <h3 v-else-if="props.errorType==ErrorType.VID">{{ extractTextFromJson(text.error.vid, props.language) }}</h3>
         <h3 v-else>{{ extractTextFromJson(text.error.other, props.language) }}</h3>
     </div>
     <div class = "action">
