@@ -128,7 +128,7 @@ class Comm implements Communication {
 }
 
 class CommMock implements Communication {
-  public constructor(public readonly data) {}
+  public constructor (public readonly data) {}
   public async electionData (): Promise<ResponseBean<ElectionData>> {
     const electionData = ElectionData.fromJson(this.data.electionData)
     return await Promise.resolve(new ResponseBeanOk<ElectionData>(electionData))

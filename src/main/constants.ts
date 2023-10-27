@@ -1,6 +1,6 @@
 import { type ProofGenerator, ProofGeneratorImpl, ProofGeneratorMock } from '../algorithms/proof'
 import dataTest from '../mock/data.json'
-import dataUI from '../mock/data.json'
+import dataUI from '../mock/extended.json'
 import { Comm, CommMock, type Communication } from './communication'
 const k = '0373744f99d31509eb5f8caaabc0cc3fab70e571a5db4d762020723b9cd6ada260'
 const g = '0279be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798'
