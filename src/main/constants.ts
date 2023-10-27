@@ -1,6 +1,6 @@
 import { type ProofGenerator, ProofGeneratorImpl, ProofGeneratorMock } from '../algorithms/proof'
 import dataTest from '../mock/data.json'
-import dataUI from '../mock/extended.json'
+import dataUI from '../mock/data.json'
 import { Comm, CommMock, type Communication } from './communication'
 const k = '0373744f99d31509eb5f8caaabc0cc3fab70e571a5db4d762020723b9cd6ada260'
 const g = '0279be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798'
@@ -22,12 +22,12 @@ class EnvironmentVariables {
     this.instance.mode = mode
     console.log('mode', mode)
     if (mode === 'mock') {
-      this.instance.proofGen = new ProofGeneratorMock(BigInt(dataUI.challengeRequest.challenge), BigInt(dataUI.challengeRequest.challengeRandomCoin))
-      this.instance.comm = new CommMock()
+      this.instance.proofGen = new ProofGeneratorMock(BigInt(dataUI.challenge.challenge), BigInt(dataUI.challenge.challengeRandomCoin))
+      this.instance.comm = new CommMock(dataUI)
     }
     if (mode === 'test') {
       this.instance.proofGen = new ProofGeneratorMock(BigInt(dataTest.challenge.challenge), BigInt(dataTest.challenge.challengeRandomCoin))
-      this.instance.comm = new CommMock()
+      this.instance.comm = new CommMock(dataTest)
     } else if (mode === 'dev') {
       this.instance.proofGen = new ProofGeneratorImpl()
       this.instance.comm = new Comm()

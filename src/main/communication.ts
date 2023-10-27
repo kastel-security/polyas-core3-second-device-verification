@@ -3,7 +3,6 @@ import { type SecretProof } from '../classes/ballot'
 import { ElectionData, SecondDeviceFinalMessage, SecondDeviceLoginResponse } from '../classes/communication'
 import { EnvironmentVariables } from './constants'
 import { ErrorType } from './error'
-import data from '../mock/extended.json'
 
 type ResponseStatus = 'OK' | 'ERROR'
 abstract class ResponseBean<T> { // eslint-disable-line 
@@ -129,18 +128,19 @@ class Comm implements Communication {
 }
 
 class CommMock implements Communication {
+  public constructor(public readonly data) {}
   public async electionData (): Promise<ResponseBean<ElectionData>> {
-    const electionData = ElectionData.fromJson(data.electionData)
+    const electionData = ElectionData.fromJson(this.data.electionData)
     return await Promise.resolve(new ResponseBeanOk<ElectionData>(electionData))
   }
 
   public async login (voterId: string, nonce: string, c: string, challenge: string): Promise<ResponseBean<SecondDeviceLoginResponse>> {
-    const loginResponse = SecondDeviceLoginResponse.fromJson(data.loginResponse.value)
+    const loginResponse = SecondDeviceLoginResponse.fromJson(this.data.loginResponse.value)
     return await Promise.resolve(new ResponseBeanOk<SecondDeviceLoginResponse>(loginResponse))
   }
 
   public async challenge (token: string, proof: SecretProof): Promise<ResponseBeanOk<SecondDeviceFinalMessage>> {
-    const finalMessage = SecondDeviceFinalMessage.fromJson(data.finalMessage.value)
+    const finalMessage = SecondDeviceFinalMessage.fromJson(this.data.finalMessage.value)
     return await Promise.resolve(new ResponseBeanOk<SecondDeviceFinalMessage>(finalMessage))
   }
 }
