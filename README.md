@@ -58,6 +58,7 @@ npm run dev
 Edit the file [docker-compose.yml](docker-compose.yml) and change the values of the following keys within ``services.vite_docker.environment``:
 * ``VITE_ELECTION_FINGERPRINT``: The fingerprint of the election for which the verifier is deployed
 * ``VITE_ELECTION_URL``: The URL of the election server instance
+* ``VITE_ELECTION_HASH``: The election hash of the running election
 * ``VITE_ELECTION_BACKEND``: The URL of your instance or a proxy to your instance
 
 ### Build and Setup of the Instance
