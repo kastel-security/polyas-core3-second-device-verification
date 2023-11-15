@@ -7,4 +7,5 @@ RUN apk update --no-cache
 RUN apk add --no-cache git
 RUN git clone ${REPO} ${NAME}; exit 0
 RUN git -C ${NAME} pull
+RUN cd ${NAME} && rm -r .git
 RUN cd ${NAME} && npm i
