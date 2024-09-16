@@ -6,7 +6,7 @@ import { bufToHex, hexToBuf } from "../src/client/main/utils"
 import crypto from "crypto"
 import { EnvironmentVariables } from "../src/client/main/constants"
 import { ProofGeneratorMock } from "../src/client/algorithms/proof"
-const loginResponse = SecondDeviceLoginResponse.fromJson(data.loginResponse)
+const loginResponse = SecondDeviceLoginResponse.fromJson(data.loginResponse.value)
 const randomCoinSeed = "1e89b5f95deae82f6f823b52709117405f057783eda018d72cbd83141d394fbd"
 
 Object.defineProperty(globalThis, 'crypto', {
@@ -46,7 +46,7 @@ test("test decrytQRCode", async () => {
 
 test("test checkZKP", async () => {
     const init = loginResponse.initialMessageDecoded
-    const final = SecondDeviceFinalMessage.fromJson(data.finalMessage)
+    const final = SecondDeviceFinalMessage.fromJson(data.finalMessage.value)
     const e = "108039209026641834721998202775536164454916176078442584841940316235417705823230"
     const r = "44267717001895006656767798790813376597351395807170189462353830054915294464906"
     const proof = (new ProofGeneratorMock(BigInt(e), BigInt(r))).generateProof()

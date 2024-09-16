@@ -23,12 +23,12 @@ class EnvironmentVariables {
     console.log('mode', mode)
     if (mode === 'mock') {
       console.log('mocked')
-      this.instance.proofGen = new ProofGeneratorMock(BigInt(dataUI.challengeRequest.challenge), BigInt(dataUI.challengeRequest.challengeRandomCoin))
-      this.instance.comm = new CommMock()
+      this.instance.proofGen = new ProofGeneratorMock(BigInt(dataUI.challenge.challenge), BigInt(dataUI.challenge.challengeRandomCoin))
+      this.instance.comm = new CommMock(dataUI)
     }
     if (mode === 'test') {
       this.instance.proofGen = new ProofGeneratorMock(BigInt(dataTest.challenge.challenge), BigInt(dataTest.challenge.challengeRandomCoin))
-      this.instance.comm = new CommMock()
+      this.instance.comm = new CommMock(dataTest)
     } else if (mode === 'dev') {
       this.instance.proofGen = new ProofGeneratorImpl()
       this.instance.comm = new Comm()
