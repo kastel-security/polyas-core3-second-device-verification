@@ -108,7 +108,7 @@ async function reset (): Promise<void> {
   <div id="all">
     <div id="header">
       <div id="left">
-        <a href="https://www.kit.edu/english/"><img class="kitlogo" src="./view/elements/kit.svg"/></a>
+        <a href="https://www.kit.edu/english/"><img class="kitlogo" src="./view/elements/kit_en.svg"/></a>
       </div>
       <div id="center">
         <h1>{{ extractTextFromJson(text.header.title, language) }}</h1>
