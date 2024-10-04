@@ -2,31 +2,25 @@ version: "2.14.2"
 name: polyas-verifier
 services:
   app:
+    container_name: polyas-verifier
+    extra_hosts:
+      127.0.0.1: host-gateway
+    ports:
+    - mode: host
+      target: 80
+      host_ip: 127.0.0.1
+      published: "5000"
+      protocol: tcp
     build:
       context: .
       dockerfile: Dockerfile
       args:
         DIR: /srv/app
         NAME: polyas-verifier
-    container_name: polyas-verifier
-    entrypoint:
-    - /usr/local/bin/npm
-    - run
-    - dev
-    environment:
-      VITE_ELECTION_URL: https://election.polyas.com
-      VITE_ELECTION_HASH: a1d0c6e8-3f02-7327-d846-1063f4Ac58a6
-      VITE_ELECTION_FINGERPRINT: 42
-      VITE_ELECTION_BACKEND: http://localhost:5000
-    extra_hosts:
-      127.0.0.1: host-gateway
-    image: node:alpine
-    ports:
-    - mode: host
-      target: 5000
-      host_ip: 127.0.0.1
-      published: "5000"
-      protocol: tcp
+        ELECTION_URL: https://election.polyas.com
+        ELECTION_HASH: a1d0c6e8-3f02-7327-d846-1063f4Ac58a6-00000
+        ELECTION_FINGERPRINT: 42
+        ELECTION_BACKEND: http://localhost:8080
     restart: always
     tty: true
     working_dir: /srv/app/polyas-verifier
