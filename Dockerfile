@@ -17,8 +17,6 @@ RUN apk add --no-cache git
 RUN git clone ${REPO} ${NAME}; rm -r ${NAME} && git clone ${REPO} ${NAME}
 RUN git -C ${NAME} pull
 
-RUN git -C ${NAME} checkout nginx-deployment
-
 # Build the frontend
 RUN cd ${NAME} && rm -r .git
 RUN cd ${NAME} && npm i
@@ -32,4 +30,5 @@ ARG ELECTION_HASH
 ENV ELECTION_URL ${ELECTION_URL}
 ENV ELECTION_HASH ${ELECTION_HASH}
 COPY --from=node ${DIR}/${NAME}/dist/ /usr/share/nginx/html/
-COPY --from=node ${DIR}/${NAME}/nginx-template.template /etc/nginx/templates/default.conf.template
+# COPY --from=node ${DIR}/${NAME}/nginx-template.template /etc/nginx/templates/default.conf.template
+COPY ./nginx-template.template /etc/nginx/templates/default.conf.template
