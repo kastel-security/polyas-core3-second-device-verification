@@ -63,8 +63,8 @@
             "value": { "DE": "Projekt-Id: " }
         },
         "voterId": {
-            "default": "Anonymized Voter Id: ",
-            "value": { "DE": "Anonymisierte Wahl-Id: " }
+            "default": "Voter Id: ",
+            "value": { "DE": "Wahl-Id: " }
         },
         "label": {
             "default": "Ballot sheet number(s): ",
