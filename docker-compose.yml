@@ -1,12 +1,11 @@
-version: "2.14.2"
-name: polyas-verifier
+version: "3.9"
 services:
   app:
     build:
       context: .
       dockerfile: Dockerfile
       args:
-        DIR: /srv/app
+        DIR: /home/local/gi-wahlverifikation
         NAME: polyas-verifier
     container_name: polyas-verifier
     entrypoint:
@@ -25,9 +24,8 @@ services:
     ports:
     - mode: host
       target: 5000
-      host_ip: 127.0.0.1
       published: "5000"
       protocol: tcp
     restart: always
     tty: true
-    working_dir: /srv/app/polyas-verifier
+    working_dir: /home/local/gi-wahlverifikation/polyas-verifier

@@ -60,8 +60,8 @@
     },
     "decoded": [0,0,0,1],
     "receipt": [
-      "Project ID: bfced618-34aa-4b78-ba5b-d21dc04a1a7e",
-      "Voter ID: 0205bf2e14496f68c0f86f6b313f210a9393edb083821dcc4f9914cab9c51c9f2e",
+      "Project-Id: bfced618-34aa-4b78-ba5b-d21dc04a1a7e",
+      "Voter-Id: 0205bf2e14496f68c0f86f6b313f210a9393edb083821dcc4f9914cab9c51c9f2e",
       "Ballot Fingerprint: 91dd5f5929",
       "-----BEGIN FINGERPRINT-----",
       "91dd5f592932c7c681f20310c801e7ea935f116527b65ce6524f14c6ad2f9dac",

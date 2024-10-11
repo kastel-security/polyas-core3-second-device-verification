@@ -155,8 +155,8 @@ async function generateReceiptText (loginResponse: SecondDeviceLoginResponse): P
   const fingerprint: string = await computeFingerprint(loginResponse)
   const shortenedFingerprint: string = fingerprint.substring(0, 10)
   const signature: string = loginResponse.initialMessageDecoded.signatureHex
-  const string = new Array<string>(`Project ID: ${electionId}`, `Voter Id: ${voterId}`, `Ballot Fingerprint: ${shortenedFingerprint}`,
-    `-----BEGIN FINGERPRINT-----', ${fingerprint}`, '-----END FINGERPRINT-----', '-----BEGIN SIGNATURE-----', `${signature}`,
+  const string = new Array<string>(`Project Id: ${electionId}`, `Voter Id: ${voterId}`, `Ballot Fingerprint: ${shortenedFingerprint}`,
+    '-----BEGIN FINGERPRINT-----', `${fingerprint}`, '-----END FINGERPRINT-----', '-----BEGIN SIGNATURE-----', `${signature}`,
     '-----END SIGNATURE-----')
   return string
 }

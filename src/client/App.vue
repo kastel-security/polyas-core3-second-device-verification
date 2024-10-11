@@ -108,7 +108,7 @@ async function reset (): Promise<void> {
   <div id="all">
     <div id="header">
       <div id="left">
-        <img class="kitlogo" src="./view/elements/kit.svg"/>
+        <a href="https://www.kit.edu/english/"><img class="kitlogo" src="./view/elements/kit_en.svg"/></a>
       </div>
       <div id="center">
         <h1>{{ extractTextFromJson(text.header.title, language) }}</h1>
@@ -125,7 +125,7 @@ async function reset (): Promise<void> {
         <h2 v-if="title!=undefined">{{ extractTextFromJson(text.header.election, language) }}<em>{{ extractText(title, language)}}</em></h2>
       </div>
       <div id="right">
-        <img class="kastellogo" src="./view/elements/kastel.png"/>
+        <a href="https://kastel-labs.de/"><img class="kastellogo" src="./view/elements/kastel.png"/></a>
       </div>
     </div>
     <div class="main">
@@ -151,7 +151,7 @@ async function reset (): Promise<void> {
     </div>
     <div id="footer">
       <a href="https://github.com/kastel-security/polyas-core3-second-device-verification" id="toollink">Polyas-Verifier</a> {{ extractTextFromJson(text.footer.acknowledgement, language) }}
-      &copy; 2023&puncsp;<a href="mailto:udqps@student.kit.edu">Christoph Niederbudde</a>, <a href="https://formal.kastel.kit.edu/~kirsten/">Michael Kirsten</a>.
+      &copy; 2024&puncsp;<a href="mailto:udqps@student.kit.edu">Christoph Niederbudde</a>, <a href="https://formal.kastel.kit.edu/~kirsten/">Michael Kirsten</a>.
     </div>
   </div>
 </template>
