@@ -59,12 +59,12 @@
             "value": { "DE": "Verifiziert für: " }
         },
         "electionId": {
-            "default": "Project\u00a0Id: ",
-            "value": { "DE": "Projekt\u2011Id: " }
+            "default": "Project" + '\u00a0' + "Id: ",
+            "value": { "DE": "Projekt" + '\u2011' + "Id: " }
         },
         "voterId": {
-            "default": "Voter\u00a0Id: ",
-            "value": { "DE": "Wahl\u2011Id: " }
+            "default": "Voter" + '\u00a0' + "Id: ",
+            "value": { "DE": "Wahl" + '\u2011' + "Id: " }
         },
         "label": {
             "default": "Ballot sheet number(s): ",
