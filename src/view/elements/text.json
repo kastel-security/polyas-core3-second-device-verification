@@ -21,9 +21,9 @@
     },
     "login": {
         "text": {
-            "default": "Please enter the time-based one-time password that is currently displayed to you in step 5 of the voting process below your pre-filled anonymized voter Id.",
+            "default": "Please enter the time-based one-time password that is currently displayed to you in step 5 of the voting process below your pre-filled anonymized voter\u00a0Id.",
             "value": {
-                "DE": "Bitte geben Sie unter Ihrer vorausgefüllten anonymisierten Wahl-Id das zeitbasierte Einmalpasswort ein, welches Ihnen aktuell in Schritt 5 der Stimmabgabe angezeigt wird."
+                "DE": "Bitte geben Sie unter Ihrer vorausgefüllten anonymisierten Wahl\u2011Id das zeitbasierte Einmalpasswort ein, welches Ihnen aktuell in Schritt 5 der Stimmabgabe angezeigt wird."
             }
         },
         "loginReq": {
@@ -39,8 +39,8 @@
             "value": { "DE": "Anmelden und Stimmzettel verifizieren" }
         },
         "voterId": {
-            "default": "Anonymized Voter Id: ",
-            "value": { "DE": "Anonymisierte Wahl-Id: " }
+            "default": "Anonymized Voter\u00a0Id: ",
+            "value": { "DE": "Anonymisierte Wahl\u2011Id: " }
         }
     },
     "verified": {
@@ -163,9 +163,9 @@
             "value": { "DE": "Der dekodierte Stimmzettel passt nicht zum vom Stimmzettelbogen vorgegebenen Format." }
         },
         "vid": {
-            "default": "The anonymized voter Id from the ballot does not match with the anonymized voter Id which is passed with the entered URL. This could be caused by a third party attack.",
+            "default": "The anonymized voter\u00a0Id from the ballot does not match with the anonymized voter\u00a0Id which is passed with the entered URL. This could be caused by a third party attack.",
             "value": {
-                "DE": "Die anonymisierte Wahl-Id des Stimmzettels stimmt nicht mit der durch die eingegebene URL übermittelten anonymisierten Wahl-Id überein. Dies könnte durch einen Angriff einer dritten Partei verursacht worden sein."
+                "DE": "Die anonymisierte Wahl\u2011Id des Stimmzettels stimmt nicht mit der durch die eingegebene URL übermittelten anonymisierten Wahl\u2011Id überein. Dies könnte durch einen Angriff einer dritten Partei verursacht worden sein."
             }
         },
         "reset": {
