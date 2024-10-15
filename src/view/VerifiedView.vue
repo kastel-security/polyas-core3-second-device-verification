@@ -80,15 +80,15 @@ async function downloadPDF (): Promise<void> {
             <text class="titleKey">{{ extractTextFromJson(text.verified.electionId, props.language) }}</text>
             <br>
             <text class="titleKey">{{ extractTextFromJson(text.verified.voterId, props.language) }}</text>
-            <br>
-            <text class="titleKey">{{ extractTextFromJson(text.verified.label, props.language) }}</text>
+            <!-- br> - The total number of ballots per voter was deemed more confusing than helpful, hence we rather omit it. -
+            <text class="titleKey">{{ extractTextFromJson(text.verified.label, props.language) }}</text -->
         </div>
         <div class="right">
             <text class="data">{{ props.loginResponse.electionId }}</text>
             <br>
             <text class="data">{{ props.loginResponse.ballotVoterId }}</text>
-            <br>
-            <text class="data">{{ props.loginResponse.publicLabel }}</text>
+            <!-- br>
+            <text class="data">{{ props.loginResponse.publicLabel }}</text -->
         </div>
     </div>
     <div class="above">

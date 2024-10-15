@@ -14,7 +14,7 @@ ENV VITE_ELECTION_BACKEND ${ELECTION_BACKEND}
 WORKDIR ${DIR}
 RUN apk update --no-cache
 RUN apk add --no-cache git
-RUN git clone ${REPO} ${NAME}; rm -r ${NAME} && git clone ${REPO} ${NAME}
+RUN git clone ${REPO} ${NAME}; exit 0; rm -r ${NAME} && git clone ${REPO} ${NAME}; exit 0
 RUN git -C ${NAME} pull
 
 # Build the frontend
