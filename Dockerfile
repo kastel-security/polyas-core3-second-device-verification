@@ -5,7 +5,7 @@ WORKDIR ${DIR}
 COPY package.json package-lock.json ${DIR}/
 
 WORKDIR ${DIR}
-RUN npm install
+RUN npm ci
 
 # Set placeholder values to later be replaced by the entrypoint script with the actual values
 ENV VITE_MODE="DOCKER_APP_VITE_MODE"
