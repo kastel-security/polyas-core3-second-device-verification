@@ -1,0 +1,7 @@
+FROM node:alpine AS dev-builder
+ARG NAME
+ARG DIR
+WORKDIR ${DIR}
+RUN rm -r ${NAME}; exit 0
+COPY . ${DIR}/${NAME}/
+RUN cd ${NAME} && npm i

@@ -55,7 +55,7 @@ npm run dev
 * [Docker Compose](https://github.com/docker/compose) (Linux)
 
 ### Configuration
-Edit the file [docker-compose.yml](docker-compose.yml) and change the values of the following keys within ``services.vite_docker.environment``:
+Edit the file [docker-compose.yml](docker-compose.yml) and change the values of the following keys within ``services.app-dev.environment`` or ``services.app.environment``:
 * ``VITE_ELECTION_FINGERPRINT``: The fingerprint of the election for which the verifier is deployed
 * ``VITE_ELECTION_URL``: The URL of the election server instance
 * ``VITE_ELECTION_HASH``: The election hash of the running election
@@ -66,6 +66,8 @@ Run
 ```
 docker-compose build
 docker-compose up -d
+# or for the development version
+docker-compose --profile dev up -d
 ```
 to build and start the container.
 If you are using *Docker Desktop*, omit the hyphen (``docker compose`` instead of ``docker-compose``).
