@@ -2,7 +2,7 @@
 import { type Language } from '../classes/basics'
 import * as text from './elements/text.json'
 import { extractTextFromJson } from './basic'
-const passwordValue: string = ''
+let passwordValue: string = ''
 
 const props = defineProps<{
   language: Language | undefined
