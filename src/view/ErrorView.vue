@@ -44,7 +44,7 @@ onMounted(() => {
         <p v-else>{{ extractTextFromJson(text.error.other, props.language) }}</p>
       </div>
     </div>
-    <div class = "action">
+    <div class="action">
         <button class="reset"
         v-if="props.errorType==ErrorType.EXTERN||props.errorType==ErrorType.FORMAT||props.errorType==ErrorType.CONNECTION||props.errorType==ErrorType.OTHER"
         @click="$emit('reset')">
@@ -79,11 +79,17 @@ onMounted(() => {
 }
 
 .reset {
-  width: 51.5%;
-  font-weight: bold;
-  padding-top: 1%;
-  padding-bottom: 1%;
+  width: 100%;
+  padding-top: 5pt;
+  padding-bottom: 5pt;
+  font-weight: 700;
   margin-top: 4%;
+  font-size: 14pt;
+  background-color: #43b494;
+  color: white;
+  border-radius: 5pt;
+  border: 1px solid #43b494;
+  cursor: pointer;
 }
 </style>
 ../main/error
