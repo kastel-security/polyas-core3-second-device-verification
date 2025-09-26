@@ -15,8 +15,8 @@
     },
     "footer": {
         "acknowledgement": {
-            "default": "by KASTEL Security Research Labs at Karlsruhe Institute of Technology (KIT)",
-            "value": { "DE": "von den KASTEL-Sicherheitsforschungslaboren am Karlsruher Institut für Technologie (KIT)" }
+            "default": "by KASTEL Security Research Labs, hosted at Ludwig-Maximilians-Universität (LMU) Munich",
+            "value": { "DE": "von den KASTEL-Sicherheitsforschungslaboren, betrieben von der Ludwig-Maximilians-Universität (LMU) München" }
         }
     },
     "login": {
@@ -66,7 +66,7 @@
         },
         "electionId": {
             "default": "Project\u00a0ID: ",
-            "value": { "DE": "Projekt\u2011ID: " }
+            "value": { "DE": "Projekt\u2011Kennung: " }
         },
         "voterId": {
             "default": "Voter\u00a0ID: ",
