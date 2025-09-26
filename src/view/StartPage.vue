@@ -2,7 +2,7 @@
 import { type Language } from '../classes/basics'
 import * as text from './elements/text.json'
 import { extractTextFromJson } from './basic'
-const passwordValue: string = ''
+let passwordValue: string = ''
 
 const props = defineProps<{
   language: Language | undefined
@@ -11,27 +11,28 @@ const props = defineProps<{
 </script>
 
 <template>
-    <div class="start">
-        <div class="explanation">{{ extractTextFromJson(text.login.text, props.language) }}</div>
-        <h4>{{ extractTextFromJson(text.login.voterId, props.language) }}</h4>
-        <div class="voterid">{{ props.voterId }}</div>
-        <h4>{{ extractTextFromJson(text.login.loginReq, props.language) }}</h4>
-        <form @submit.prevent="$emit('login', passwordValue)">
-            <div class="password">
-                <input id="enter" class="input" maxlength="6" autocomplete="new-password one-time-code" :type="passwordFieldType" v-model="passwordValue" />
-                <i :class="togglerIcon" id="eye" @click="switchVisibility"></i>
-            </div>
-            <div class="explanation">{{ extractTextFromJson(text.login.explanation, props.language) }}</div>
-            <button class="login" v-on:click="$emit('login', passwordValue)">
-                {{ extractTextFromJson(text.login.loginButton, props.language) }}
-            </button>
-        </form>
-    </div>
+  <div class="start">
+    <div class="explanation">{{ extractTextFromJson(text.login.textId, props.language) }}</div>
+    <h4>{{ extractTextFromJson(text.login.voterId, props.language) }}</h4>
+    <div class="voterid">{{ props.voterId }}</div>
+    <div class="explanation">{{ extractTextFromJson(text.login.text, props.language) }}</div>
+    <h4>{{ extractTextFromJson(text.login.loginReq, props.language) }}</h4>
+    <form @submit.prevent="$emit('login', passwordValue)">
+      <div class="password">
+        <input class="input" maxlength="6" autocomplete="new-password one-time-code" :type="passwordFieldType" v-model="passwordValue" />
+        <i :class="togglerIcon" id="eye" @click="switchVisibility"></i>
+      </div>
+      <div class="explanation">{{ extractTextFromJson(text.login.explanation, props.language) }}</div>
+      <button class="login" v-on:click="$emit('login', passwordValue)">
+        {{ extractTextFromJson(text.login.loginButton, props.language) }}
+      </button>
+    </form>
+  </div>
 </template>
 
 <script lang="ts">
 export default {
-  data () {
+  data() {
     return {
       password: '',
       passwordFieldType: 'password',
@@ -39,7 +40,7 @@ export default {
     }
   },
   methods: {
-    switchVisibility () {
+    switchVisibility() {
       this.passwordFieldType = this.passwordFieldType === 'password' ? 'text' : 'password'
       this.togglerIcon = this.togglerIcon === 'fa fa-eye' ? 'fa fa-eye-slash' : 'fa fa-eye'
     }
@@ -59,14 +60,24 @@ export default {
   text-align: justify;
 }
 
+h4 {
+  text-align: left;
+  color: #4a4a4a;
+}
+
 .voterid {
+  width: 100%;
   margin-top: -4%;
-  margin-bottom: -2%;
-  margin-left: 24.5%;
-  padding-left: 0.75%;
+  margin-bottom: 4%;
+  font-size: 14pt;
+  font-weight: bold;
+  border-radius: 5pt;
+  border-width: 1px;
+  padding: 5pt;
+  box-sizing: border-box;
   border: 0.1px solid #bbb;
-  width: 50%;
   background-color: #f8f8f8;
+  text-align: left;
 }
 
 .password {
@@ -74,24 +85,35 @@ export default {
   margin-bottom: 4%;
 }
 
-#enter {
-  width: 50%;
-  text-align: center;
+.input {
+  width: 100%;
+  font-size: 12pt;
+  border-radius: 5pt;
+  border-width: 1px;
+  padding: 5pt;
+  box-sizing: border-box;
 }
 
 #eye {
   position: absolute;
-  margin-top: .25%;
-  margin-left: 0.3em;
+  margin-top: 7.5pt;
+  margin-left: -20pt;
   cursor: pointer;
-  color: gray;
+  color: #404040;
+  size: 12pt;
 }
 
 .login {
-  width: 51.5%;
-  font-weight: bold;
-  padding-top: 1%;
-  padding-bottom: 1%;
+  width: 100%;
+  padding-top: 5pt;
+  padding-bottom: 5pt;
+  font-weight: 700;
   margin-top: 4%;
+  font-size: 14pt;
+  background-color: #43b494;
+  color: white;
+  border-radius: 4pt;
+  border: 1px solid #43b494;
+  cursor: pointer;
 }
 </style>

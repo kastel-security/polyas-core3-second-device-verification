@@ -6,6 +6,7 @@ import text from './view/elements/text.json'
 import { I18n, type Language } from './classes/basics'
 import { extractText, extractTextFromJson, State } from './view/basic'
 import VerifiedView from './view/VerifiedView.vue'
+import SuccessPage from './view/SuccessPage.vue'
 import { ErrorType } from './main/error'
 import { ResponseBean, ResponseBeanError, type ResponseBeanOk } from './main/communication'
 import ErrorView from './view/ErrorView.vue'
@@ -32,7 +33,7 @@ onMounted(async () => {
   env.fingerprint = (import.meta as any).env.VITE_ELECTION_FINGERPRINT
   console.log('Fingerprint: ', env.fingerprint)
   const urlParams = new URLSearchParams(window.location.search)
-  languages = ['DE', 'EN', undefined]
+  languages = ['DE', undefined]
   language.value = 'DE'
   await loadData()
   if (!urlParams.has('c') || !urlParams.has('vid') || !urlParams.has('nonce')) {
@@ -49,7 +50,6 @@ async function loadData (): Promise<void> {
   verificationtool.value = new Verificationtool()
   const electionData = await verificationtool.value.loadElectionData()
   if (electionData.status === ResponseBean.okStatus) {
-    language.value = undefined
     languages = [...(electionData as ResponseBeanOk<ElectionData>).value.languages, undefined]
     title.value = (electionData as ResponseBeanOk<ElectionData>).value.title
     state.value = State.LOGIN
@@ -58,6 +58,10 @@ async function loadData (): Promise<void> {
     error.value = electionData as ResponseBeanError
     state.value = State.ERROR
   }
+}
+
+async function confmirm(): Promise<void> {
+  state.value = State.SUCCESS
 }
 
 async function login (password: string): Promise<void> {
@@ -106,74 +110,114 @@ async function reset (): Promise<void> {
 
 <template>
   <div id="all">
+    <div id="header-top">
+      <div class="logos">
+        <!-- a href="https://www.kit.edu/english/"><img class="kitlogo" src="./view/elements/kit_en.svg"/></a -->
+        <a href="https://www.lmu.de/en/"><img class="lmulogo" src="./view/elements/lmu.svg"/></a>
+        <a href="https://kastel-labs.de/"><img class="kastellogo" src="./view/elements/kastel.svg"/></a>
+      </div>
+      <div class="select">
+        <div id="symbol"><i class="fa fa-globe"></i></div>
+        <select class="selectButton"
+          v-model="language">
+          {{ language ? language : "default" }}
+          <option v-for="lang in languages"
+            :value="lang"
+            :key="lang"
+            :id="lang">{{ lang ? lang : "EN" }}</option>
+        </select>
+      </div>
+    </div>
     <div id="header">
-      <div id="left">
-        <a href="https://www.kit.edu/english/"><img class="kitlogo" src="./view/elements/kit_en.svg"/></a>
-      </div>
-      <div id="center">
+      <div id="title">
         <h1>{{ extractTextFromJson(text.header.title, language) }}</h1>
-        <div class="select">
-          <div id="symbol">&#x1F310;</div><select class="selectButton"
-            v-model="language">
-            {{ language ? language : "default" }}
-            <option v-for="lang in languages"
-              :value="lang"
-              :key="lang"
-              :id="lang">{{ lang ? lang : "Default" }}</option>
-          </select>
-        </div>
-        <h2 v-if="title!=undefined">{{ extractTextFromJson(text.header.election, language) }}<em>{{ extractText(title, language)}}</em></h2>
       </div>
-      <div id="right">
-        <a href="https://kastel-labs.de/"><img class="kastellogo" src="./view/elements/kastel.png"/></a>
+      <div class="election-title">
+        <h2 v-if="title!=undefined"><em>{{ extractText(title, language)}}</em></h2>
       </div>
     </div>
     <div class="main">
       <StartPage
       v-if="state == State.LOGIN"
-      :language="language" :voterId="voterId!" @login="(password) => login(password)"/>
+      :language="language" :voterId="voterId!" @login="(password) => login(password)"
+      />
       <VerifiedView
       v-else-if="state==State.VERIFIED"
       :loginResponse="loginResponse!"
       :result="result!"
       :language="language"
-      :receipt-text="receiptText!"/>
+      :receipt-text="receiptText!"
+        @confirm="()=> confirm()"
+      />
       <ErrorView
       v-else-if="state==State.ERROR"
       :errorType="error.errorType"
       :message="error.message"
       :title="(title as I18n<string>)"
       :language="language"
-      @reset="reset"/>
+        @reset="reset"
+      />
+      <SuccessPage
+      v-else-if="state==State.SUCCESS"
+      :language="language"
+      />
       <div v-else class="loading">
         <img src="./view/elements/spinner-1s-200px.svg"/>
       </div>
     </div>
     <div id="footer">
-      <a href="https://github.com/kastel-security/polyas-core3-second-device-verification" id="toollink">Polyas-Verifier</a> {{ extractTextFromJson(text.footer.acknowledgement, language) }}
-      &copy; 2024&puncsp;<a href="mailto:udqps@student.kit.edu">Christoph Niederbudde</a>, <a href="https://formal.kastel.kit.edu/~kirsten/">Michael Kirsten</a>.
+      <span>
+        <a href="https://github.com/kastel-security/polyas-core3-second-device-verification" id="toollink">Polyas-Verifier</a>
+        {{ extractTextFromJson(text.footer.acknowledgement, language) }} &copy; 2025&puncsp;<a href="mailto:udqps@student.kit.edu">Christoph Niederbudde</a>, <a href="https://www.tcs.ifi.lmu.de/mitarbeiter/michael-kirsten_de.html">Michael Kirsten</a>.
+      </span>
     </div>
   </div>
 </template>
 
+<style>
+body {
+  margin: 0;
+}
+</style>
+
 <style scoped>
+
 #header {
-  height: 100%;
-  width: 100%;
-  display: flex;
+  max-width: 835pt;
+  padding: 0 12pt;
+  margin: auto auto 4rem auto;
   font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
+#header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; 
+  margin-bottom: 15px;  
+  border-bottom: 1px solid #4664aa;
+}
+
+#title {
+  text-align: center;
+}
+
+.election-title {
+  text-align: center;
+}
+
 #footer {
-  width: 92%;
-  text-align: justify;
-  padding-top: 15px;
-  padding-bottom: 15px;
-  padding-inline-start: 7%;
-  background-color: #F2F2F2;
   bottom: 0;
   font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-weight: 100;
+  text-align: center;
+  padding: 15px 5%;
+  background-color: #404040;
+  color: white;
+  font-size: 12pt;
+  flex-direction: column;
+  align-items: center;
+  margin-top: auto;
+  position: relative;
 }
 
 #toollink {
@@ -181,10 +225,23 @@ async function reset (): Promise<void> {
   font-size: 18px;
   font-weight: 600;
   font-variant: small-caps;
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
+  color: white;
+  text-decoration: none;
 }
 
-#left {
-  width: 20%;
+#footer span {
+  display: block;
+  text-align: center;
+}
+
+#footer a {
+  color: white;
+}
+
+#symbol {
+  margin: 0.1em;
+  color: #404040;
 }
 
 #center {
@@ -193,30 +250,28 @@ async function reset (): Promise<void> {
   font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
-#right {
-  width: 20%;
-  text-align: right;
-  font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-}
-
 #symbol {
   margin: 0.1em;
+  color: #404040;
+}
+
+.logos {
+  display: flex;
+  align-items: center;
+  gap: 5pt;
+  padding-left: 5pt;
 }
 
 .kitlogo {
-  margin-left: 32.98%;
-  margin-top: 1.22rem;
-  width: 35.85%;
-  min-height: 0%;
-  min-width: 35%;
+  height: 30pt;
+}
+
+.lmulogo {
+  height: 30pt;
 }
 
 .kastellogo {
-  margin-right: 30%;
-  margin-top: .5rem;
-  width: 45%;
-  min-height: 0%;
-  min-width: 45%;
+  height: 50pt;
 }
 
 .select {
@@ -226,11 +281,9 @@ async function reset (): Promise<void> {
   .selectButton {
     margin-left: .5em;
     margin-right: 7%;
+    margin-bottom: 4.45%;
     background-color: inherit;
   }
-  margin-left: auto;
-  margin-right: -8%;
-  margin-top: -4.45%;
 }
 
 .selectbck {

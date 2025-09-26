@@ -1,15 +1,15 @@
 {
     "header": {
         "title": {
-            "default": "Polyas-Verifier",
-            "value": { "DE": "Polyas-Verifier" }
+            "default": "Individual Ballot Verification for the GI\u00a0elections with Polyas",
+            "value": { "DE": "Individuelle Stimmzettel-Verifikation zu den GI\u2011Wahlen mit Polyas" }
         },
         "election": {
             "default": "Election Title: ",
             "value": { "DE": "Titel der Wahl: " }
         },
         "electionReference": {
-            "default": "To the online election:",
+            "default": "Go to the online election:",
             "value": { "DE": "Zur Online-Wahl:"}
         }
     },
@@ -20,10 +20,16 @@
         }
     },
     "login": {
-        "text": {
-            "default": "Please enter the time-based one-time password that is currently displayed to you in step 5 of the voting process below your pre-filled anonymized voter\u00a0Id.",
+        "textId": {
+            "default": "Please first check whether the following pre-filled field contains your correct anonymized voter\u00a0ID. If the IDs do not match, this could be caused by a third party and you should contact the election administration.",
             "value": {
-                "DE": "Bitte geben Sie unter Ihrer vorausgefüllten anonymisierten Wahl\u2011Id das zeitbasierte Einmalpasswort ein, welches Ihnen aktuell in Schritt 5 der Stimmabgabe angezeigt wird."
+                "DE": "Bitte prüfen Sie zunächst, ob das folgende vorausgefüllte Feld Ihre korrekte anonymisierte Wahl\u2011ID enthält. Falls die IDs nicht übereinstimmen, könnte dies durch einen Angriff einer dritten Partei verursacht worden sein und Sie sollten sich mit der Wahlleitung in Verbindung setzen."
+            }
+        },
+        "text": {
+            "default": "Please now enter the time-based one-time password that is currently displayed to you on the last page of the online voting system.",
+            "value": {
+                "DE": "Bitte geben Sie nun das zeitbasierte Einmalpasswort ein, welches Ihnen aktuell auf der letzten Seite des Online-Wahlsystems angezeigt wird."
             }
         },
         "loginReq": {
@@ -31,16 +37,16 @@
             "value": { "DE": "Aktuelles Einmalpasswort:" }
         },
         "explanation": {
-            "default": "Click on \"Login and verify ballot\" in order to verify the correctness of your ballot submission. In the next step, you will be shown an image of your ballot(s) in the ballot box.",
-            "value": { "DE": "Klicken Sie auf \"Anmelden und Stimmzettel verifizieren\", um die Korrektheit Ihrer Stimmabgabe zu überprüfen. Im nächsten Schritt wird Ihnen ein Abbild Ihres Stimmzettels bzw. Ihrer Stimmzettel in der Wahlurne angezeigt." }
+            "default": "Click on \"Verify ballot\" in order to verify the correctness of your ballot submission. You will then be automatically logged in to the online-election website and thereafter, you will be shown an image of your ballot(s) in the ballot box.",
+            "value": { "DE": "Klicken Sie auf \"Stimmzettel verifizieren\", um die Korrektheit Ihrer Stimmabgabe zu überprüfen. Dabei werden Sie automatisch auf der Webseite der Online-Wahl angemeldet und Ihnen wird anschließend ein Abbild Ihres Stimmzettels bzw. Ihrer Stimmzettel in der Wahlurne angezeigt." }
         },
         "loginButton": {
-            "default": "Login and verify ballot",
-            "value": { "DE": "Anmelden und Stimmzettel verifizieren" }
+            "default": "Verify ballot",
+            "value": { "DE": "Stimmzettel verifizieren" }
         },
         "voterId": {
-            "default": "Anonymized Voter\u00a0Id: ",
-            "value": { "DE": "Anonymisierte Wahl\u2011Id: " }
+            "default": "Voter\u00a0ID: ",
+            "value": { "DE": "Wahl\u2011ID: " }
         }
     },
     "verified": {
@@ -59,32 +65,42 @@
             "value": { "DE": "Verifiziert für: " }
         },
         "electionId": {
-            "default": "Project\u00a0Id: ",
-            "value": { "DE": "Projekt\u2011Id: " }
+            "default": "Project\u00a0ID: ",
+            "value": { "DE": "Projekt\u2011ID: " }
         },
         "voterId": {
-            "default": "Voter\u00a0Id: ",
-            "value": { "DE": "Wahl\u2011Id: " }
+            "default": "Voter\u00a0ID: ",
+            "value": { "DE": "Wahl\u2011ID: " }
         },
         "label": {
             "default": "Ballot sheet number(s): ",
             "value": { "DE": "Stimmzettelnummer(n): " }
         },
         "downloadText": {
-            "default": "Here, you can again download the ballot receipt submission for an external screening process, e.g., by means of a universal verification tool for checking whether your ballot is correctly included in the tally.",
+            "default": "Here, you can again download the receipt of your ballot submission for an external screening process, e.g., by means of a universal verification tool for checking whether your ballot is correctly included in the tally.",
             "value": {
                 "DE": "Sie können hier die Wahl-Quittung Ihrer Stimmabgabe für ein externes Prüfverfahren, beispielsweise mittels eines universellen Verifizierungswerkzeugs zur Prüfung ob Ihre Stimmabgabe korrekt in der Auszählung berücksichtigt ist, erneut herunterladen."
             }
         },
         "download": {
-            "default": "Download ballot receipt of the submission",
-            "value": { "DE": "Wahl-Quittung der Stimmabgabe herunterladen" }
+            "default": "Download receipt of your ballot submission",
+            "value": { "DE": "Wahl-Quittung Ihrer Stimmabgabe herunterladen" }
         }
 
     },
+     "success": {
+        "header": {
+            "default": "You have completed the verification of your ballot!",
+            "value": { "DE": "Sie haben die Verifikation Ihres Stimmzettels abgeschlossen!" }
+        },
+        "text": {
+            "default": "Thank you for verifying the submission of your ballot. You can now close this browser window.",
+            "value": { "DE": "Vielen Dank für die Verifikation Ihrer Stimmabgabe. Sie können dieses Browserfenster jetzt schließen." }
+        }
+    },
     "ballot": {
         "invalidOption": {
-            "default": "Value your vote as invalid",
+            "default": "Mark your vote as invalid",
             "value": { "DE": "Ungültig wählen" }
         },
         "abstainOption": {
@@ -131,7 +147,7 @@
             }
         },
         "ack": {
-            "default": "The ballot receipt of the submission sent by the election server is invalid. This could be caused by a third party attack.",
+            "default": "The receipt of your ballot submission sent by the election server is invalid. This could be caused by a third party attack.",
             "value": {
                 "DE": "Die Wahl-Quittung des Stimmzettels durch den Wahlserver ist ungültig. Dies könnte durch einen Angriff einer dritten Partei verursacht worden sein."
             }
