@@ -29,7 +29,7 @@ onMounted(() => {
         <p v-if="props.errorType==ErrorType.PARAMS">
             {{ extractTextFromJson(text.error.params, props.language) }}<br>
             <p>
-                {{ extractTextFromJson(text.header.electionReference, props.language) }}
+                {{ extractTextFromJson(text.header.electionReference, props.language) }}<br>
                 <em><a :href="EnvironmentVariables.instance.electionUrl">{{ EnvironmentVariables.instance.electionUrl }}</a></em>
             </p>
         </p>
