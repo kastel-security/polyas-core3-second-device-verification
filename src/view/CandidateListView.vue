@@ -51,11 +51,11 @@ onMounted(() => {
     <div class="list">
         <div class="binaryListVote" v-if="props.candidateList.maxVotesForList == 1">
             <label for="listVote">{{ extractTextFromJson(text.ballot.listVote, props.language) }}</label>
-            <input class="checkbox" type="checkbox" name="listVote" :checked="props.result[0]==1"/>
+            <input type="checkbox" name="listVote" :checked="props.result[0]==1"/>
         </div>
         <div class="listVote" v-if="props.candidateList.maxVotesForList > 1">
             <label for="listVote">{{ extractTextFromJson(text.ballot.listVote, props.language) }}</label>
-            <input class="checkbox" type="checkbox" name="listVote" value="props.result[0]"/>
+            <input type="checkbox" name="listVote" value="props.result[0]"/>
         </div>
     </div>
     <div class="candidates" v-if="rendered">
