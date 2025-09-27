@@ -55,9 +55,15 @@
             "value": { "DE": "Ihr Stimmzettel wurde erfolgreich überprüft." }
         },
         "explanation": {
-            "default": "Please note that the following is an image of your ballot(s) in the ballot box. You can now no longer change your submitted ballot. However, you can modify the following image in order to hide your vote from possible observers. But this modification will neither affect your submitted ballot nor its generated ballot receipt.",
+            "default": "The login and cryptographic exchange were successful. Please now check whether the image of your submitted ballot(s) shown below is identical in number and content to your voting choice.",
             "value": {
-                "DE": "Bitte beachten Sie, dass es sich nachfolgend um ein Abbild Ihres Stimmzettels bzw. Ihrer Stimmzettel in der Wahlurne handelt. Eine Änderung Ihrer Stimmabgabe ist nun nicht mehr möglich. Allerdings können Sie das folgende Abbild verändern, um Ihre Stimmabgabe vor möglichen Beobachtenden zu verbergen. Diese Veränderung wird jedoch weder Ihre abgegebenen Stimmzettel in der Wahlurne noch die generierte Wahl-Quittung Ihrer Stimmabgabe beeinflussen."
+                "DE": "Die Anmeldung und der kryptographische Austausch waren erfolgreich. Bitte überprüfen Sie nun, ob das unten dargestellte Abbild Ihrer Stimmzettel in Anzahl und Inhalt mit Ihrer getroffenen Wahl identisch ist."
+            }
+        },
+        "remark": {
+            "default": "Note that the following is an image of your submitted ballot(s) in the ballot box and it is no longer possible to change your voting choice. However, you can change the following image in order to conceal your voting decisions from potential observers. This does not affect your submitted ballot(s) or the generated election receipt for your submitted vote, which you can download below.",
+            "value": {
+                "DE": "Beachten Sie, dass es sich nachfolgend um ein Abbild Ihrers Stimmzettel in der Wahlurne handelt und eine Änderung Ihrer Stimmabgabe nicht mehr möglich ist. Allerdings können Sie das folgende Abbild verändern, um Ihre Wahlentscheidungen vor möglichen Beobachtenden zu verbergen. Dies beeinflusst jedoch weder Ihre abgegebenen Stimmzettel noch die generierte Wahl-Quittung Ihrer Stimmabgabe, die Sie sich darunter herunterladen können."
             }
         },
         "verifiedFor": {
@@ -85,6 +91,10 @@
         "download": {
             "default": "Download receipt of your ballot submission",
             "value": { "DE": "Wahl-Quittung Ihrer Stimmabgabe herunterladen" }
+        },
+        "completeButton": {
+            "default": "Complete verification",
+            "value": { "DE": "Verifikation abschließen" }
         }
 
     },
@@ -134,10 +144,16 @@
             "default": "A connection issue occured.",
             "value": { "DE": "Ein Verbindungsfehler ist aufgetreten." }
         },
-        "extern": {
-            "default": "Your login or the cryptographic exchange has been rejected by the election server. Did you maybe enter the one-time password incorrectly or did the time limit for the verification run out?",
+        "login": {
+            "default": "Your login has been rejected by the election server. Either you did not enter the correct one-time password, or it has been more than 30 minutes since you cast your vote and verification is no longer possible.",
             "value": {
-                "DE": "Ihre Anmeldung oder der kryptographische Austausch wurde vom Wahlserver zurückgewiesen. Haben Sie vielleicht das Einmalpasswort falsch eingegeben oder wurde das Zeitlimit der Verifizierung erreicht?"
+                "DE": "Ihre Anmeldung wurde vom Wahlserver zurückgewiesen. Entweder haben Sie nicht das korrekte Einmalpasswort eingegeben oder Ihre Stimmabgabe liegt bereits länger als 30 Minuten zurück und eine Verifizierung ist nicht länger möglich."
+            }
+        },
+        "extern": {
+            "default": "Your cryptographic exchange has been rejected by the election server. Either you did not enter the correct one-time password, or it has been more than 30 minutes since you cast your vote and verification is no longer possible.",
+            "value": {
+                "DE": "Ihr kryptographischer Austausch wurde vom Wahlserver zurückgewiesen. Entweder haben Sie nicht das korrekte Einmalpasswort eingegeben oder Ihre Stimmabgabe liegt bereits länger als 30 Minuten zurück und eine Verifizierung ist nicht länger möglich."
             }
         },
         "sdpp": {

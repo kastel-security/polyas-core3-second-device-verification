@@ -73,23 +73,16 @@ async function downloadPDF (): Promise<void> {
     <div class="logo" v-if="props.loginResponse.logo">
         <img class="content" :src="getImgUrl(props.loginResponse.logo!)" ref="test"/>
     </div>
-    <div class="verifiedText">
-        <h1 class="verified"><span class="check">&#x2705;</span> {{ extractTextFromJson(text.verified.verified, props.language) }}</h1>
-    </div>
-    <br>
     <div class="id">
         <text class="titleKey">{{ extractTextFromJson(text.verified.electionId, props.language) }}</text>
-        <br>
-        <!-- br> - The total number of ballots per voter was deemed more confusing than helpful, hence we rather omit it. -
-        <text class="titleKey">{{ extractTextFromJson(text.verified.label, props.language) }}</text -->
-
         <text class="data">{{ props.loginResponse.electionId }}</text>
         <br>
         <text class="titleKey">{{ extractTextFromJson(text.verified.voterId, props.language) }}</text>
-        <br>
         <text class="data">{{ props.loginResponse.ballotVoterId }}</text>
-        <!-- br>
-        <text class="data">{{ props.loginResponse.publicLabel }}</text -->
+
+        <!-- text class="data">{{ props.loginResponse.publicLabel }}</text -->
+        <!-- br> - The total number of ballots per voter was deemed more confusing than helpful, hence we rather omit it. -
+        <text class="titleKey">{{ extractTextFromJson(text.verified.label, props.language) }}</text -->
     </div>
     <div class="above">
         <div class="contentAbove" v-if="props.loginResponse.contentAbove">
@@ -100,6 +93,10 @@ async function downloadPDF (): Promise<void> {
     <div class="verifiedText">
         <div class="explanation">
             <text>{{ extractTextFromJson(text.verified.explanation, props.language) }}</text>
+            <br><br>
+            <div class="remark">
+              <div class="inner"><text>{{ extractTextFromJson(text.verified.remark, props.language) }}</text></div>
+            </div>
         </div>
     </div>
     <div class="allBallots"
@@ -124,9 +121,8 @@ async function downloadPDF (): Promise<void> {
 
 <style scoped>
 .verifiedView {
-  max-width: 400pt;
+  max-width: 600pt;
   margin: auto;
-  text-align: center;
   font-size: 12pt;
 }
 
@@ -190,6 +186,15 @@ async function downloadPDF (): Promise<void> {
   }
 }
 
+.remark {
+  background-color: #ebecf0;
+  border-left: 15px solid gray;
+  box-shadow: 0 0 1px #aaa;
+  .inner {
+    padding: 10px;
+  }
+}
+
 .download {
   text-align: justify;
   max-width: 600pt;
@@ -203,16 +208,17 @@ async function downloadPDF (): Promise<void> {
 }
 
 .buttonInner {
-  text-align: center;
   width: 100%;
-  font-weight: bold;
   padding-top: 5pt;
   padding-bottom: 5pt;
+  font-weight: 700;
   margin-top: 4%;
-  font-size: 12pt;
-  border: 1px solid #4664aa;
-  border-radius: 5pt;
-  background-color: #dddddd;
+  font-size: 14pt;
+  background-color: #43b494;
+  color: white;
+  border-radius: 4pt;
+  border: 1px solid #43b494;
+  cursor: pointer;
 }
 
 #completeButton {

@@ -34,6 +34,7 @@ onMounted(() => {
         </p>
       </div>
       <div v-else-if="props.errorType==ErrorType.CONNECTION">{{ extractTextFromJson(text.error.connection, props.language) }}</div>
+      <div v-else-if="props.errorType==ErrorType.LOGIN">{{ extractTextFromJson(text.error.login, props.language) }}</div>
       <div v-else-if="props.errorType==ErrorType.EXTERN">{{ extractTextFromJson(text.error.extern, props.language) }}</div>
       <div v-else-if="props.errorType==ErrorType.BALLOT_ACK||props.errorType==ErrorType.BALLOT_ACK_FAIL">{{ extractTextFromJson(text.error.ack, props.language) }}</div>
       <div v-else-if="props.errorType==ErrorType.DECRYPT">{{ extractTextFromJson(text.error.decrypt, props.language) }}</div>
@@ -46,7 +47,7 @@ onMounted(() => {
   </div>
   <div class="action">
     <button class="reset"
-      v-if="props.errorType==ErrorType.EXTERN||props.errorType==ErrorType.FORMAT||props.errorType==ErrorType.CONNECTION||props.errorType==ErrorType.OTHER"
+      v-if="props.errorType==ErrorType.LOGIN||props.errorType==ErrorType.EXTERN||props.errorType==ErrorType.FORMAT||props.errorType==ErrorType.CONNECTION||props.errorType==ErrorType.OTHER"
       @click="$emit('reset')">
         {{ extractTextFromJson(text.error.reset, props.language) }}
     </button>

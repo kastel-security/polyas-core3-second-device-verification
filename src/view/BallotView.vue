@@ -120,4 +120,8 @@ onMounted(() => {
 .contentBelow {
   margin-left: 10pt;
 }
+
+[type=checkbox] {
+  accent-color: #404040;
+}
 </style>
