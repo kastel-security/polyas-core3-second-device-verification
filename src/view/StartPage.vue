@@ -87,7 +87,7 @@ h4 {
 
 .input {
   width: 100%;
-  font-size: 12pt;
+  font-size: 14pt;
   border-radius: 5pt;
   border-width: 1px;
   padding: 5pt;
