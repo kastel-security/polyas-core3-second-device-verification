@@ -60,7 +60,7 @@ async function loadData (): Promise<void> {
   }
 }
 
-async function confmirm(): Promise<void> {
+async function confirm(): Promise<void> {
   state.value = State.SUCCESS
 }
 
