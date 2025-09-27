@@ -81,7 +81,7 @@ class Comm implements Communication {
     })
       .then(async (response) => {
         if (response.data.status !== Comm.responseOk) {
-          return await this.resolveFail(ErrorType.EXTERN, response.data.error)
+          return await this.resolveFail(ErrorType.LOGIN, response.data.error)
         }
         try {
           const secondDeviceLoginResponse = SecondDeviceLoginResponse.fromJson(response.data.value)

@@ -4,7 +4,7 @@ Polyas-Verifier is a web application for the individual second-device verificati
 for [individual verifiability](https://gi.de/wahlen/verifikation-der-gi-wahlen-tools-gesucht) (cast-as-intended verification), see also the original
 [publication](https://publikationen.bibliothek.kit.edu/1000117999).
 The POLYAS 3.0 E-Voting System is used in the [elections for the executive and the managing committee](https://gi.de/wahlen/) of the
-[German Informatics Society](https://gi.de/) in autumn 2023, see [polyas3.0-verifiable-1.3.2.pdf](doc/polyas3.0-verifiable-1.3.2.pdf)
+[German Informatics Society](https://gi.de/) in autumn 2025, see [polyas3.0-verifiable-1.3.2.pdf](doc/polyas3.0-verifiable-1.3.2.pdf)
 for its system specification and [second-device-spec-1.0.pdf](doc/second-device-spec-1.0.pdf) for the system specification
 of its second device verification protocol.
 
@@ -75,7 +75,7 @@ npm run dev
 * [Docker Compose](https://github.com/docker/compose) (Linux)
 
 ### Configuration
-Edit the file [docker-compose.yml](docker-compose.yml) and change the values of the following keys within ``services.vite_docker.environment``:
+Edit the file [docker-compose.yml](docker-compose.yml) and change the values of the following keys within ``services.app-dev.environment`` or ``services.app.environment``:
 * ``VITE_ELECTION_FINGERPRINT``: The fingerprint of the election for which the verifier is deployed
 * ``VITE_ELECTION_URL``: The URL of the election server instance
 * ``VITE_ELECTION_HASH``: The election hash of the running election
@@ -87,6 +87,8 @@ Run
 ```
 docker-compose build
 docker-compose up -d
+# or for the development version
+docker-compose --profile dev up -d
 ```
 to build and start the container.
 If you are using *Docker Desktop*, omit the hyphen (``docker compose`` instead of ``docker-compose``).
@@ -98,4 +100,4 @@ See [LICENSE](LICENSE)
 The principal development of this software has been done by [Christoph Niederbudde](mailto:udqps@student.kit.edu).
 
 ## Contact
-For more information, please contact [Michael Kirsten](https://formal.kastel.kit.edu/~kirsten/?lang=en).
+For more information, please contact [Michael Kirsten](https://www.tcs.ifi.lmu.de/mitarbeiter/michael-kirsten_de.html).

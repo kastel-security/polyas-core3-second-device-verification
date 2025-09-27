@@ -1,2 +1,12 @@
 node_modules
 npm-debug.log
+dist
+build
+docker-compose.yml
+Dockerfile
+Dockerfile-dev
+.dockerignore
+.git
+.github
+.gitignore
+.env*

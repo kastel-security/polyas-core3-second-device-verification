@@ -98,7 +98,7 @@ test("test backend error", async () => {
     mockedAxios.mockResolvedValueOnce(invalidResponse)
     const login = await comm.login(data.vid, data.nonce, data.password, data.c)
     expect(login.status).toBe("ERROR")
-    expect((login as ResponseBeanError).errorType).toBe(ErrorType.EXTERN)
+    expect((login as ResponseBeanError).errorType).toBe(ErrorType.LOGIN)
 
     await comm.login(data.vid, data.nonce, data.password, data.c)
     mockedAxios.mockResolvedValueOnce(invalidResponse)
