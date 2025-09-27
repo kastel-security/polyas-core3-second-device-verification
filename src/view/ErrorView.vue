@@ -82,7 +82,7 @@ onMounted(() => {
 }
 
 .reset {
-  width: 100%;
+  width: 80%;
   padding-top: 5pt;
   padding-bottom: 5pt;
   font-weight: 700;
