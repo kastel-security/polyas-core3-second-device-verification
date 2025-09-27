@@ -42,15 +42,15 @@ onMounted(() => {
         <p v-else-if="props.errorType==ErrorType.ZKP_INV">{{ extractTextFromJson(text.error.zkp_inv, props.language) }}</p>
         <p v-else-if="props.errorType==ErrorType.VID">{{ extractTextFromJson(text.error.vid, props.language) }}</p>
         <p v-else>{{ extractTextFromJson(text.error.other, props.language) }}</p>
-      </div>
     </div>
-    <div class="action">
-        <button class="reset"
-        v-if="props.errorType==ErrorType.EXTERN||props.errorType==ErrorType.FORMAT||props.errorType==ErrorType.CONNECTION||props.errorType==ErrorType.OTHER"
-        @click="$emit('reset')">
-            {{ extractTextFromJson(text.error.reset, props.language) }}
-        </button>
-    </div>
+  </div>
+  <div class="action">
+      <button class="reset"
+      v-if="props.errorType==ErrorType.EXTERN||props.errorType==ErrorType.FORMAT||props.errorType==ErrorType.CONNECTION||props.errorType==ErrorType.OTHER"
+      @click="$emit('reset')">
+          {{ extractTextFromJson(text.error.reset, props.language) }}
+      </button>
+  </div>
 </template>
 
 <style scoped>
@@ -75,6 +75,7 @@ onMounted(() => {
 }
 
 .action {
+  max-width: 500pt;
   text-align: center;
 }
 
