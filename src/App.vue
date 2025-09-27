@@ -259,7 +259,7 @@ body {
   display: flex;
   align-items: center;
   gap: 5pt;
-  padding-left: 5pt;
+  padding-left: 1%;
 }
 
 .kitlogo {
@@ -284,6 +284,7 @@ body {
     margin-bottom: 4.45%;
     background-color: inherit;
   }
+  padding-right: 1%;
 }
 
 .selectbck {

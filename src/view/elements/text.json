@@ -175,7 +175,7 @@
             }
         },
         "decode": {
-            "default": "The decoded ballot does not fit the format required by the ballot sheet.",
+            "default": "The decoded ballot does not match the format required by the ballot sheet.",
             "value": { "DE": "Der dekodierte Stimmzettel passt nicht zum vom Stimmzettelbogen vorgegebenen Format." }
         },
         "vid": {

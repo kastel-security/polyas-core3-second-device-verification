@@ -51,7 +51,8 @@ function getImgUrl (img: I18n<ImageRef>): string {
 async function downloadPDF (): Promise<void> {
   const doc = new jsPDF('p', 'px', 'a4') // eslint-disable-line 
   doc.setProperties({
-    title: 'Bestätigung der Stimmabgabe',
+    title: 'Wahl-Quittung der Stimmabgabe',
+    subject: 'Sofern für Ihre Online-Wahl eine externe Wahl-Verifizierung durchgeführt wird, können Sie diese Quittung den externen Prüfenden zur universellen Wahl-Verifizierung vorzeigen.',
     creator: 'KASTEL Polyas-Verifier'
   })
   const pageWidth = doc.internal.pageSize.getWidth()
@@ -59,7 +60,7 @@ async function downloadPDF (): Promise<void> {
   doc.setDisplayMode('fullpage')
   doc.viewerPreferences({ FitWindow: true })
   doc.setLanguage('de-DE')
-  doc.text('Bestätigung der Stimmabgabe', 40, 30)
+  doc.text('Wahl-Quittung der Stimmabgabe', 40, 30)
   doc.setFontSize(16)
   doc.setFont('courier', 'normal')
   doc.text(props.receiptText, 60, 120, { maxWidth: pageWidth - 2 * left })
