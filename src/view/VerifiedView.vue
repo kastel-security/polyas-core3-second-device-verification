@@ -52,7 +52,7 @@ async function downloadPDF (): Promise<void> {
   const doc = new jsPDF('p', 'px', 'a4') // eslint-disable-line 
   doc.setProperties({
     title: 'Bestätigung der Stimmabgabe',
-    creator: 'KIT Polyas-Verifier'
+    creator: 'KASTEL Polyas-Verifier'
   })
   const pageWidth = doc.internal.pageSize.getWidth()
   const left = 60
@@ -68,13 +68,13 @@ async function downloadPDF (): Promise<void> {
 </script>
 
 <template>
-  <div id="verifiedView">
+  <div class="verifiedView">
     <div class="logo" v-if="props.loginResponse.logo">
         <img class="content" :src="getImgUrl(props.loginResponse.logo!)" ref="test"/>
     </div>
-    <!-- div class="verifiedText">
+    <div class="verifiedText">
         <h1 class="verified"><span class="check">&#x2705;</span> {{ extractTextFromJson(text.verified.verified, props.language) }}</h1>
-    </div -->
+    </div>
     <br>
     <div class="id">
         <text class="titleKey">{{ extractTextFromJson(text.verified.electionId, props.language) }}</text>
@@ -122,9 +122,11 @@ async function downloadPDF (): Promise<void> {
 </template>
 
 <style scoped>
-#verifiedView {
+.verifiedView {
+  max-width: 400pt;
   margin: auto;
-  max-width: 600pt;
+  text-align: center;
+  font-size: 12pt;
 }
 
 .verifiedText {
