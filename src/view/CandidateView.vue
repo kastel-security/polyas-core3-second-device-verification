@@ -44,3 +44,9 @@ onMounted(() => {
         </td>
     </tr>
 </template>
+
+<style scoped>
+[type=checkbox] {
+  accent-color: #404040;
+}
+</style>
