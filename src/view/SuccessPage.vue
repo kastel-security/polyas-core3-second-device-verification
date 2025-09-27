@@ -13,3 +13,7 @@ const props = defineProps<{
         <p>{{ extractTextFromJson(text.success.text, props.language) }}</p>
     </div>
 </template>
+
+<style scoped>
+
+</style>

@@ -225,7 +225,7 @@ body {
   font-size: 18px;
   font-weight: 600;
   font-variant: small-caps;
-  font-size: clamp(1.2rem, 2vw, 1.5rem);
+  font-size: 14pt;
   color: white;
   text-decoration: none;
 }
