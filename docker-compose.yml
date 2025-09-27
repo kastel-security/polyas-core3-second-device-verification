@@ -5,11 +5,11 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        DIR: /home/local/gi-wahlverifikation
+        DIR: /home/local/gi-vote-verifier
         NAME: polyas-verifier
     container_name: polyas-verifier
     args:
-      DIR: /home/local/gi-wahlverifikation/polyas-verifier
+      DIR: /home/local/gi-vote-verifier/polyas-verifier
       NAME: polyas-verifier
       ELECTION_URL: https://election.polyas.com
       ELECTION_HASH: a1d0c6e8-3f02-7327-d846-1063f4Ac58a6
@@ -25,4 +25,4 @@ services:
       protocol: tcp
     restart: always
     tty: true
-    working_dir: /home/local/gi-wahlverifikation/polyas-verifier
+    working_dir: /home/local/gi-vote-verifier/polyas-verifier
