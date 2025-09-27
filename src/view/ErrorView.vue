@@ -75,7 +75,7 @@ onMounted(() => {
 }
 
 .action {
-  max-width: 500pt;
+  max-width: 400pt;
   padding: 0 2pt;
   margin: auto auto 4rem auto;
   text-align: center;
