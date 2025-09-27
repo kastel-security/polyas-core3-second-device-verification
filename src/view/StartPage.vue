@@ -2,7 +2,7 @@
 import { type Language } from '../classes/basics'
 import * as text from './elements/text.json'
 import { extractTextFromJson } from './basic'
-let passwordValue: string = ''
+let passwordValue: string = '' // eslint-disable-line
 
 const props = defineProps<{
   language: Language | undefined
