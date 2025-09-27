@@ -2,7 +2,7 @@
 import { type Language } from '../classes/basics'
 import * as text from './elements/text.json'
 import { extractTextFromJson } from './basic'
-let passwordValue: string = ''
+const passwordValue: string = ''
 
 const props = defineProps<{
   language: Language | undefined
@@ -32,7 +32,7 @@ const props = defineProps<{
 
 <script lang="ts">
 export default {
-  data() {
+  data () {
     return {
       password: '',
       passwordFieldType: 'password',
@@ -40,7 +40,7 @@ export default {
     }
   },
   methods: {
-    switchVisibility() {
+    switchVisibility () {
       this.passwordFieldType = this.passwordFieldType === 'password' ? 'text' : 'password'
       this.togglerIcon = this.togglerIcon === 'fa fa-eye' ? 'fa fa-eye-slash' : 'fa fa-eye'
     }

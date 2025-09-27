@@ -60,7 +60,7 @@ async function loadData (): Promise<void> {
   }
 }
 
-async function confirm(): Promise<void> {
+async function confirm (): Promise<void> {
   state.value = State.SUCCESS
 }
 
@@ -192,8 +192,8 @@ body {
 #header-top {
   display: flex;
   justify-content: space-between;
-  align-items: center; 
-  margin-bottom: 15px;  
+  align-items: center;
+  margin-bottom: 15px;
   border-bottom: 1px solid #4664aa;
 }
 

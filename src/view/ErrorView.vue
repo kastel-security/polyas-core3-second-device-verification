@@ -26,22 +26,22 @@ onMounted(() => {
       <h3 class="fail">{{ extractTextFromJson(text.error.rejected, props.language) }}</h3>
     </div>
     <div class="cause">
-      <p v-if="props.errorType==ErrorType.PARAMS">
+      <div v-if="props.errorType==ErrorType.PARAMS">
         {{ extractTextFromJson(text.error.params, props.language) }}<br>
         <p>
           {{ extractTextFromJson(text.header.electionReference, props.language) }}<br>
             <em><a :href="EnvironmentVariables.instance.electionUrl">{{ EnvironmentVariables.instance.electionUrl }}</a></em>
         </p>
-      </p>
-      <p v-else-if="props.errorType==ErrorType.CONNECTION">{{ extractTextFromJson(text.error.connection, props.language) }}</p>
-      <p v-else-if="props.errorType==ErrorType.EXTERN">{{ extractTextFromJson(text.error.extern, props.language) }}</p>
-      <p v-else-if="props.errorType==ErrorType.BALLOT_ACK||props.errorType==ErrorType.BALLOT_ACK_FAIL">{{ extractTextFromJson(text.error.ack, props.language) }}</p>
-      <p v-else-if="props.errorType==ErrorType.DECRYPT">{{ extractTextFromJson(text.error.decrypt, props.language) }}</p>
-      <p v-else-if="props.errorType==ErrorType.FORMAT">{{ extractTextFromJson(text.error.format, props.language) }}</p>
-      <p v-else-if="props.errorType==ErrorType.SDPP">{{ extractTextFromJson(text.error.sdpp, props.language) }}</p>
-      <p v-else-if="props.errorType==ErrorType.ZKP_INV">{{ extractTextFromJson(text.error.zkp_inv, props.language) }}</p>
-      <p v-else-if="props.errorType==ErrorType.VID">{{ extractTextFromJson(text.error.vid, props.language) }}</p>
-      <p v-else>{{ extractTextFromJson(text.error.other, props.language) }}</p>
+      </div>
+      <div v-else-if="props.errorType==ErrorType.CONNECTION">{{ extractTextFromJson(text.error.connection, props.language) }}</div>
+      <div v-else-if="props.errorType==ErrorType.EXTERN">{{ extractTextFromJson(text.error.extern, props.language) }}</div>
+      <div v-else-if="props.errorType==ErrorType.BALLOT_ACK||props.errorType==ErrorType.BALLOT_ACK_FAIL">{{ extractTextFromJson(text.error.ack, props.language) }}</div>
+      <div v-else-if="props.errorType==ErrorType.DECRYPT">{{ extractTextFromJson(text.error.decrypt, props.language) }}</div>
+      <div v-else-if="props.errorType==ErrorType.FORMAT">{{ extractTextFromJson(text.error.format, props.language) }}</div>
+      <div v-else-if="props.errorType==ErrorType.SDPP">{{ extractTextFromJson(text.error.sdpp, props.language) }}</div>
+      <div v-else-if="props.errorType==ErrorType.ZKP_INV">{{ extractTextFromJson(text.error.zkp_inv, props.language) }}</div>
+      <div v-else-if="props.errorType==ErrorType.VID">{{ extractTextFromJson(text.error.vid, props.language) }}</div>
+      <div v-else>{{ extractTextFromJson(text.error.other, props.language) }}</div>
     </div>
   </div>
   <div class="action">
