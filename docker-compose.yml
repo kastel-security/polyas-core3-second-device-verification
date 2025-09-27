@@ -4,20 +4,38 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    container_name: polyas-verifier
+    environment:
+      DOCKER_APP_VITE_MODE: "deploy"
+      DOCKER_APP_VITE_ELECTION_URL: "https://election.polyas.com"
+      DOCKER_APP_VITE_ELECTION_HASH: "a1d0c6e8-3f02-7327-d846-1063f4Ac58a6"
+      DOCKER_APP_VITE_ELECTION_FINGERPRINT: "42"
+      DOCKER_APP_VITE_ELECTION_BACKEND: "http://localhost:80"
+    ports:
+      - 80:80
+    restart: always
+    tty: true
+
+  app-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile-dev
       args:
         DIR: /home/local/gi-vote-verifier
         NAME: polyas-verifier
-    container_name: polyas-verifier
-    args:
-      DIR: /home/local/gi-vote-verifier/polyas-verifier
-      NAME: polyas-verifier
-      ELECTION_URL: https://election.polyas.com
-      ELECTION_HASH: a1d0c6e8-3f02-7327-d846-1063f4Ac58a6
-      ELECTION_FINGERPRINT: 42
-      ELECTION_BACKEND: http://localhost:5000
+    container_name: polyas-verifier-dev
+    entrypoint:
+    - /usr/local/bin/npm
+    - run
+    - dev
+    environment:
+      VITE_MODE: dev
+      VITE_ELECTION_URL: https://election.polyas.com
+      VITE_ELECTION_HASH: a1d0c6e8-3f02-7327-d846-1063f4Ac58a6
+      VITE_ELECTION_FINGERPRINT: 42
+      VITE_ELECTION_BACKEND: http://localhost:5000
     extra_hosts:
       127.0.0.1: host-gateway
-    image: node:alpine
     ports:
     - mode: host
       target: 5000
@@ -26,3 +44,5 @@ services:
     restart: always
     tty: true
     working_dir: /home/local/gi-vote-verifier/polyas-verifier
+    profiles:
+      - dev
