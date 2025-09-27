@@ -51,15 +51,16 @@ function getImgUrl (img: I18n<ImageRef>): string {
 async function downloadPDF (): Promise<void> {
   const doc = new jsPDF('p', 'px', 'a4') // eslint-disable-line 
   doc.setProperties({
-    title: 'Bestätigung der Stimmabgabe',
-    creator: 'KIT Polyas-Verifier'
+    title: 'Wahl-Quittung der Stimmabgabe',
+    subject: 'Sofern für Ihre Online-Wahl eine externe Wahl-Verifizierung durchgeführt wird, können Sie diese Quittung den externen Prüfenden zur universellen Wahl-Verifizierung vorzeigen.',
+    creator: 'KASTEL Polyas-Verifier'
   })
   const pageWidth = doc.internal.pageSize.getWidth()
   const left = 60
   doc.setDisplayMode('fullpage')
   doc.viewerPreferences({ FitWindow: true })
   doc.setLanguage('de-DE')
-  doc.text('Bestätigung der Stimmabgabe', 40, 30)
+  doc.text('Wahl-Quittung der Stimmabgabe', 40, 30)
   doc.setFontSize(16)
   doc.setFont('courier', 'normal')
   doc.text(props.receiptText, 60, 120, { maxWidth: pageWidth - 2 * left })
@@ -68,28 +69,20 @@ async function downloadPDF (): Promise<void> {
 </script>
 
 <template>
+  <div class="verifiedView">
     <div class="logo" v-if="props.loginResponse.logo">
         <img class="content" :src="getImgUrl(props.loginResponse.logo!)" ref="test"/>
     </div>
-    <div class="verifiedText">
-        <h1 class="verified"><span class="check">&#x2705;</span> {{ extractTextFromJson(text.verified.verified, props.language) }}</h1>
-    </div>
-    <br>
     <div class="id">
-        <div class="left">
-            <text class="titleKey">{{ extractTextFromJson(text.verified.electionId, props.language) }}</text>
-            <br>
-            <text class="titleKey">{{ extractTextFromJson(text.verified.voterId, props.language) }}</text>
-            <!-- br> - The total number of ballots per voter was deemed more confusing than helpful, hence we rather omit it. -
-            <text class="titleKey">{{ extractTextFromJson(text.verified.label, props.language) }}</text -->
-        </div>
-        <div class="right">
-            <text class="data">{{ props.loginResponse.electionId }}</text>
-            <br>
-            <text class="data">{{ props.loginResponse.ballotVoterId }}</text>
-            <!-- br>
-            <text class="data">{{ props.loginResponse.publicLabel }}</text -->
-        </div>
+        <text class="titleKey">{{ extractTextFromJson(text.verified.electionId, props.language) }}</text>
+        <text class="data">{{ props.loginResponse.electionId }}</text>
+        <br>
+        <text class="titleKey">{{ extractTextFromJson(text.verified.voterId, props.language) }}</text>
+        <text class="data">{{ props.loginResponse.ballotVoterId }}</text>
+
+        <!-- text class="data">{{ props.loginResponse.publicLabel }}</text -->
+        <!-- br> - The total number of ballots per voter was deemed more confusing than helpful, hence we rather omit it. -
+        <text class="titleKey">{{ extractTextFromJson(text.verified.label, props.language) }}</text -->
     </div>
     <div class="above">
         <div class="contentAbove" v-if="props.loginResponse.contentAbove">
@@ -100,6 +93,10 @@ async function downloadPDF (): Promise<void> {
     <div class="verifiedText">
         <div class="explanation">
             <text>{{ extractTextFromJson(text.verified.explanation, props.language) }}</text>
+            <br><br>
+            <div class="remark">
+              <div class="inner"><text>{{ extractTextFromJson(text.verified.remark, props.language) }}</text></div>
+            </div>
         </div>
     </div>
     <div class="allBallots"
@@ -116,11 +113,19 @@ async function downloadPDF (): Promise<void> {
     <div class="download">
         <text class="text">{{ extractTextFromJson(text.verified.downloadText, props.language) }}</text>
         <br>
-        <div class="buttonOuter"><button class="pressDownload" v-on:click="downloadPDF">{{ extractTextFromJson(text.verified.download, props.language) }}</button></div>
+        <div class="buttonOuter"><button class="buttonInner" v-on:click="downloadPDF">{{ extractTextFromJson(text.verified.download, props.language) }}</button></div>
+        <div class="buttonOuter"><button id="completeButton" v-on:click="$emit('confirm')" class="buttonInner">{{ extractTextFromJson(text.verified.completeButton, props.language) }}</button></div>
     </div>
+  </div>
 </template>
 
 <style scoped>
+.verifiedView {
+  max-width: 600pt;
+  margin: auto;
+  font-size: 12pt;
+}
+
 .verifiedText {
   text-align: center;
 }
@@ -134,16 +139,7 @@ async function downloadPDF (): Promise<void> {
 }
 
 .id {
-  display: flex;
-  width: 100%;
-  padding-left: 20%
-}
-
-.left {
-  flex: 18%;
-}
-.right {
-  flex: 82%;
+  display: inline-block;
 }
 
 .titleKey {
@@ -153,11 +149,10 @@ async function downloadPDF (): Promise<void> {
 .data {
   margin-top: -4%;
   margin-bottom: -2%;
-  width: 50%;
 }
 
 .above {
-  text-align:center
+  text-align: center;
 }
 
 .explanation {
@@ -174,7 +169,7 @@ async function downloadPDF (): Promise<void> {
   margin: 36pt 0;
   box-shadow: 0 2px 4px 0 rgba(0,0,0,.1);
   border: solid 1px;
-  border-radius: 3pt;
+  border-radius: 0pt 8pt 0pt 8pt;
 }
 
 .logo {
@@ -191,6 +186,15 @@ async function downloadPDF (): Promise<void> {
   }
 }
 
+.remark {
+  background-color: #ebecf0;
+  border-left: 15px solid gray;
+  box-shadow: 0 0 1px #aaa;
+  .inner {
+    padding: 10px;
+  }
+}
+
 .download {
   text-align: justify;
   max-width: 600pt;
@@ -203,13 +207,23 @@ async function downloadPDF (): Promise<void> {
   text-align: center;
 }
 
-.pressDownload {
-  text-align: center;
-  width: 51.5%;
-  font-weight: bold;
-  padding-top: 1%;
-  padding-bottom: 1%;
+.buttonInner {
+  width: 100%;
+  padding-top: 5pt;
+  padding-bottom: 5pt;
+  font-weight: 700;
   margin-top: 4%;
+  font-size: 14pt;
+  background-color: #43b494;
+  color: white;
+  border-radius: 4pt;
+  border: 1px solid #43b494;
+  cursor: pointer;
+}
+
+#completeButton {
+  background-color: #4664aa;
+  color: white;
 }
 </style>
 ../main/constants

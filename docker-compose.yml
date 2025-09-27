@@ -21,7 +21,7 @@ services:
       context: .
       dockerfile: Dockerfile-dev
       args:
-        DIR: /home/local/gi-wahlverifikation
+        DIR: /home/local/gi-vote-verifier
         NAME: polyas-verifier
     container_name: polyas-verifier-dev
     entrypoint:
@@ -43,6 +43,6 @@ services:
       protocol: tcp
     restart: always
     tty: true
-    working_dir: /home/local/gi-wahlverifikation/polyas-verifier
+    working_dir: /home/local/gi-vote-verifier/polyas-verifier
     profiles:
       - dev

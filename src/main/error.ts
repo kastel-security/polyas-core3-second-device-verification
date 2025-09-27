@@ -1,5 +1,6 @@
 enum ErrorType {
   CONNECTION,
+  LOGIN,
   EXTERN,
   SDPP,
   VID,
