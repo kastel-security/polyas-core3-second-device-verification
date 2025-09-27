@@ -26,5 +26,6 @@ export enum State {
   LOADING,
   LOGIN,
   ERROR,
-  VERIFIED
+  VERIFIED,
+  SUCCESS
 }

@@ -33,7 +33,7 @@ onMounted(() => {
 <template>
     <div id="title">
         <div id="left">
-            <h4>{{ props.ballot.id }}</h4>
+            <!-- h4>{{ props.ballot.id }}</h4 -->
         </div>
         <div id="center">
             <h2>{{ extractText(props.ballot.title, props.language) }}</h2>
@@ -41,7 +41,7 @@ onMounted(() => {
         <div id="right"></div>
     </div>
     <div class="ext" v-if="props.ballot.externalIdentification">
-        <h3>{{ props.ballot.externalIdentification}}</h3>
+        <!-- h3>{{ props.ballot.externalIdentification}}</h3 -->
     </div>
     <div class="contentAbove" v-if="ballot.contentAbove">
         <ContentView :content="ballot.contentAbove" :language="props.language"/>
@@ -77,6 +77,7 @@ onMounted(() => {
   padding: 2pt 6pt;
   border-bottom: 1px solid #ddd;
   display: flex;
+  border-radius: 0pt 8pt 0pt 8pt;
   #left {
     width: 10%;
     text-align: left;
@@ -99,12 +100,13 @@ onMounted(() => {
 }
 
 .questions {
-  margin-left:10pt;
+  margin-left: 5pt;
+  margin-right: 5pt;
   margin-top: 20pt;
   margin-bottom: 10pt;
   box-shadow: 0 2px 4px 0 rgba(0,0,0,.1);
   border: solid 1px;
-  border-radius: 3pt;
+  border-radius: 0pt 8pt 0pt 8pt;
 }
 
 .invalid {
@@ -117,5 +119,9 @@ onMounted(() => {
 
 .contentBelow {
   margin-left: 10pt;
+}
+
+[type=checkbox] {
+  accent-color: #404040;
 }
 </style>
