@@ -185,8 +185,8 @@
             }
         },
         "reset": {
-            "default": "Retry login and ballot verification",
-            "value": { "DE": "Erneut Anmeldung und Stimmzettelverifizierung versuchen" }
+            "default": "Retry ballot verification",
+            "value": { "DE": "Erneut Stimmzettelverifizierung versuchen" }
         },
         "title_default": {
             "default": "unknown",
