@@ -60,6 +60,7 @@ onMounted(() => {
     </div>
     <div class="candidates" v-if="rendered">
         <table>
+          <tbody>
             <tr>
                 <th></th>
                 <th v-for="columnHeader in columnHeaders"
@@ -72,6 +73,7 @@ onMounted(() => {
             :language="props.language"
             :headerLength="props.candidateList.columnHeaders.length"
             :result="candidateResult.get(candidate.id)!"/>
+          </tbody>
         </table>
     </div>
 </template>
