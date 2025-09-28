@@ -37,11 +37,11 @@
             "value": { "DE": "Aktuelles Einmalpasswort:" }
         },
         "explanation": {
-            "default": "Click on \"Verify ballot\" in order to verify the correctness of your ballot submission. You will then be automatically logged in to the online-election website and thereafter, you will be shown an image of your ballot(s) in the ballot box.",
+            "default": "Click on \"Verify ballot(s)\" in order to verify the correctness of your ballot submission. You will then be automatically logged in to the online-election website and thereafter, you will be shown an image of your ballot(s) in the ballot box.",
             "value": { "DE": "Klicken Sie auf \"Stimmzettel verifizieren\", um die Korrektheit Ihrer Stimmabgabe zu überprüfen. Dabei werden Sie automatisch auf der Webseite der Online-Wahl angemeldet und Ihnen wird anschließend ein Abbild Ihres Stimmzettels bzw. Ihrer Stimmzettel in der Wahlurne angezeigt." }
         },
         "loginButton": {
-            "default": "Verify ballot",
+            "default": "Verify ballot(s)",
             "value": { "DE": "Stimmzettel verifizieren" }
         },
         "voterId": {
@@ -51,8 +51,8 @@
     },
     "verified": {
         "verified": {
-            "default": "Your ballot has been successfully checked.",
-            "value": { "DE": "Ihr Stimmzettel wurde erfolgreich überprüft." }
+            "default": "Your ballots have been successfully checked.",
+            "value": { "DE": "Ihre Stimmzettel wurden erfolgreich überprüft." }
         },
         "explanation": {
             "default": "The login and cryptographic exchange were successful. Please now check whether the image of your submitted ballot(s) shown below is identical in number and content to your voting choice.",
@@ -63,7 +63,7 @@
         "remark": {
             "default": "Note that the following is an image of your submitted ballot(s) in the ballot box and it is no longer possible to change your voting choice. However, you can change the following image in order to conceal your voting decisions from potential observers. This does not affect your submitted ballot(s) or the generated election receipt for your submitted vote, which you can download below.",
             "value": {
-                "DE": "Beachten Sie, dass es sich nachfolgend um ein Abbild Ihrers Stimmzettel in der Wahlurne handelt und eine Änderung Ihrer Stimmabgabe nicht mehr möglich ist. Allerdings können Sie das folgende Abbild verändern, um Ihre Wahlentscheidungen vor möglichen Beobachtenden zu verbergen. Dies beeinflusst jedoch weder Ihre abgegebenen Stimmzettel noch die generierte Wahl-Quittung Ihrer Stimmabgabe, die Sie sich darunter herunterladen können."
+                "DE": "Beachten Sie, dass es sich nachfolgend um ein Abbild Ihrer Stimmzettel in der Wahlurne handelt und eine Änderung Ihrer Stimmabgabe nicht mehr möglich ist. Allerdings können Sie das folgende Abbild verändern, um Ihre Wahlentscheidungen vor möglichen Beobachtenden zu verbergen. Dies beeinflusst jedoch weder Ihre abgegebenen Stimmzettel noch die generierte Wahl-Quittung Ihrer Stimmabgabe, die Sie sich darunter herunterladen können."
             }
         },
         "verifiedFor": {
@@ -83,7 +83,7 @@
             "value": { "DE": "Stimmzettelnummer(n): " }
         },
         "downloadText": {
-            "default": "Here, you can again download the receipt of your ballot submission for an external screening process, e.g., by means of a universal verification tool for checking whether your ballot is correctly included in the tally.",
+            "default": "Here, you can again download the receipt of your ballot submission for an external audit process, e.g., by means of a universal verification tool for checking whether your ballots are correctly included in the tally.",
             "value": {
                 "DE": "Sie können hier die Wahl-Quittung Ihrer Stimmabgabe für ein externes Prüfverfahren, beispielsweise mittels eines universellen Verifizierungswerkzeugs zur Prüfung ob Ihre Stimmabgabe korrekt in der Auszählung berücksichtigt ist, erneut herunterladen."
             }
@@ -100,11 +100,11 @@
     },
      "success": {
         "header": {
-            "default": "You have completed the verification of your ballot!",
-            "value": { "DE": "Sie haben die Verifikation Ihres Stimmzettels abgeschlossen!" }
+            "default": "You have completed the verification of your ballot submission!",
+            "value": { "DE": "Sie haben die Verifikation Ihrer Stimmabgabe abgeschlossen!" }
         },
         "text": {
-            "default": "Thank you for verifying the submission of your ballot. You can now close this browser window.",
+            "default": "Thank you for verifying the submission of your ballot(s). You can now close this browser window.",
             "value": { "DE": "Vielen Dank für die Verifikation Ihrer Stimmabgabe. Sie können dieses Browserfenster jetzt schließen." }
         }
     },
@@ -137,8 +137,8 @@
             }
         },
         "rejected": {
-            "default": "Your ballot could not be verified.",
-            "value": { "DE": "Ihr Stimmzettel konnte nicht verifiziert werden." }
+            "default": "Your ballot(s) could not be verified.",
+            "value": { "DE": "Ihre Stimmzettel konnten nicht verifiziert werden." }
         },
         "connection": {
             "default": "A connection issue occured.",
@@ -191,13 +191,13 @@
             }
         },
         "decode": {
-            "default": "The decoded ballot does not match the format required by the ballot sheet.",
-            "value": { "DE": "Der dekodierte Stimmzettel passt nicht zum vom Stimmzettelbogen vorgegebenen Format." }
+            "default": "The decoded ballots do not match the format required by the ballot sheet.",
+            "value": { "DE": "Die dekodierten Stimmzettel passen nicht zum vom Stimmzettelbogen vorgegebenen Format." }
         },
         "vid": {
-            "default": "The anonymized voter\u00a0Id from the ballot does not match with the anonymized voter\u00a0Id which is passed with the entered URL. This could be caused by a third party attack.",
+            "default": "The anonymized voter\u00a0Id of the ballot(s) does not match with the anonymized voter\u00a0Id which is passed with the entered URL. This could be caused by a third party attack.",
             "value": {
-                "DE": "Die anonymisierte Wahl\u2011Id des Stimmzettels stimmt nicht mit der durch die eingegebene URL übermittelten anonymisierten Wahl\u2011Id überein. Dies könnte durch einen Angriff einer dritten Partei verursacht worden sein."
+                "DE": "Die anonymisierte Wahl\u2011Id der Stimmzettel stimmt nicht mit der durch die eingegebene URL übermittelten anonymisierten Wahl\u2011Id überein. Dies könnte durch einen Angriff einer dritten Partei verursacht worden sein."
             }
         },
         "reset": {
