@@ -25,13 +25,15 @@
     "vue": "^3.5.22"
   },
   "devDependencies": {
+    "@eslint/config-array": "^0.21.0",
+    "@eslint/object-schema": "^2.1.6",
     "@types/jest": "^30.0.0",
     "@types/node": "^24.5.2",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@vitejs/plugin-vue": "^5.2.4",
     "babel-jest": "^30.2.0",
     "eslint": "^8.57.0",
-    "eslint-config-standard-with-typescript": "^43.0.1",
+    "eslint-config-love": "^130.0.0",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-n": "^16.6.0",
     "eslint-plugin-promise": "^6.6.0",
