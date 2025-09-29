@@ -68,7 +68,7 @@ onMounted(() => {
   background-color: #f8d7da;
   border-radius: 5pt;
   border: 1px solid #966a6d;
-  color: #622532
+  color: #622532;
 }
 
 .cause {
