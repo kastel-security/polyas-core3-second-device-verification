@@ -78,6 +78,7 @@ h4 {
   border: 0.1px solid #bbb;
   background-color: #f8f8f8;
   text-align: left;
+  overflow-wrap: break-word;
 }
 
 .password {

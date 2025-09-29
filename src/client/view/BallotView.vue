@@ -72,7 +72,7 @@ onMounted(() => {
 <style scoped>
 #title {
   text-align: center;
-  margin:0;
+  margin: 0;
   background: #ddd;
   padding: 2pt 6pt;
   border-bottom: 1px solid #ddd;
@@ -87,7 +87,7 @@ onMounted(() => {
     text-align: center;
   }
   #right {
-    width:10%
+    width:10%;
   }
 }
 
@@ -96,7 +96,7 @@ onMounted(() => {
 }
 
 .contentAbove {
-  margin-left:10pt
+  margin-left:10pt;
 }
 
 .questions {

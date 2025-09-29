@@ -24,6 +24,6 @@ const props = defineProps<{
   background-color: #dff8d7;
   border-radius: 5pt;
   border: 1px solid #966a6d;
-  color: #0E9700
+  color: #0E9700;
 }
 </style>

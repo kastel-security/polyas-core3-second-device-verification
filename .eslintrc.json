@@ -5,7 +5,7 @@
         "node": true
     },
     "extends": [
-        "standard-with-typescript",
+        "love",
         "plugin:vue/vue3-essential"
     ],
     "parserOptions": {
