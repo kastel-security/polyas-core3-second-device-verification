@@ -21,9 +21,14 @@
     },
     "login": {
         "textId": {
-            "default": "Please first check whether the following pre-filled field contains your correct anonymized voter\u00a0ID. If the IDs do not match, this could be caused by a third party and you should contact the election administration.",
+            "default": "Please first check whether the following pre-filled field contains your correct anonymized voter\u00a0ID.",
             "value": {
-                "DE": "Bitte prüfen Sie zunächst, ob das folgende vorausgefüllte Feld Ihre korrekte anonymisierte Wahl\u2011ID enthält. Falls die IDs nicht übereinstimmen, könnte dies durch einen Angriff einer dritten Partei verursacht worden sein und Sie sollten sich mit der Wahlleitung in Verbindung setzen."
+                "DE": "Bitte prüfen Sie zunächst, ob das folgende vorausgefüllte Feld Ihre korrekte anonymisierte Wahl\u2011ID enthält."
+            }
+        },
+        "remark": {
+            "default": "If the ID does not match your personal voter\u00a0ID, this could be caused by a third party attack and you should contact the election administration.",
+            "value": { "DE": "Falls die ID nicht mit Ihrer persönlichen Wahl\u2011ID übereinstimmt, könnte dies durch einen Angriff einer dritten Partei verursacht worden sein und Sie sollten sich mit der Wahlleitung in Verbindung setzen."
             }
         },
         "text": {

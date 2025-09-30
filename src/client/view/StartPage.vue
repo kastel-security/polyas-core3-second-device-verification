@@ -12,7 +12,13 @@ const props = defineProps<{
 
 <template>
   <div class="start">
-    <div class="explanation">{{ extractTextFromJson(text.login.textId, props.language) }}</div>
+    <div class="explanation">
+      <text>{{ extractTextFromJson(text.login.textId, props.language) }}</text>
+      <br><br>
+      <div class="remark">
+        <div class="inner"><text>{{ extractTextFromJson(text.login.remark, props.language) }}</text></div>
+      </div>
+    </div>
     <h4>{{ extractTextFromJson(text.login.voterId, props.language) }}</h4>
     <div class="voterid">{{ props.voterId }}</div>
     <div class="explanation">{{ extractTextFromJson(text.login.text, props.language) }}</div>
@@ -63,6 +69,15 @@ export default {
 h4 {
   text-align: left;
   color: #4a4a4a;
+}
+
+.remark {
+  background-color: #ebecf0;
+  border-left: 15px solid gray;
+  box-shadow: 0 0 1px #aaa;
+  .inner {
+    padding: 10px;
+  }
 }
 
 .voterid {
