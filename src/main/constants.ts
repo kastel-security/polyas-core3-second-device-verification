@@ -12,6 +12,7 @@ type Modes = 'mock' | 'dev' | 'deploy' | 'test'
 class EnvironmentVariables {
   public mode: Modes
   public electionUrl: string
+  public electionHash: string
   public backendUrl: string
   public fingerprint: string
   public proofGen: ProofGenerator

@@ -64,7 +64,7 @@ async function downloadPDF (): Promise<void> {
   doc.setFontSize(16)
   doc.setFont('courier', 'normal')
   doc.text(props.receiptText, 60, 120, { maxWidth: pageWidth - 2 * left })
-  doc.save(`vote-receipt-${EnvironmentVariables.instance.fingerprint.substring(0, 10)}.pdf`)
+  doc.save(`gi-wahl-quittung-${EnvironmentVariables.instance.electionHash.substring(0, 8)}.pdf`)
 }
 </script>
 
