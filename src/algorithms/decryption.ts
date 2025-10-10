@@ -71,7 +71,7 @@ async function aesDecrypt (c: string, comKey: Uint8Array): Promise<Uint8Array> {
  * @param initialMessage InitialMessage From SecondDeviceLoginResponse
  * @returns the decrypted QR Code
  */
-async function decrytQRCode (c: string, initialMessage: SecondDeviceInitialMsg): Promise<Uint8Array> {
+async function decryptQRCode (c: string, initialMessage: SecondDeviceInitialMsg): Promise<Uint8Array> {
   const ballotNorm = getBallotAsNormalizedBytestring(initialMessage.ballot)
   const comKey = await generateComKey2(ballotNorm, initialMessage.comSeed)
   return await aesDecrypt(c, comKey)
@@ -161,4 +161,4 @@ async function generateReceiptText (loginResponse: SecondDeviceLoginResponse): P
   return string
 }
 
-export { checkSecondDeviceParameters, generateComKey2, checkZKP, decryptBallot, generateReceiptText, aesDecrypt, decrytQRCode }
+export { checkSecondDeviceParameters, generateComKey2, checkZKP, decryptBallot, generateReceiptText, aesDecrypt, decryptQRCode }

@@ -1,7 +1,7 @@
 import { type ElectionData, type SecondDeviceFinalMessage, type SecondDeviceLoginResponse } from '../classes/communication'
 import { type Core3StandardBallot, type SecretProof } from '../classes/ballot'
 import { ErrorType } from './error'
-import { checkSecondDeviceParameters, checkZKP, decryptBallot, decrytQRCode, generateReceiptText } from '../algorithms/decryption'
+import { checkSecondDeviceParameters, checkZKP, decryptBallot, decryptQRCode, generateReceiptText } from '../algorithms/decryption'
 import { checkSignature } from '../algorithms/signature'
 import { EnvironmentVariables } from './constants'
 import { type Communication, ResponseBean, ResponseBeanError, ResponseBeanOk } from './communication'
@@ -60,7 +60,7 @@ class Verificationtool {
       return await this.resolveFail(ErrorType.BALLOT_ACK)
     }
     try {
-      this._randomCoinSeed = await decrytQRCode(c, this._secondDeviceLoginResponse.initialMessageDecoded)
+      this._randomCoinSeed = await decryptQRCode(c, this._secondDeviceLoginResponse.initialMessageDecoded)
     } catch (error: any) {
       return await this.resolveFail(ErrorType.DECRYPT, error.message)
     }
