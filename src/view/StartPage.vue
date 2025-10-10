@@ -14,13 +14,15 @@ const props = defineProps<{
   <div class="start">
     <div class="explanation">
       <text>{{ extractTextFromJson(text.login.textId, props.language) }}</text>
-      <br><br>
-      <div class="remark">
-        <div class="inner"><text>{{ extractTextFromJson(text.login.remark, props.language) }}</text></div>
-      </div>
     </div>
     <h4>{{ extractTextFromJson(text.login.voterId, props.language) }}</h4>
     <div class="voterid">{{ props.voterId }}</div>
+    <div class="explanation">
+      <div class="remark">
+        <div class="inner"><text>{{ extractTextFromJson(text.login.remark, props.language) }}</text></div>
+      </div>
+      <br><br>
+    </div>
     <div class="explanation">{{ extractTextFromJson(text.login.text, props.language) }}</div>
     <h4>{{ extractTextFromJson(text.login.loginReq, props.language) }}</h4>
     <form @submit.prevent="$emit('login', passwordValue)">
