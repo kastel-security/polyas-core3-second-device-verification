@@ -50,7 +50,7 @@ function getImgUrl (img: I18n<ImageRef>): string {
 
 async function downloadPDF (): Promise<void> {
   const doc = generateReceipt(props.receiptText)
-  doc.save(`vote-receipt-${props.receiptText[2]}.pdf`)
+  doc.save(`gi-wahl-quittung-${props.receiptText[2]}.pdf`)
   await EnvironmentVariables.instance.comm.logReceipt(props.receiptText)
 }
 </script>
