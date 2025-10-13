@@ -1,9 +1,9 @@
 import data from "../src/mock/testinstanz.json"
-import { SecondDeviceLoginResponse} from "../src/classes/communication"
+import { SecondDeviceLoginResponse } from "../src/classes/communication"
 import { checkSignature } from "../src/algorithms/signature"
 
 import crypto from "crypto"
-import { decrytQRCode } from "../src/algorithms/decryption";
+import { decryptQRCode } from "../src/algorithms/decryption";
 
 Object.defineProperty(globalThis, 'crypto', {
   value: {
@@ -20,5 +20,5 @@ test("Testing failing signature from polyas test server", async () => {
 
 test("Testing decryptQRCode from polyas test server", async () => {
     const loginResponse = SecondDeviceLoginResponse.fromJson(data.loginResponse) 
-    const decrypted = await decrytQRCode(data.c, loginResponse.initialMessageDecoded)
+    const decrypted = await decryptQRCode(data.c, loginResponse.initialMessageDecoded)
 })

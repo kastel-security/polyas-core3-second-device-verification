@@ -3,8 +3,8 @@ import data from "../src/mock/data.json"
 import * as decrypt from "../src/algorithms/decryption"
 import * as sign from "../src/algorithms/signature"
 import axios from 'axios'
-import {Comm, ResponseBean, ResponseBeanError, ResponseBeanOk} from "../src/main/communication"
-import {Verificationtool} from "../src/main/verificationtool"
+import { Comm, ResponseBean, ResponseBeanError, ResponseBeanOk } from "../src/main/communication"
+import { Verificationtool } from "../src/main/verificationtool"
 import { ElectionData, SecondDeviceFinalMessage, SecondDeviceLoginResponse } from "../src/classes/communication"
 import { ErrorType } from "../src/main/error"
 import { EnvironmentVariables } from "../src/main/constants"
@@ -12,7 +12,7 @@ import crypto from "crypto"
 import { Proof, SecretProof } from "../src/classes/ballot"
 
 EnvironmentVariables.init("test").fingerprint = "b7e8e76c369d6a9ca268e40cde8347ac443040d6c4a1df3035744ace05b94e00849abf083ae5baa8fee462a723823054858387ec35462a49f93c2ea40b2fc876"
-const mockedDecrypt = jest.spyOn(decrypt, 'decrytQRCode')
+const mockedDecrypt = jest.spyOn(decrypt, 'decryptQRCode')
 const randomCoinSeed = "1e89b5f95deae82f6f823b52709117405f057783eda018d72cbd83141d394fbd"
 
 Object.defineProperty(globalThis, 'crypto', {
@@ -138,7 +138,7 @@ test("test signature fail", async () => {
 })
 
 test("test qrDecrypt error", async () => {
-    const mockedDecrypt = jest.spyOn(decrypt, "decrytQRCode")
+    const mockedDecrypt = jest.spyOn(decrypt, "decryptQRCode")
     mockedDecrypt.mockRejectedValueOnce(new Error("test"))
     const verificationtool = new Verificationtool()
     const login = await verificationtool.login(data.vid, data.nonce, data.password, data.c)
