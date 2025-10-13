@@ -1,5 +1,5 @@
 import data from "../src/client/mock/testinstanz.json"
-import { SecondDeviceLoginResponse} from "../src/client/classes/communication"
+import { SecondDeviceLoginResponse } from "../src/client/classes/communication"
 import { checkSignature } from "../src/client/algorithms/signature"
 
 import crypto from "crypto"

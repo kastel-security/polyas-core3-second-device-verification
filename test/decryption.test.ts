@@ -1,5 +1,5 @@
 import data from "../src/client/mock/data.json"
-import {SecondDeviceFinalMessage, SecondDeviceLoginResponse} from "../src/client/classes/communication"
+import { SecondDeviceFinalMessage, SecondDeviceLoginResponse } from "../src/client/classes/communication"
 import { aesDecrypt, checkSecondDeviceParameters, checkZKP, decryptBallot, decryptQRCode, generateComKey2 } from "../src/client/algorithms/decryption"
 import { getBallotAsNormalizedBytestring } from "../src/client/algorithms/signature"
 import { bufToHex, hexToBuf } from "../src/client/main/utils"

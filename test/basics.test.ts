@@ -1,4 +1,4 @@
-import {NumbersInRangeFromSeed, kdfCounterMode} from "../src/client/algorithms/basics"
+import { NumbersInRangeFromSeed, kdfCounterMode } from "../src/client/algorithms/basics"
 import { bufToBn, hexToBuf, toUint8Array } from "../src/client/main/utils"
 import crypto from "crypto"
 
