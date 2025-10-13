@@ -38,7 +38,7 @@
             }
         },
         "loginReq": {
-            "default": "Current one-time password:",
+            "default": "Current One-Time Password:",
             "value": { "DE": "Aktuelles Einmalpasswort:" }
         },
         "explanation": {
