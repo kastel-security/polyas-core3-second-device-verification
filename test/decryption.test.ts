@@ -1,6 +1,6 @@
 import data from "../src/client/mock/data.json"
 import {SecondDeviceFinalMessage, SecondDeviceLoginResponse} from "../src/client/classes/communication"
-import { aesDecrypt, checkSecondDeviceParameters, checkZKP, decryptBallot, decrytQRCode, generateComKey2 } from "../src/client/algorithms/decryption"
+import { aesDecrypt, checkSecondDeviceParameters, checkZKP, decryptBallot, decryptQRCode, generateComKey2 } from "../src/client/algorithms/decryption"
 import { getBallotAsNormalizedBytestring } from "../src/client/algorithms/signature"
 import { bufToHex, hexToBuf } from "../src/client/main/utils"
 import crypto from "crypto"
@@ -39,8 +39,8 @@ test("test aesDecrypt", async () => {
     expect(bufToHex(result)).toBe(randomCoinSeed)
 })
 
-test("test decrytQRCode", async () => {
-    const decrypted = await decrytQRCode(data.c, loginResponse.initialMessageDecoded)
+test("test decryptQRCode", async () => {
+    const decrypted = await decryptQRCode(data.c, loginResponse.initialMessageDecoded)
     expect(bufToHex(decrypted)).toBe(randomCoinSeed)
 })
 

@@ -3,7 +3,7 @@ import { SecondDeviceLoginResponse} from "../src/client/classes/communication"
 import { checkSignature } from "../src/client/algorithms/signature"
 
 import crypto from "crypto"
-import { decrytQRCode } from "../src/client/algorithms/decryption";
+import { decryptQRCode } from "../src/client/algorithms/decryption";
 
 Object.defineProperty(globalThis, 'crypto', {
   value: {
@@ -20,5 +20,5 @@ test("Testing failing signature from polyas test server", async () => {
 
 test("Testing decryptQRCode from polyas test server", async () => {
     const loginResponse = SecondDeviceLoginResponse.fromJson(data.loginResponse) 
-    const decrypted = await decrytQRCode(data.c, loginResponse.initialMessageDecoded)
+    const decrypted = await decryptQRCode(data.c, loginResponse.initialMessageDecoded)
 })
