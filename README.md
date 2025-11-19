@@ -79,4 +79,4 @@ See [LICENSE](LICENSE)
 The principal development of this software has been done by [Christoph Niederbudde](mailto:udqps@student.kit.edu).
 
 ## Contact
-For more information, please contact [Michael Kirsten](https://www.tcs.ifi.lmu.de/mitarbeiter/michael-kirsten_de.html).
+For more information, please contact [Michael Kirsten](https://www.tcs.ifi.lmu.de/staff/michael-kirsten).
